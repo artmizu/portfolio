@@ -6,10 +6,10 @@
       </div>
       <div class="layout-header__nav">
         <h3 class="h3 layout-header__nav-item">
-          <a href="#" class="link">Проекты</a>
+          <router-link to="/" class="link">Проекты</router-link>
         </h3>
         <h3 class="h3 layout-header__nav-item">
-          <a href="#" class="link">Заметки</a>
+          <router-link to="/project/birden" class="link">Заметки</router-link>
         </h3>
       </div>
       <div class="layout-header__contacts">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
   data() {
@@ -66,7 +67,25 @@ export default {
   }
 
   .body {
-    background-image: url(./assets/body-bg.png);
+    color:#232236;
+    background-color:#f1edfd;
+    position:relative;
+    /* &:before {
+      content:"";
+      background-image: url(./assets/body-pattern.png);
+      display:block;
+      position:absolute;
+      z-index:-1;
+      left:0px;
+      top:0px;
+      right:0px;
+      bottom:0px;
+      opacity:1;
+      transition-duration:0.3s;
+    }
+    &_disable-bg:before {
+      opacity:0;
+    } */
   }
 
   .h1 {
