@@ -1,0 +1,15 @@
+.h1 {
+	margin: 0;
+	font-size: 56px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 61px;
+
+	&_mt {
+		margin-top: 80px;
+	}
+
+	&_mb {
+		margin-bottom: 45px;
+	}
+}

@@ -1,0 +1,31 @@
+.card {
+	display: flex;
+	flex-direction: column;
+	height: 376px;
+	padding: 35px 30px;
+	background-color: var(--grey-bg);
+	border-radius: 20px;
+
+	&__img {
+		margin-bottom: 17px;
+	}
+
+	&__github {
+		margin-top: auto;
+	}
+}
+
+.github-link {
+	display: flex;
+	align-items: center;
+	color: #fff;
+	text-decoration: none;
+
+	&::before {
+		width: 21px;
+		height: 21px;
+		margin-right: 9px;
+		content: "";
+		background: url("./asset/github-logo.svg") no-repeat center;
+	}
+}

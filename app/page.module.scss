@@ -1,0 +1,48 @@
+.main-intro {
+	display: flex;
+
+	&__about {
+		padding-right: 20px;
+	}
+
+	&__art {
+		flex-shrink: 0;
+		width: 310px;
+		background-color: #f7cfdf;
+		border-radius: 20px;
+	}
+
+	&__title {
+		margin-bottom: 45px;
+	}
+
+	&__title-links {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 19px;
+	}
+
+	&__title-link {
+		margin-right: 15px;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}
+
+.main-used {
+	&__grid {
+		display: grid;
+		grid: repeat(2, 1fr) / auto-flow;
+		gap: 30px 40px;
+	}
+}
+
+.main-open-source {
+	&__grid {
+		display: grid;
+		grid: repeat(1, 1fr) / auto-flow;
+		gap: 20px;
+	}
+}

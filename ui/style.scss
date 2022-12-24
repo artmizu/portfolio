@@ -1,0 +1,28 @@
+.ui-link {
+	color: var(--blue-text);
+	text-decoration: none;
+}
+
+.ui-p {
+	font-size: 14px;
+	font-weight: 200;
+	line-height: 25px;
+
+	&_my {
+		margin-top: 8px;
+		margin-bottom: 8px;
+	}
+
+	&_large {
+		font-size: 15px;
+		line-height: 28px;
+	}
+
+	&_mxw-540 {
+		max-width: 540px;
+	}
+}
+
+.ui-grey-text {
+	color: var(--grey-text);
+}

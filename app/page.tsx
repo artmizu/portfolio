@@ -1,91 +1,119 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import st from './page.module.scss'
+import cls from 'classnames'
+import H1 from 'ui/h1'
+import H3 from 'ui/h3'
+import OpenSourceCard from 'ui/OpenSourceCard'
 
 export default function Home() {
+  const list = [
+    { 
+      title: 'Vite, ESBuild, Rollup, Webpack',
+      text: 'Для сборки проектов'
+    },
+    { 
+      title: 'Vitest, Jest, Cypress, Puppeteer',
+      text: 'Для тестирования'
+    },
+    { 
+      title: 'NodeJS, GraphQL, Apollo,  MongoDB, PostgreSQL',
+      text: 'Для разработки на бэке'
+    },
+    { 
+      title: 'Vue 2/3, React, Solid, SvelteJS',
+      text: 'И экосистемы вокруг них'
+    },
+    { 
+      title: 'Gitlab CI, Docker, Github Actions',
+      text: 'Для автоматизации'
+    },
+    { 
+      title: 'Typescript',
+      text: 'Люблю и использую'
+    }
+  ]
+
+  const openSource = [
+    {
+      img: 'analytics' as const,
+      title: 'Модуль аналитики для Nuxt 2/3',
+      description: 'Позволяет увидеть, что происходит с приложением. Поддерживает NodeJS метрики и метрики специфичные для SSR приложений',
+      github: 'https://github.com/artmizu/analytics-nuxt'
+    },
+    {
+      img: 'sitemap' as const,
+      title: 'Модуль сайтмэпа для Nuxt 2/3',
+      description: 'Поддерживает Typescript, динамические роуты, кэширование и разделение карт на куски',
+      github: 'https://github.com/artmizu/sitemap-nuxt-2'
+    },
+    {
+      img: 'metrika' as const,
+      title: 'Модуль я.метрики для Nuxt 2/3',
+      description: 'Поддерживает Typescript, добавляет удобные логи при разработке и полезные методы в контекст приложения',
+      github: 'https://github.com/artmizu/yandex-metrika-nuxt-2'
+    },
+  ]
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className={st['main-page']}>
+      <div className={st['main-intro']}>
+        <div className={st['main-intro__about']}>
+          <div className={st['main-intro__title']}>
+            <H1>Александр Сабуров, разработка и дизайн</H1>
+            <div className={cls('ui-p', st['main-intro__title-links'])}>
+              <a href="https://t.me/artmizu" className={cls('ui-link', st['main-intro__title-link'])}>Telegram</a>
+              <a href="https://github.com/artmizu" className={cls('ui-link', st['main-intro__title-link'])}>Гитхаб</a>
+              <a href="mailto:hello@artmizu.ru" className={cls('ui-link', st['main-intro__title-link'])}>hello@artmizu.ru</a>
+            </div>
+          </div>
+          <div className={st['main-intro__description']}>
+            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
+              <b>10+ лет занимаюсь разработкой и дизайном</b>, умею создавать проекты с нуля, продумывать архитектуру 
+              приложений и проектировать дизайн сложных интерфейсов. Интересуюсь бизнес-составляющими, чтобы 
+              лучше понимать итоговую ценность, которую нужно пронести от идеи до конечного клиента через дизайн и разработку.
+            </div>
+            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
+              <b>Люблю не сносить и строить всё с нуля, а формировать подход по эволюционному развитию проектов</b>, не останавливая 
+              поставку новых фич на момент этого перехода.
+            </div>
+            <H3 mt>3 года руковожу командой разработки</H3>
+            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
+              При работе с командой занимаюсь её обучением и развитием, формирую базу знаний проекта и оптимизирую процессы. 
+              Выстраиваю асинхронное взаимодействие участников команды, в котором все понимают что нужно делать и зачем. 
+            </div>
+            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
+              При этом не забываю про результат и отслеживание общей производительности команды и настроения её участников. 
+              Руководил командами разработки до 8 человек.
+            </div>
+          </div>
+        </div>
+        <div className={st['main-intro__art']}></div>
+      </div>
+      <div className={st['main-used']}>
+        <H1 mt mb>С чем работал</H1>
+        <div className={st['main-used__grid']}>
+          { list.map((el) => {
+            return <div key={el.title} className={st['main-used__el']}>
+              <div className={st['main-used__el-title']}>
+                <H3 mb>{ el.title }</H3>
+              </div>
+              <div className={cls('ui-p', 'ui-grey-text', st['main-used__el-text'])}>{ el.text }</div>
+            </div>
+          }) }
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
+      <div className={st['main-open-source']}>
+        <H1 mt mb>Open Source</H1>
+        <div className={st['main-open-source__grid']}>
+          { openSource.map((el, index) => {
+            return <div key={index} className={st['main-open-source__el']}>
+              <OpenSourceCard {...el} />
+            </div>
+          }) }
         </div>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className={st['main-projects']}>
+        <H1 mt mb>Чем занимался</H1>
       </div>
-    </main>
+    </div>
   )
 }

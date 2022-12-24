@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "stylelint-config-recess-order",
+    "stylelint-config-recommended",
+    "stylelint-config-standard-scss"
+  ],
+  "plugins": [
+    "stylelint-scss"
+  ],
+  "rules": {
+    "indentation": "tab",
+    "selector-nested-pattern": "^(\\^{0,2}&|\\.|[a-z].|>)"
+  }
+}
