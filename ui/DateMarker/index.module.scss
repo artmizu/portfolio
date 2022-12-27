@@ -1,0 +1,20 @@
+.date {
+	display: flex;
+	align-items: center;
+	color: var(--grey-text);
+
+	&__from {
+		padding-right: 5px;
+	}
+
+	&__dash {
+		width: 21px;
+		height: 5px;
+		background: url(./asset/dash.svg) no-repeat center;
+		background-size: 21px 5px;
+	}
+
+	&__to {
+		padding-left: 5px;
+	}
+}

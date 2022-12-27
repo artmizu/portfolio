@@ -11,6 +11,8 @@
 	}
 
 	&__github {
+		display: flex;
+		justify-content: flex-start;
 		margin-top: auto;
 	}
 }
@@ -26,6 +28,16 @@
 		height: 21px;
 		margin-right: 9px;
 		content: "";
-		background: url("./asset/github-logo.svg") no-repeat center;
+		background: url(./asset/github-logo.svg) no-repeat center;
+	}
+
+	&:hover {
+		color: #0a85ff;
+		transition: color 0.3s ease-out;
+
+		&::before {
+			background-image: url(./asset/github-logo-hover.svg);
+			transition: background 0.3s ease-out;
+		}
 	}
 }

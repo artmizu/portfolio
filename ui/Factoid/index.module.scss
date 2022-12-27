@@ -1,0 +1,330 @@
+.factoid {
+	display: flex;
+	flex-direction: column;
+	height: 340px;
+	overflow: hidden;
+	text-align: center;
+	border-radius: 20px;
+
+	&__about {
+		display: flex;
+		flex-direction: column;
+		padding: 17px 20px 20px;
+	}
+
+	&__art {
+		flex-grow: 1;
+	}
+
+	&__date {
+		margin-bottom: 1px;
+		font-size: 11px;
+		font-weight: 200;
+		line-height: 19px;
+	}
+
+	&__title {
+		font-size: 21px;
+		font-weight: 500;
+		line-height: 25px;
+	}
+
+	&__description {
+		margin-top: 8px;
+		font-size: 11px;
+		font-weight: 200;
+		line-height: 16px;
+	}
+
+	&__link-wrapper {
+		margin-top: 7px;
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	&__link {
+		text-decoration: none;
+	}
+}
+
+.parser-recruiter {
+	position: relative;
+	height: 100%;
+
+	&__left,
+	&__center,
+	&__right {
+		position: absolute;
+		left: calc(50% - 110px);
+		width: 220px;
+		height: 226px;
+		background-repeat: no-repeat;
+		background-size: 220px 226px;
+		border-radius: 7px;
+		opacity: 0;
+	}
+
+	&__left {
+		background-image: url(./asset/parser-recruiter/left.jpg);
+		filter: blur(1px);
+		transform: translate(-60px, 0) rotate(-17deg);
+		transform-origin: right;
+	}
+
+	&__center {
+		z-index: 1;
+		background-image: url(./asset/parser-recruiter/center.jpg);
+		box-shadow: 0 9px 26px 15px rgb(130 67 100 / 17%);
+	}
+
+	&__right {
+		background-image: url(./asset/parser-recruiter/right.jpg);
+		filter: blur(1px);
+		transform: translate(60px, 0) rotate(17deg);
+		transform-origin: left;
+	}
+
+	&_visible {
+		.parser-recruiter__left {
+			opacity: 0.5;
+			animation: parser-left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.8s linear;
+		}
+
+		.parser-recruiter__center {
+			opacity: 1;
+			animation: parser-center 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.4s linear;
+		}
+
+		.parser-recruiter__right {
+			opacity: 0.5;
+			animation: parser-right 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.8s linear;
+		}
+	}
+}
+
+@keyframes parser-left {
+	from {
+		transform: translate(-40px, 120px) rotate(-45deg);
+	}
+
+	to {
+		transform: translate(-60px, 0) rotate(-17deg);
+	}
+}
+
+@keyframes parser-center {
+	from {
+		transform: translate(0, 150px);
+	}
+
+	to {
+		transform: translate(0, 0);
+	}
+}
+
+@keyframes parser-right {
+	from {
+		transform: translate(40px, 120px) rotate(45deg);
+	}
+
+	to {
+		transform: translate(60px, 0) rotate(17deg);
+	}
+}
+
+.parser-extension {
+	position: relative;
+	display: flex;
+	align-items: flex-end;
+	height: 100%;
+
+	&__video-wrapper {
+		position: absolute;
+		bottom: -20px;
+		left: 20px;
+		overflow: hidden;
+		border-radius: 5px 0 0;
+		box-shadow: 0 0 19px 1px rgb(193 208 223 / 63%);
+		opacity: 0;
+	}
+
+	&__video {
+		display: block;
+		height: 195px;
+	}
+
+	&_visible {
+		.parser-extension__video-wrapper {
+			opacity: 1;
+			animation: parser-center 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.6s linear;
+		}
+	}
+}
+
+.verdi {
+	position: relative;
+	height: 100%;
+
+	&__left,
+	&__center,
+	&__right {
+		position: absolute;
+		left: calc(50% - 110px);
+		width: 220px;
+		height: 226px;
+		background-repeat: no-repeat;
+		background-size: 220px 226px;
+		border-radius: 7px;
+		opacity: 0;
+	}
+
+	&__left {
+		background-image: url(./asset/verdi/aside.jpg);
+		filter: blur(1px);
+		transform: translate(-60px, 0) rotate(-17deg);
+		transform-origin: right;
+	}
+
+	&__center {
+		z-index: 1;
+		background-image: url(./asset/verdi/center.jpg);
+		box-shadow: 0 9px 26px 15px rgb(130 67 100 / 17%);
+	}
+
+	&__right {
+		background-image: url(./asset/verdi/aside.jpg);
+		filter: blur(1px);
+		transform: translate(60px, 0) rotate(17deg);
+		transform-origin: left;
+	}
+
+	&_visible {
+		.verdi__left {
+			opacity: 0.5;
+			animation: parser-left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+		}
+
+		.verdi__center {
+			opacity: 1;
+			animation: parser-center 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.3s linear;
+		}
+
+		.verdi__right {
+			opacity: 0.5;
+			animation: parser-right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+		}
+	}
+}
+
+.behance {
+	position: relative;
+	height: 100%;
+
+	&__left,
+	&__right {
+		position: absolute;
+		left: calc(50% - 61px);
+		width: 123px;
+		height: 230px;
+		background-repeat: no-repeat;
+		background-size: 123px 230px;
+		border-radius: 7px;
+		opacity: 0;
+	}
+
+	&__left {
+		background-image: url(./asset/behance/left.jpg);
+		filter: blur(1px);
+		transform: translate(-120px, 30px) rotate(-17deg);
+		transform-origin: right;
+	}
+
+	&__center {
+		position: absolute;
+		left: calc(50% - 118px);
+		z-index: 1;
+		width: 236px;
+		height: 241px;
+		background-image: url(./asset/behance/center.jpg);
+		background-repeat: no-repeat;
+		background-size: 236px 241px;
+		border-radius: 7px 7px 0 0;
+		box-shadow: 0 9px 26px 15px rgb(130 67 100 / 17%);
+		opacity: 0;
+		transform: translate(0, 5px);
+	}
+
+	&__right {
+		background-image: url(./asset/behance/right.jpg);
+		filter: blur(1px);
+		transform: translate(120px, 30px) rotate(17deg);
+		transform-origin: left;
+	}
+
+	&_visible {
+		.behance__left {
+			opacity: 0.5;
+			animation: behance-left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+		}
+
+		.behance__center {
+			opacity: 1;
+			animation: behance-center 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.3s linear;
+		}
+
+		.behance__right {
+			opacity: 0.5;
+			animation: behance-right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+		}
+	}
+}
+
+@keyframes behance-left {
+	from {
+		transform: translate(-120px, 120px) rotate(-45deg);
+	}
+
+	to {
+		transform: translate(-120px, 30px) rotate(-17deg);
+	}
+}
+
+@keyframes behance-center {
+	from {
+		transform: translate(0, 150px);
+	}
+
+	to {
+		transform: translate(0, 5px);
+	}
+}
+
+@keyframes behance-right {
+	from {
+		transform: translate(120px, 120px) rotate(45deg);
+	}
+
+	to {
+		transform: translate(120px, 30px) rotate(17deg);
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fade-in-transparent {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 0.5;
+	}
+}

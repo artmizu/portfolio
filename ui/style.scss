@@ -1,6 +1,11 @@
 .ui-link {
 	color: var(--blue-text);
 	text-decoration: none;
+
+	&:hover {
+		color: #0a85ff;
+		transition: color 0.3s ease-out;
+	}
 }
 
 .ui-p {
@@ -16,6 +21,11 @@
 	&_large {
 		font-size: 15px;
 		line-height: 28px;
+	}
+
+	&_small {
+		font-size: 11px;
+		line-height: 19px;
 	}
 
 	&_mxw-540 {

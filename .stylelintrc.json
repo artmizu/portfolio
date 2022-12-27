@@ -9,6 +9,8 @@
   ],
   "rules": {
     "indentation": "tab",
-    "selector-nested-pattern": "^(\\^{0,2}&|\\.|[a-z].|>)"
+    "selector-nested-pattern": "^(\\^{0,2}&|\\.|[a-z].|>)",
+    "function-url-quotes": "never",
+    "selector-class-pattern": null
   }
 }

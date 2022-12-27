@@ -3,9 +3,14 @@ import cls from 'classnames'
 import H1 from 'ui/h1'
 import H3 from 'ui/h3'
 import OpenSourceCard from 'ui/OpenSourceCard'
+import { useTranslation } from './i18n'
+import ProjectGrid from 'ui/ProjectGrid'
+import projectList from './projects'
 
-export default function Home() {
-  const list = [
+export default async function Home() {
+  const { t } = await useTranslation('ru')
+
+  const used = [
     { 
       title: 'Vite, ESBuild, Rollup, Webpack',
       text: 'Для сборки проектов'
@@ -23,7 +28,7 @@ export default function Home() {
       text: 'И экосистемы вокруг них'
     },
     { 
-      title: 'Gitlab CI, Docker, Github Actions',
+      title: 'Gitlab CI, Docker, Github Actions',
       text: 'Для автоматизации'
     },
     { 
@@ -35,19 +40,19 @@ export default function Home() {
   const openSource = [
     {
       img: 'analytics' as const,
-      title: 'Модуль аналитики для Nuxt 2/3',
+      title: 'Модуль аналитики для Nuxt 2/3',
       description: 'Позволяет увидеть, что происходит с приложением. Поддерживает NodeJS метрики и метрики специфичные для SSR приложений',
       github: 'https://github.com/artmizu/analytics-nuxt'
     },
     {
       img: 'sitemap' as const,
-      title: 'Модуль сайтмэпа для Nuxt 2/3',
+      title: 'Модуль сайтмэпа для Nuxt 2/3',
       description: 'Поддерживает Typescript, динамические роуты, кэширование и разделение карт на куски',
       github: 'https://github.com/artmizu/sitemap-nuxt-2'
     },
     {
       img: 'metrika' as const,
-      title: 'Модуль я.метрики для Nuxt 2/3',
+      title: 'Модуль я.метрики для Nuxt 2/3',
       description: 'Поддерживает Typescript, добавляет удобные логи при разработке и полезные методы в контекст приложения',
       github: 'https://github.com/artmizu/yandex-metrika-nuxt-2'
     },
@@ -55,6 +60,7 @@ export default function Home() {
 
   return (
     <div className={st['main-page']}>
+      { t('h1') }
       <div className={st['main-intro']}>
         <div className={st['main-intro__about']}>
           <div className={st['main-intro__title']}>
@@ -88,32 +94,23 @@ export default function Home() {
         </div>
         <div className={st['main-intro__art']}></div>
       </div>
-      <div className={st['main-used']}>
-        <H1 mt mb>С чем работал</H1>
-        <div className={st['main-used__grid']}>
-          { list.map((el) => {
-            return <div key={el.title} className={st['main-used__el']}>
-              <div className={st['main-used__el-title']}>
-                <H3 mb>{ el.title }</H3>
-              </div>
-              <div className={cls('ui-p', 'ui-grey-text', st['main-used__el-text'])}>{ el.text }</div>
+      <H1 mt mb>С чем работал</H1>
+      <div className={st['main-used-grid']}>
+        { used.map((el) => {
+          return <div key={el.title} className={st['main-used__el']}>
+            <div className={st['main-used__el-title']}>
+              <H3 mb>{ el.title }</H3>
             </div>
-          }) }
-        </div>
+            <div className={cls('ui-p', 'ui-grey-text', st['main-used__el-text'])}>{ el.text }</div>
+          </div>
+        }) }
       </div>
-      <div className={st['main-open-source']}>
-        <H1 mt mb>Open Source</H1>
-        <div className={st['main-open-source__grid']}>
-          { openSource.map((el, index) => {
-            return <div key={index} className={st['main-open-source__el']}>
-              <OpenSourceCard {...el} />
-            </div>
-          }) }
-        </div>
+      <H1 mt mb>Open Source</H1>
+      <div className={st['main-open-source-grid']}>
+        { openSource.map((el, index) => <OpenSourceCard  key={index} {...el} />) }
       </div>
-      <div className={st['main-projects']}>
-        <H1 mt mb>Чем занимался</H1>
-      </div>
+      <H1 mt mb>Чем занимался</H1>
+      <ProjectGrid list={projectList} />
     </div>
   )
 }

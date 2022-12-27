@@ -6,9 +6,9 @@ import AnalyticsImage from './asset/analytics.png'
 import MetrikaImage from './asset/metrika.png'
 import SitemapImage from './asset/sitemap.png'
 
-type ImageType = 'analytics' | 'metrika' | 'sitemap'
+type OpenSourceType = 'analytics' | 'metrika' | 'sitemap'
 
-function getImage(img: ImageType) {
+function getImage(img: OpenSourceType) {
   if (img === 'analytics') {
     return AnalyticsImage
   } else if (img === 'metrika') {
@@ -18,7 +18,7 @@ function getImage(img: ImageType) {
   }
 }
 
-export default function OpenSourceCard({ img, title, description, github }: { img: ImageType, title: string, description: string, github?: string }) {
+export default function OpenSourceCard({ img, title, description, github }: { img: OpenSourceType, title: string, description: string, github?: string }) {
   return (
     <div className={st['card']}>
       <div className={st['card__img']}>
