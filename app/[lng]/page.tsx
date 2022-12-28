@@ -3,12 +3,16 @@ import cls from 'classnames'
 import H1 from 'ui/h1'
 import H3 from 'ui/h3'
 import OpenSourceCard from 'ui/OpenSourceCard'
-import { useTranslation } from './i18n'
+import { useTranslation } from 'i18n'
 import ProjectGrid from 'ui/ProjectGrid'
 import projectList from './projects'
+import { Language } from 'shared/type/Language'
+import LanguageSwitcher from 'ui/LanguageSwitcher'
 
-export default async function Home() {
-  const { t } = await useTranslation('ru')
+
+export default async function Home({ params: { lng } }: { params: { lng: Language }}) {
+  console.log("GENERATE", lng)
+  const { t } = await useTranslation(lng)
 
   const used = [
     { 
@@ -61,6 +65,8 @@ export default async function Home() {
   return (
     <div className={st['main-page']}>
       { t('h1') }
+      {/* @ts-expect-error Server Component */}
+      <LanguageSwitcher current={lng}/>
       <div className={st['main-intro']}>
         <div className={st['main-intro__about']}>
           <div className={st['main-intro__title']}>

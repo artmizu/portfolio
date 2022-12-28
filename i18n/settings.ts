@@ -1,6 +1,8 @@
-export const fallbackLng = 'en'
-export const languages = [fallbackLng, 'de']
-export const defaultNS = 'translation'
+import { Language } from "shared/type/Language"
+
+export const fallbackLng: Language = 'ru'
+export const languages: Language[] = [fallbackLng, 'en']
+export const defaultNS = 'common'
 
 export function getOptions (lng = fallbackLng, ns = defaultNS) {
   return {

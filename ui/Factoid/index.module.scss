@@ -86,8 +86,8 @@
 
 	&_visible {
 		.parser-recruiter__left {
-			opacity: 0.5;
-			animation: parser-left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.8s linear;
+			opacity: 1;
+			animation: parser-left 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.8s linear;
 		}
 
 		.parser-recruiter__center {
@@ -96,8 +96,8 @@
 		}
 
 		.parser-recruiter__right {
-			opacity: 0.5;
-			animation: parser-right 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.8s linear;
+			opacity: 1;
+			animation: parser-right 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.8s linear;
 		}
 	}
 }
@@ -200,8 +200,8 @@
 
 	&_visible {
 		.verdi__left {
-			opacity: 0.5;
-			animation: parser-left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+			opacity: 1;
+			animation: parser-left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.6s linear;
 		}
 
 		.verdi__center {
@@ -210,8 +210,8 @@
 		}
 
 		.verdi__right {
-			opacity: 0.5;
-			animation: parser-right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+			opacity: 1;
+			animation: parser-right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.6s linear;
 		}
 	}
 }
@@ -263,8 +263,8 @@
 
 	&_visible {
 		.behance__left {
-			opacity: 0.5;
-			animation: behance-left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+			opacity: 1;
+			animation: behance-left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.6s linear;
 		}
 
 		.behance__center {
@@ -273,8 +273,8 @@
 		}
 
 		.behance__right {
-			opacity: 0.5;
-			animation: behance-right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in-transparent 0.6s linear;
+			opacity: 1;
+			animation: behance-right 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.6s linear;
 		}
 	}
 }
@@ -316,15 +316,5 @@
 
 	to {
 		opacity: 1;
-	}
-}
-
-@keyframes fade-in-transparent {
-	from {
-		opacity: 0;
-	}
-
-	to {
-		opacity: 0.5;
 	}
 }

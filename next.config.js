@@ -3,10 +3,6 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-  i18n: {
-    defaultLocale: 'ru',
-    locales: ['en', 'ru'],
-  },
   webpack(config, options) {
     const { isServer } = options;
     const prefix = nextConfig.assetPrefix || '';
