@@ -1,0 +1,237 @@
+{
+  "title": "Projects",
+  "list": [
+    {
+      "type": "constructor",
+      "title": "Promo page builder for 05.ru",
+      "date": {
+        "from": 2022
+      },
+      "description": "<div class=\"ui-p ui-p_my\">The tool helps to form promo pages without developers' participation from standard blocks, whose look and content can be customized.</div><div class=\"ui-p ui-p_my\">I invented the tool itself, and then thought out the service architecture, how components of the builder will be used in other services, how other services will request data, how it will all exist in the context of different Vue versions. </div>",
+      "technology": "Apollo, GraphQL, MongoDB, NodeJS, Typescript"
+    },
+    {
+      "type": "store",
+      "title": "Online store 05.ru",
+      "date": {
+        "from": 2016,
+        "to": 2022
+      },
+      "description": "<div class=\"ui-p ui-p_my\">Worked my way up from designer and developer to development team leader and interface art director, with up to 8 people on the team.</div><div class=\"ui-p ui-p_my\">  Together with the team took the front-end out of the monolith, worked on the architecture of the application, divided the application into layers, implemented metrics, tests, automation, and much more.</div>",
+      "technology": "Nuxt 2, Vue 2, Typescript",
+      "link": {
+        "text": "Go to the site",
+        "href": "https://05.ru/"
+      }
+    },
+    {
+      "title": "CRM to work with applicants for 05.ru",
+      "date": {
+        "from": 2021,
+        "to": 2022
+      },
+      "description": "<div class=\"ui-p ui-p_my\">An internal tool that helps the company's HR's work with applicants.</div><div class=\"ui-p ui-p_my\">In the project, I managed the front-end development team and the design team.</div>",
+      "technology": "Nuxt 2/3, Vue 2/3, Typescript"
+    },
+    {
+      "title": "UI Kit for 05.ru",
+      "date": {
+        "from": 2020,
+        "to": 2022
+      },
+      "description": "<div class=\"ui-p ui-p_my\">We developed a set of components and utilities that we reused in all 05 projects, so that we could develop more quickly and not need to create the same components from scratch over and over again.</div><div class=\"ui-p ui-p_my\">We automated the workflow of releases for convenience and simplicity.</div>",
+      "technology": "Vue 2/3, Typescript, Storybook"
+    },
+    {
+      "type": "parser-recruiter",
+      "title": "Browser Extension for Parsing Resumes",
+      "date": {
+        "from": 2021
+      },
+      "description": "A tool to help HR's solve routine tasks"
+    },
+    {
+      "type": "darkstore",
+      "title": "«Darkstore» food delivery service",
+      "date": {
+        "from": 2021,
+        "to": 2022
+      },
+      "description": "Led the front-end development team and the interface design team. Developed the initial look of the product MVP and iteratively improved its design and codebase, later moving the project to Nuxt 3.",
+      "technology": "Nuxt 2/3, Vue 2/3, Typescript",
+      "link": {
+        "text": "Go to the site",
+        "href": "https://darkstore.05.ru/"
+      }
+    },
+    {
+      "title": "Creation of newsletters in 05.ru",
+      "date": {
+        "from": 2021,
+        "to": 2022
+      },
+      "description": "<div class=\"ui-p ui-p_my\">Formed an approach to creating newsletters to simplify their development. Integrated MJML, and create a workflow for building and automating its deployment.</div><div class=\"ui-p ui-p_my\">For designers to take into account all the limitations of MJML, I wrote a document that describes them in detail.</div>",
+      "technology": "MJML"
+    },
+    {
+      "title": "Personal account of the seller in 05.ru",
+      "date": {
+        "from": 2020,
+        "to": 2021
+      },
+      "description": "<div class=\"ui-p ui-p_my\">A tool that allows merchants to sell their products on the 05.ru store pages, keep track of product remains, sales, and other metrics.</div><div class=\"ui-p ui-p_my\">Led the front-end development and interface design team.</div>",
+      "technology": "Nuxt 2, Vue 2"
+    },
+    {
+      "type": "parser-extension",
+      "title": "Browser extension for parsing data",
+      "date": {
+        "from": 2019
+      },
+      "description": "Allows you to parse lists of products and any other entities, taking into account page navigation, then export the data in JSON format."
+    },
+    {
+      "type": "uae",
+      "title": "«UAE sign» company website",
+      "date": {
+        "from": 2019
+      },
+      "description": "<div class=\"ui-p ui-p_my\">The company is engaged in the production of signs in Dubai. Together with the business owner we created the design and structure of the site.</div>\n<div class=\"ui-p ui-p_my\">Then I implemented its front-end and back-end, and also made an admin panel for editing the main entities.</div>",
+      "technology": "Express, PostgreSQL, NodeJS, Vue 2, Nuxt 2, Figma"
+    },
+    {
+      "title": "API for architectural agency",
+      "date": {
+        "from": 2019
+      },
+      "description": "Wrote an API to filter and update agency projects. Configured feedback collection and email notifications, set up backups and documentation generation via Swagger.",
+      "technology": "Express, PostgreSQL, NodeJS",
+      "link": {
+        "text": "Go to the site",
+        "href": "https://urbanpg.ru"
+      }
+    },
+    {
+      "title": "Functionality of checklists for Collaborator.pro",
+      "date": {
+        "from": 2019
+      },
+      "description": "There was a need to implement a new tool in the monolith, so without using frameworks I invented all the functionality to update the view and synchronize the states between all the entities of the page.",
+      "technology": "Custom development in JS",
+      "link": {
+        "text": "Go to the site",
+        "href": "https://collaborator.pro/tools/checklist-for-seo"
+      }
+    },
+    {
+      "type": "verdi",
+      "title": "«Verdi» clothing store design",
+      "date": {
+        "from": 2019
+      },
+      "description": "Together with the business, we developed a concept for an updated version of the store"
+    },
+    {
+      "type": "samo",
+      "title": "«SAMO.CRM» for travel business",
+      "date": {
+        "from": 2017
+      },
+      "description": "<div class=\"ui-p ui-p_my\">A tool that allows to work with customer applications, handle leads and move the client through the sales funnel in a convenient way for travel agencies.</div><div class=\"ui-p ui-p_my\">I made the UI of the CRM, then worked on the front-end: thought about the architecture and structure of the pages, figured out how to update the view regarding the internal state of the components, wrote the logic for the kanban boards and a lot of dynamic elements.</div>",
+      "technology": "Custom development in JS, Sketch"
+    },
+    {
+      "type": "kran",
+      "title": "«Uraltehimpex» company website",
+      "date": {
+        "from": 2016
+      },
+      "description": "<div class=\"ui-p ui-p_my\">Made a website for a company producing heavy lifting equipment, thought through the structure of the project, created a design taking into account the existing corporate identity of the company.</div>\n<div class=\"ui-p ui-p_my\">After that I wrote all the back-end and front-end parts, also made an admin panel for editing the main entities.</div>",
+      "technology": "Ruby on Rails, SQLite",
+      "link": {
+        "text": "Go to the site",
+        "href": "https://www.kran18.ru"
+      }
+    },
+    {
+      "title": "CRM for travel agency owners",
+      "date": {
+        "from": 2016
+      },
+      "description": "A tool to solve the routine tasks of travel agency owners: it monitors managers' work and automates communication with clients. I did the design and the front-end.",
+      "technology": "Photoshop, custom development in JS",
+      "link": {
+        "text": "Project promo page",
+        "href": "http://uttermost-wrist.surge.sh"
+      }
+    },
+    {
+      "title": "«FaceTrip» travel finder",
+      "date": {
+        "from": 2014,
+        "to": 2015
+      },
+      "description": "A service that allows customers to search for travel tours around the world. Together with the business owner, we developed the structure of the site and the visual representation of the UI components. After that I was involved in the implementation of the front-end part of the project.",
+      "technology": "Photoshop, custom development in JS",
+      "link": {
+        "text": "Project presentation",
+        "href": "https://drive.google.com/file/d/11YrPoEqmNMYrbwVclKeTbc2r7lPpcRO-/view?usp=sharing"
+      }
+    },
+    {
+      "type": "behance",
+      "title": "Behance projects",
+      "date": {
+        "from": 2015
+      },
+      "link": {
+        "text": "Look at",
+        "href": "https://www.behance.net/artmizu"
+      }
+    },
+    {
+      "type": "birden",
+      "title": "«Birden.io» personalized anime catalog",
+      "date": {
+        "from": 2015
+      },
+      "description": "<div class=\"ui-p ui-p_my\">The service allows you to follow the release of new episodes of your favorite shows, watch anime online and catalog them in a user-friendly format.</div><div class=\"ui-p ui-p_my\">I designed the entire interface, then did the front-end in Ember.js and the back-end in Ruby on Rails.</div>  ",
+      "technology": "Ember, Ruby on Rails",
+      "link": {
+        "text": "Look at UI",
+        "href": "https://www.behance.net/gallery/28659185/Birdenio-catalog-of-anime"
+      }
+    },
+    {
+      "title": "Sletat.ru interface design",
+      "date": {
+        "from": 2013,
+        "to": 2014
+      },
+      "description": "<div class=\"ui-p ui-p_my\">The service focuses on online tour search for users and B2B clients.</div><div class=\"ui-p ui-p_my\">I designed interfaces, presentations and promotional materials.</div>",
+      "technology": "Photoshop"
+    },
+    {
+      "title": "Animechoice.ru personalized anime search",
+      "date": {
+        "from": 2013,
+        "to": 2014
+      },
+      "description": "I did my own project, which allowed picking up anime in an interesting way: the user answered the questions and we picked up the appropriate shows according to the answers. I did the design and the front end.",
+      "technology": "Javascript, Photoshop",
+      "link": {
+        "text": "Webarchive copy",
+        "href": "http://web.archive.org/web/20150201140251/http://animechoice.ru/"
+      }
+    },
+    {
+      "title": "Own projects to sell advertising",
+      "date": {
+        "from": 2010,
+        "to": 2012
+      },
+      "description": "I made sites on various subjects: applications for Android, a site with a catalog of flash games, various sites on near-game subjects. I filled them with content and then sold advertising spots through third party providers.",
+      "technology": "Javascript, Photoshop"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "title": "Alexander Saburov, Development & Design",
+  "description": {
+    "first": "<b>10+ years in development and design</b>, able to create projects from scratch, develop application architecture and design complex interfaces. I have an interest in the business aspects to better understand the total value that needs to be carried from the idea to the end client through design and development.",
+    "second": "<b>I like not to tear down and build everything from scratch</b>, but to form an evolutionary approach to the development of projects, not stopping the delivery of new features at the time of this transition.",
+    "title": "Managing a development team for 3 years",
+    "third": "When working with a team I am engaged in its training and development, I form the knowledge base of the project and optimize processes. I build asynchronous interaction between team members, in which everyone understands what needs to be done and why. ",
+    "fourth": "At the same time I do not forget about the result and tracking the overall performance of the team and the mood of its members. I have led development teams of up to 8 people."
+  },
+  "tool": {
+    "title": "Things I use",
+    "list": [
+      { 
+        "title": "Vite, ESBuild, Rollup, Webpack",
+        "text": "For building projects"
+      },
+      { 
+        "title": "Vitest, Jest, Cypress, Puppeteer",
+        "text": "For testing purposes"
+      },
+      { 
+        "title": "NodeJS, GraphQL, Apollo,  MongoDB, PostgreSQL",
+        "text": "For back-end development"
+      },
+      { 
+        "title": "Vue 2/3, React, Solid, SvelteJS",
+        "text": "Also the ecosystems around them"
+      },
+      { 
+        "title": "Gitlab CI, Docker, Github Actions",
+        "text": "For CI/CD"
+      },
+      { 
+        "title": "Typescript",
+        "text": "Love and use it"
+      }
+    ]
+  },
+  "opensource": {
+    "analytics": {
+      "title": "Analytics module for Nuxt 2/3",
+      "description": "Allows you to see what's going on with the application. Supports NodeJS metrics and metrics specific to SSR applications"
+    },
+    "sitemap": {
+      "title": "Sitemap module for Nuxt 2/3",
+      "description": "Supports Typescript, caching, allow to pass dynamic routes and implement chunking"
+    },
+    "metrika": {
+      "title": "Yandex.Metrica module for Nuxt 2/3",
+      "description": "Supports Typescript, adds handy development logs and useful methods to the application context"
+    }
+  }
+}

@@ -1,6 +1,10 @@
 .main-intro {
 	display: flex;
 
+	&__switcher {
+		margin-bottom: 47px;
+	}
+
 	&__about {
 		padding-right: 20px;
 	}

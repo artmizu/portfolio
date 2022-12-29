@@ -1,0 +1,13 @@
+.switcher {
+  font-size: 15px;
+  line-height: 19px;
+  text-transform: uppercase;
+  color: #787878;
+  display: flex;
+  &__el {
+    margin-right: 19px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

@@ -1,26 +1,30 @@
 import Link from 'next/link'
-import { Trans } from 'react-i18next/TransWithoutContext'
 import { languages } from 'i18n/settings'
-import { useTranslation } from 'i18n'
 import { Language } from 'shared/type/Language'
+import st from './index.module.scss'
 
 export default async function LanguageSwitcher({ current }: { current: Language }) {
-  const { t } = await useTranslation(current, 'footer')
   return (
-    <>
-      <Trans i18nKey="languageSwitcher" t={t}>
-        Switch from <strong>{current}</strong> to:{' '}
-      </Trans>
-      {languages.filter((l) => current !== l).map((l, index) => {
-        return (
-          <span key={l}>
-            {index > 0 && (' or ')}
-            <Link href={`/${l}`}>
-              {l}
-            </Link>
-          </span>
-        )
-      })}
-    </>
+    <div className={st['switcher']}>
+      {
+        languages.map((el) => {
+          if (el === current) {
+            return (
+              <div key={el} className={st['switcher__el']}>
+                { el }
+              </div>
+            )
+          } else {
+            return (
+              <div key={el} className={st['switcher__el']}>
+                <Link className='ui-link' href={`/${el}`}>
+                  { el }
+                </Link>
+              </div>
+            )
+          }
+        })
+      }
+    </div>
   )
 }
