@@ -11,4 +11,13 @@
 	&_mb {
 		margin-bottom: 6px;
 	}
+
+	@media (max-width: 900px) {
+		font-size: 17px;
+		line-height: 24px;
+
+		&_mt {
+			margin-top: 15px;
+		}
+	}
 }

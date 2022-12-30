@@ -12,4 +12,17 @@
 	&_mb {
 		margin-bottom: 45px;
 	}
+
+	@media (max-width: 900px) {
+		font-size: 41px;
+		line-height: 47px;
+
+		&_mt {
+			margin-top: 40px;
+		}
+
+		&_mb {
+			margin-bottom: 25px;
+		}
+	}
 }

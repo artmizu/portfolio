@@ -9,9 +9,8 @@ import { Language } from 'shared/type/Language'
 import LanguageSwitcher from 'ui/LanguageSwitcher'
 import { Project, ProjectType } from 'shared/type/Project'
 
-
 export default async function Home({ params: { lng } }: { params: { lng: Language }}) {
-  const { t } = await useTranslation(lng, ['about', 'common', 'project'])
+  const { t } = await useTranslation(lng, ['about', 'project'])
   const list: { title: string, text: string }[] = t('about:tool.list', { returnObjects: true })
   const projectList: Array<Project & { type?: ProjectType }> = t('project:list', { returnObjects: true })
 
@@ -69,17 +68,21 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
       <H1 mt mb>{ t('about:tool.title') }</H1>
       <div className={st['main-used-grid']}>
         { list.map((el) => {
-          return <div key={el.title} className={st['main-used__el']}>
-            <div className={st['main-used__el-title']}>
-              <H3 mb>{ el.title }</H3>
+          return <div key={el.title} className={st['main-used-grid__el']}>
+            <div className={st['main-used-grid__el-title']}>
+              <H3>{ el.title }</H3>
             </div>
-            <div className={cls('ui-p', 'ui-grey-text', st['main-used__el-text'])}>{ el.text }</div>
+            <div className={cls('ui-p', 'ui-grey-text', st['main-used-grid__el-text'])}>{ el.text }</div>
           </div>
         }) }
       </div>
       <H1 mt mb>Open Source</H1>
       <div className={st['main-open-source-grid']}>
-        { openSource.map((el, index) => <OpenSourceCard key={index} {...el} />) }
+        { openSource.map((el, index) => (
+          <div key={index} className={st['main-open-source-grid__el']}>
+            <OpenSourceCard {...el} />
+          </div>
+        )) }
       </div>
       <H1 mt mb>{ t('project:title') }</H1>
       <ProjectGrid list={projectList} />

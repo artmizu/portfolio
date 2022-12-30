@@ -74,7 +74,7 @@ export function ProjectCardLargeConstructor({ data }: { data: Project }) {
         [st['constructor_visible']]: isVisible
       })}>
         <div className={st['constructor__video-wrapper']}>
-          <video autoPlay muted loop src={require('./asset/constructor/preview.mp4')} className={st['constructor__video']}/>
+          <video playsInline autoPlay muted loop src={require('./asset/constructor/preview.mp4')} className={st['constructor__video']}/>
         </div>
         <div className={st['constructor__spot']}></div>
       </div>
@@ -123,11 +123,13 @@ export function ProjectCardLargeUae({ data }: { data: Project }) {
       <div className={cls(st['uae'], {
         [st['uae_visible']]: isVisible
       })}>
-        <div className={st['uae__left']}>
-          <Image src={UaeLeft} width="300" className={st['uae__preview']} alt={data.title} />
-        </div>
-        <div className={st['uae__right']}>
-          <Image src={UaeRight} width="400" className={st['uae__preview']} alt={data.title} />
+        <div className={st['uae__wrapper']}>
+          <div className={st['uae__left']}>
+            <Image src={UaeLeft} width="300" className={st['uae__preview']} alt={data.title} />
+          </div>
+          <div className={st['uae__right']}>
+            <Image src={UaeRight} width="400" className={st['uae__preview']} alt={data.title} />
+          </div>
         </div>
       </div>
     </ProjectCardLargeBase>
@@ -145,7 +147,7 @@ export function ProjectCardLargeSamo({ data }: { data: Project }) {
           <Image src={SamoImage} width="450" className={st['samo__preview']} alt={data.title} />
         </div>
         <div className={st['samo__video-wrapper']}>
-          <video autoPlay muted loop src={require('./asset/samo/preview.mp4')} className={st['samo__video']}/>
+          <video playsInline autoPlay muted loop src={require('./asset/samo/preview.mp4')} className={st['samo__video']}/>
         </div>
       </div>
     </ProjectCardLargeBase>
@@ -160,7 +162,7 @@ export function ProjectCardLargeKran({ data }: { data: Project }) {
         [st['kran_visible']]: isVisible
       })}>
         <div className={st['kran__video-wrapper']}>
-          <video autoPlay muted src={require('./asset/kran/preview.mp4')} className={st['kran__video']}/>
+          <video playsInline autoPlay muted src={require('./asset/kran/preview.mp4')} className={st['kran__video']}/>
         </div>
       </div>
     </ProjectCardLargeBase>

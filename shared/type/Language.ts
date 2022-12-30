@@ -1,2 +1,2 @@
 export type Language = 'en' | 'ru'
-export type LanguageNS = 'common' | 'project' | 'about'
+export type LanguageNS = 'project' | 'about'

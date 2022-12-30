@@ -82,7 +82,11 @@ export default function ProjectGrid({ list }: { list: Array<Project & { type?: P
               <FactoidBehance key={index} data={el} />
             )
           } else {
-            return <ProjectCard data={el} key={index}/>
+            return (
+              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_simple'])}>
+                <ProjectCard data={el} />
+              </div>
+            )
           }
         })
       }

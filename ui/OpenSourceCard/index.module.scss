@@ -1,7 +1,7 @@
 .card {
 	display: flex;
 	flex-direction: column;
-	height: 376px;
+	min-height: 376px;
 	padding: 35px 30px;
 	background-color: var(--grey-bg);
 	border-radius: 20px;
@@ -10,10 +10,27 @@
 		margin-bottom: 17px;
 	}
 
+	&__title {
+		margin-bottom: 6px;
+	}
+
+	&__description {
+		margin-bottom: 25px;
+	}
+
 	&__github {
 		display: flex;
 		justify-content: flex-start;
 		margin-top: auto;
+	}
+
+	@media (max-width: 900px) {
+		height: 330px;
+		padding: 20px 20px 25px;
+
+		&__title {
+			margin-bottom: 8px;
+		}
 	}
 }
 

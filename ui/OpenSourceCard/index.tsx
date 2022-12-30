@@ -24,7 +24,9 @@ export default function OpenSourceCard({ img, title, description, github }: { im
       <div className={st['card__img']}>
         <Image src={getImage(img)} height="60" alt={title}/>
       </div>
-      <H3 mb>{ title }</H3>
+      <div className={st['card__title']}>
+        <H3>{ title }</H3>
+      </div>
       <div className={cls('ui-p', 'ui-grey-text', st['card__description'])}>
         { description }
       </div>

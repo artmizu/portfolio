@@ -9,6 +9,7 @@
 	&__about {
 		display: flex;
 		flex-direction: column;
+		min-height: 120px;
 		padding: 17px 20px 20px;
 	}
 
@@ -44,6 +45,12 @@
 
 	&__link {
 		text-decoration: none;
+	}
+
+	@media (max-width: 900px) {
+		height: auto;
+		min-height: 340px;
+		border-radius: 10px;
 	}
 }
 
@@ -157,6 +164,19 @@
 		.parser-extension__video-wrapper {
 			opacity: 1;
 			animation: parser-center 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), fade-in 0.6s linear;
+		}
+	}
+
+	@media (max-width: 900px) {
+		height: 220px;
+
+		&__video-wrapper {
+			left: max(20px, calc(50% - 215px));
+		}
+
+		&__video {
+			width: 430px;
+			height: auto;
 		}
 	}
 }
