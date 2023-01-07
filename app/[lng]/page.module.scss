@@ -12,8 +12,17 @@
 	&__art {
 		flex-shrink: 0;
 		width: 310px;
-		background-color: #f7cfdf;
+		overflow: hidden;
+
+		// background: url(./shader.png) no-repeat center;
+		// background-color: #f7cfdf;
+		background-size: cover;
 		border-radius: 20px;
+	}
+
+	&__art-video {
+		width: 310px;
+		height: 775px;
 	}
 
 	&__title {

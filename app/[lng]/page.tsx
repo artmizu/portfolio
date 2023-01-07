@@ -63,7 +63,10 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
             </div>
           </div>
         </div>
-        <div className={st['main-intro__art']}></div>
+        <div className={st['main-intro__art']}>
+          <iframe width="310" height="775" src="https://www.shadertoy.com/embed/NlVBz1?gui=false&t=90&paused=false&muted=true" allowFullScreen frameBorder="0" className={st['main-intro__art-video']}></iframe>
+          {/* <video playsInline autoPlay muted loop src={require('./shader.mp4')} className={st['main-intro__art-video']}/> */}
+        </div>
       </div>
       <H1 mt mb>{ t('about:tool.title') }</H1>
       <div className={st['main-used-grid']}>
