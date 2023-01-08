@@ -8,6 +8,7 @@ import ProjectGrid from 'ui/ProjectGrid'
 import { Language } from 'shared/type/Language'
 import LanguageSwitcher from 'ui/LanguageSwitcher'
 import { Project, ProjectType } from 'shared/type/Project'
+import Art from 'ui/Art'
 
 export default async function Home({ params: { lng } }: { params: { lng: Language }}) {
   const { t } = await useTranslation(lng, ['about', 'project'])
@@ -64,8 +65,7 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
           </div>
         </div>
         <div className={st['main-intro__art']}>
-          <iframe width="310" height="775" src="https://www.shadertoy.com/embed/NlVBz1?gui=false&t=90&paused=false&muted=true" allowFullScreen frameBorder="0" className={st['main-intro__art-video']}></iframe>
-          {/* <video playsInline autoPlay muted loop src={require('./shader.mp4')} className={st['main-intro__art-video']}/> */}
+          <Art/>
         </div>
       </div>
       <H1 mt mb>{ t('about:tool.title') }</H1>

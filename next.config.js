@@ -21,6 +21,15 @@ const nextConfig = {
         },
       ],
     });
+
+    config.module.rules.push({
+      test: /\.(frag|vert)$/,
+      use: [
+        {
+          loader: require.resolve('ts-shader-loader')
+        },
+      ],
+    });
     
     return config;
   },

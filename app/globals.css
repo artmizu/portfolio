@@ -17,7 +17,8 @@ b {
 :root {
 	/* text */
 	--grey-text: #c9c9c9;
-	--blue-text: #68b4ff;
+	--blue-text: #1dc9ff;
+	--blue-text-hover: #89e3ff;
 
 	/* background */
 	--grey-bg: #151515;

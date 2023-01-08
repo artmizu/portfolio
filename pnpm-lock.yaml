@@ -27,6 +27,8 @@ specifiers:
   stylelint-config-standard: ^29.0.0
   stylelint-config-standard-scss: ^6.1.0
   stylelint-scss: ^4.3.0
+  ts-shader-loader: ^2.0.2
+  twgl.js: ^5.3.0
   typescript: 4.9.4
 
 dependencies:
@@ -48,6 +50,7 @@ dependencies:
   react-i18next: 12.1.1_6vygckh2jgtx4nucc3no6lnm3y
   react-use: 17.4.0_biqbaboplfbrettd7655fr4n2y
   sharp: 0.31.3
+  twgl.js: 5.3.0
   typescript: 4.9.4
 
 devDependencies:
@@ -59,6 +62,7 @@ devDependencies:
   stylelint-config-standard: 29.0.0_stylelint@14.16.0
   stylelint-config-standard-scss: 6.1.0_l3s4qeu3gkar2knsdy3w5miimm
   stylelint-scss: 4.3.0_stylelint@14.16.0
+  ts-shader-loader: 2.0.2
 
 packages:
 
@@ -2925,6 +2929,11 @@ packages:
       json5: 1.0.1
     dev: true
 
+  /loader-utils/3.2.1:
+    resolution: {integrity: sha512-ZvFw1KWS3GVyYBYb7qkmRM/WwL2TQQBxgCK62rlvm4WpVQ23Nb4tYjApUlfjrEGvOs7KHEsmyUn75OHZrJMWPw==}
+    engines: {node: '>= 12.13.0'}
+    dev: true
+
   /locate-path/3.0.0:
     resolution: {integrity: sha512-7AO748wWnIhNqAuaty2ZWHkQHRSNfPVIsPIfwEOWO22AmaoVrWavlOcMR5nzTLNYvp36X220/maaRsrec1G65A==}
     engines: {node: '>=6'}
@@ -4906,6 +4915,12 @@ packages:
     resolution: {integrity: sha512-Z86EW+fFFh/IFB1fqQ3/+7Zpf9t2ebOAxNI/V6Wo7r5gqiqtxmgTlQ1qbqQcjLKYeSHPTsEmvlJUDg/EuL0uHQ==}
     dev: false
 
+  /ts-shader-loader/2.0.2:
+    resolution: {integrity: sha512-PMdxdDQoS9D3O+UZ4y8Ul4AwXjTdvBiZHOLRnjkUbgNJyA1p0c4U2YXggqIGw7apCyoBP80QJz2Y+YcZMFHoVg==}
+    dependencies:
+      loader-utils: 3.2.1
+    dev: true
+
   /tsconfig-paths/3.14.1:
     resolution: {integrity: sha512-fxDhWnFSLt3VuTwtvJt5fpwxBHg5AdKWMsgcPOOIilyjymcYVZoCQF8fvFRezCNfblEXmi+PcM1eYHeOAgXCOQ==}
     dependencies:
@@ -4941,6 +4956,10 @@ packages:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
     dependencies:
       safe-buffer: 5.2.1
+    dev: false
+
+  /twgl.js/5.3.0:
+    resolution: {integrity: sha512-0L2YOZBe9fyNZ3NtvHS5uqJxPfSXxFJtz2RTryY1TMWy8asg6K52naHNVdYTMPH9IteYYwNiwq/nBHC5iEIBXw==}
     dev: false
 
   /type-check/0.4.0:
