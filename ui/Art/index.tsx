@@ -67,7 +67,7 @@ export default function Canvas () {
     };
 
     let wasResized = true
-    let currentWindowWidth = 0
+    let currentWindowWidth = window.innerWidth
 
     function onResize() {
       // workaround to prevent ios page resize events when scrolling the page
