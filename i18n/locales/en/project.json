@@ -17,7 +17,7 @@
         "from": 2016,
         "to": 2022
       },
-      "description": "<div class=\"ui-p ui-p_my\">Worked my way up from designer and developer to development team leader and interface art director, with up to 8 people on the team.</div><div class=\"ui-p ui-p_my\">  Together with the team took the front-end out of the monolith, worked on the architecture of the application, divided the application into layers, implemented metrics, tests, automation, and much more.</div>",
+      "description": "<div class=\"ui-p ui-p_my\">Worked my way up from designer and developer to development team leader and interface art director, with up to 8 people in the team.</div><div class=\"ui-p ui-p_my\">  Together with the team took the front-end out of the monolith, worked on the architecture of the application, divided the application into layers, implemented metrics, tests, automation, and much more.</div>",
       "technology": "Nuxt 2, Vue 2, Typescript",
       "link": {
         "text": "Go to the site",
