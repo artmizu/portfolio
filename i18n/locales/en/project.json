@@ -15,7 +15,7 @@
       "title": "Online store 05.ru",
       "date": {
         "from": 2016,
-        "to": 2022
+        "to": 2023
       },
       "description": "<div class=\"ui-p ui-p_my\">Worked my way up from designer and developer to development team leader and interface art director, with up to 8 people in the team.</div><div class=\"ui-p ui-p_my\">  Together with the team took the front-end out of the monolith, worked on the architecture of the application, divided the application into layers, implemented metrics, tests, automation, and much more.</div>",
       "technology": "Nuxt 2, Vue 2, Typescript",
@@ -28,7 +28,7 @@
       "title": "CRM to work with applicants for 05.ru",
       "date": {
         "from": 2021,
-        "to": 2022
+        "to": 2023
       },
       "description": "<div class=\"ui-p ui-p_my\">An internal tool that helps the company's HR's work with applicants.</div><div class=\"ui-p ui-p_my\">In the project, I managed the front-end development team and the design team.</div>",
       "technology": "Nuxt 2/3, Vue 2/3, Typescript"
@@ -37,7 +37,7 @@
       "title": "UI Kit for 05.ru",
       "date": {
         "from": 2020,
-        "to": 2022
+        "to": 2023
       },
       "description": "<div class=\"ui-p ui-p_my\">We developed a set of components and utilities that we reused in all 05 projects, so that we could develop more quickly and not need to create the same components from scratch over and over again.</div><div class=\"ui-p ui-p_my\">We automated the workflow of releases for convenience and simplicity.</div>",
       "technology": "Vue 2/3, Typescript, Storybook"
@@ -55,7 +55,7 @@
       "title": "«Darkstore» food delivery service",
       "date": {
         "from": 2021,
-        "to": 2022
+        "to": 2023
       },
       "description": "Led the front-end development team and the interface design team. Developed the initial look of the product MVP and iteratively improved its design and codebase, later moving the project to Nuxt 3.",
       "technology": "Nuxt 2/3, Vue 2/3, Typescript",
@@ -68,7 +68,7 @@
       "title": "Creation of newsletters in 05.ru",
       "date": {
         "from": 2021,
-        "to": 2022
+        "to": 2023
       },
       "description": "<div class=\"ui-p ui-p_my\">Formed an approach to creating newsletters to simplify their development. Integrated MJML, and create a workflow for building and automating its deployment.</div><div class=\"ui-p ui-p_my\">For designers to take into account all the limitations of MJML, I wrote a document that describes them in detail.</div>",
       "technology": "MJML"
