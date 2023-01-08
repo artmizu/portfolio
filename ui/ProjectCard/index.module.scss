@@ -453,9 +453,9 @@
 
 	&__wrapper {
 		position: absolute;
-		right: auto;
+		right: 0;
 		bottom: -30px;
-		left: 20px;
+		left: auto;
 		display: flex;
 		gap: 10px;
 	}
@@ -506,6 +506,7 @@
 	@media (max-width: 900px) {
 		&__wrapper {
 			top: 0;
+			right: auto;
 			left: max(20px, calc(50% - 272px));
 		}
 
