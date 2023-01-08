@@ -81,7 +81,7 @@ export default function Canvas () {
     
     const render = (time: number) => {
       if (wasResized) {
-        twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, window.devicePixelRatio); // TODO ??
+        twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, Math.min(2, window.devicePixelRatio)); // TODO ??
         twgl.resizeFramebufferInfo(gl, fb, fbAttachments);
         twgl.resizeFramebufferInfo(gl, fb2, fb2Attachments);
         uniforms.u_resolution = [gl.canvas.width, gl.canvas.height]
