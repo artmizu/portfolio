@@ -45,16 +45,12 @@ export default function Canvas () {
     })
     
     const fbAttachments = [{
-      attachment: textures.u_framebuffer,
-      attachmentPoint: gl.COLOR_ATTACHMENT0,
-      level: 0
+      attachment: textures.u_framebuffer
     }]
     const fb = twgl.createFramebufferInfo(gl, fbAttachments);
     
     const fb2Attachments = [{
-      attachment: textures.u_framebuffersecond,
-      attachmentPoint: gl.COLOR_ATTACHMENT0,
-      level: 0
+      attachment: textures.u_framebuffersecond
     }];
     const fb2 = twgl.createFramebufferInfo(gl, fb2Attachments);
 
