@@ -11,6 +11,11 @@ export default async function Head({ params: { lng } }: { params: { lng: Languag
       <meta name="description" content={ t('about:meta') as string } />
       <link rel="icon" href="/favicon.ico" sizes="any"/>
       <link rel="apple-touch-icon" href="/favicon.png"/>
+      <meta property="og:image" content="/og.jpg"/>
+      <meta property="og:image:width" content="1200"/>
+      <meta property="og:image:height" content="600"/>
+      <meta property="og:title" content={ t('about:title') as string }/>
+      <meta property="og:description" content={t('about:meta') as string}/>
     </>
   )
 }
