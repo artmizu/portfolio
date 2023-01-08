@@ -32,6 +32,6 @@ jobs:
           script: |
             cd /home/artmizu/ftp/www/artmizu.ru
             git pull --rebase
-            pnpm install
-            pnpm build
-            pm2 reload all
+            /home/artmizu/.nvm/versions/node/v17.9.0/bin/pnpm install
+            /home/artmizu/.nvm/versions/node/v17.9.0/bin/pnpm build
+            /home/artmizu/.nvm/versions/node/v17.9.0/bin/pm2 reload all

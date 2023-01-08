@@ -81,7 +81,6 @@ export default function Canvas () {
     
     const render = (time: number) => {
       if (wasResized) {
-        console.log('resized')
         twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, window.devicePixelRatio); // TODO ??
         twgl.resizeFramebufferInfo(gl, fb, fbAttachments);
         twgl.resizeFramebufferInfo(gl, fb2, fb2Attachments);
