@@ -5,7 +5,8 @@
       "type": "constructor",
       "title": "Promo page builder for 05.ru",
       "date": {
-        "from": 2022
+        "from": 2022,
+        "to": 2023
       },
       "description": "<div class=\"ui-p ui-p_my\">The tool helps to form promo pages without developers' participation from standard blocks, whose look and content can be customized.</div><div class=\"ui-p ui-p_my\">I invented the tool itself, and then thought out the service architecture, how components of the builder will be used in other services, how other services will request data, how it will all exist in the context of different Vue versions. </div>",
       "technology": "Apollo, GraphQL, MongoDB, NodeJS, Typescript"
