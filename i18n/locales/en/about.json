@@ -43,11 +43,11 @@
       "description": "Allows you to see what's going on with the application. Supports NodeJS metrics and metrics specific to SSR applications"
     },
     "sitemap": {
-      "title": "Sitemap module for Nuxt 2/3",
+      "title": "Sitemap module for Nuxt 2",
       "description": "Supports Typescript, caching, allow to pass dynamic routes and implement chunking"
     },
     "metrika": {
-      "title": "Yandex.Metrica module for Nuxt 2/3",
+      "title": "Yandex.Metrica module for Nuxt 2",
       "description": "Supports Typescript, adds handy development logs and useful methods to the application context"
     }
   }
