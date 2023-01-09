@@ -5,7 +5,7 @@ import st from './index.module.scss'
 
 export default async function LanguageSwitcher({ current }: { current: Language }) {
   return (
-    <div className={st['switcher']}>
+    <nav className={st['switcher']}>
       {
         languages.map((el) => {
           if (el === current) {
@@ -25,6 +25,6 @@ export default async function LanguageSwitcher({ current }: { current: Language 
           }
         })
       }
-    </div>
+    </nav>
   )
 }

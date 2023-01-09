@@ -46,13 +46,13 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
           </div>
           <div className={st['main-intro__title']}>
             <H1>{ t('about:title') }</H1>
-            <div className={cls('ui-p', st['main-intro__title-links'])}>
+            <nav className={cls('ui-p', st['main-intro__title-links'])}>
               <a href="https://t.me/artmizu" className={cls('ui-link', st['main-intro__title-link'])}>Telegram</a>
               <a href="https://github.com/artmizu" className={cls('ui-link', st['main-intro__title-link'])}>GitHub</a>
               <a href="mailto:hello@artmizu.ru" className={cls('ui-link', st['main-intro__title-link'])}>hello@artmizu.ru</a>
-            </div>
+            </nav>
           </div>
-          <div className={st['main-intro__description']}>
+          <section className={st['main-intro__description']}>
             <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.first') }} />
             <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.second') }} />
             <H3 mt>{ t('about:description.title') }</H3>
@@ -62,14 +62,14 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
             <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
               { t('about:description.fourth') }
             </div>
-          </div>
+          </section>
         </div>
         <div className={st['main-intro__art']}>
           <Art/>
         </div>
       </div>
       <H1 mt mb>{ t('about:tool.title') }</H1>
-      <div className={st['main-used-grid']}>
+      <section className={st['main-used-grid']}>
         { list.map((el) => {
           return <div key={el.title} className={st['main-used-grid__el']}>
             <div className={st['main-used-grid__el-title']}>
@@ -78,15 +78,15 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
             <div className={cls('ui-p', 'ui-grey-text', st['main-used-grid__el-text'])}>{ el.text }</div>
           </div>
         }) }
-      </div>
+      </section>
       <H1 mt mb>Open Source</H1>
-      <div className={st['main-open-source-grid']}>
+      <section className={st['main-open-source-grid']}>
         { openSource.map((el, index) => (
           <div key={index} className={st['main-open-source-grid__el']}>
             <OpenSourceCard {...el} />
           </div>
         )) }
-      </div>
+      </section>
       <H1 mt mb>{ t('project:title') }</H1>
       <ProjectGrid list={projectList} />
     </div>

@@ -20,7 +20,7 @@ function getImage(img: OpenSourceType) {
 
 export default function OpenSourceCard({ img, title, description, github }: { img: OpenSourceType, title: string, description: string, github?: string }) {
   return (
-    <div className={st['card']}>
+    <article className={st['card']}>
       <div className={st['card__img']}>
         <Image src={getImage(img)} height="60" alt={title}/>
       </div>
@@ -35,6 +35,6 @@ export default function OpenSourceCard({ img, title, description, github }: { im
           GitHub
         </a>
       </div>
-    </div>
+    </article>
   )
 }

@@ -25,45 +25,45 @@ export default function ProjectGrid({ list }: { list: Array<Project & { type?: P
         list.map((el, index) => {
           if (el.type === 'constructor') {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeConstructor data={el} />
-              </div>
+              </article>
             )
           } else if (el.type === 'store') {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeStore data={el} />
-              </div>
+              </article>
             )
           } else if (el.type === 'darkstore') {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeDarkstore data={el} />
-              </div>
+              </article>
             )
           } else if (el.type === 'uae') {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeUae data={el} />
-              </div>
+              </article>
             )
           } else if (el.type === 'samo') {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeSamo data={el} />
-              </div>
+              </article>
             )
           } else if (el.type === 'kran') {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeKran data={el} />
-              </div>
+              </article>
             )
           } else if (el.type === 'birden') {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeBirden data={el} />
-              </div>
+              </article>
             )
           } else if (el.type === 'parser-recruiter') {
             return (
@@ -83,9 +83,9 @@ export default function ProjectGrid({ list }: { list: Array<Project & { type?: P
             )
           } else {
             return (
-              <div key={index} className={cls(st['project-grid__el'], st['project-grid__el_simple'])}>
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_simple'])}>
                 <ProjectCard data={el} />
-              </div>
+              </article>
             )
           }
         })

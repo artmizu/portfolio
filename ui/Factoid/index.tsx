@@ -36,7 +36,7 @@ function FactoidBase({
   }, [intersection])
 
   return (
-    <div className={st['factoid']} style={{ background: `linear-gradient(${background.from}, ${background.to})`}} ref={intersectionRef}>
+    <article className={st['factoid']} style={{ background: `linear-gradient(${background.from}, ${background.to})`}} ref={intersectionRef}>
       <div className={st['factoid__about']}>
         <div className={st['factoid__date']} style={{ color: textColor }}>
           { data.date.from }
@@ -54,7 +54,7 @@ function FactoidBase({
       <div className={st['factoid__art']}>
         { children }
       </div>
-    </div>
+    </article>
   )
 }
 
