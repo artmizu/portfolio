@@ -53,15 +53,15 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
             </nav>
           </div>
           <section className={st['main-intro__description']}>
-            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.first') }} />
-            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.second') }} />
+            <p className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.first') }} />
+            <p className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.second') }} />
             <H3 mt>{ t('about:description.title') }</H3>
-            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
+            <p className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
               { t('about:description.third') }
-            </div>
-            <div className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
+            </p>
+            <p className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">
               { t('about:description.fourth') }
-            </div>
+            </p>
           </section>
         </div>
         <div className={st['main-intro__art']}>
