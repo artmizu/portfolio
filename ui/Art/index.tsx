@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useState } from 'react'
 import * as twgl from "twgl.js/dist/5.x/twgl.js";
 import vertexShaderSource from "./vertex.vert";
 import fragmentShaderSource from "./fragment.frag";
@@ -10,12 +10,45 @@ import st from './index.module.scss'
 
 export default function Canvas () {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const [canvasDisabled, setDisabledCanvas] = useState(false)
+  const [wasResized, setWasResized] = useState(false)
+
+  useEffect(() => {
+    let previousWindowWidth = window.innerWidth
+
+    function onResize() {
+      // workaround to prevent ios page resize events when scrolling the page
+      if (previousWindowWidth !== window.innerWidth) {
+        setWasResized(true)
+        previousWindowWidth = window.innerWidth
+      }
+
+      if (window.innerWidth <= 900) {
+        setDisabledCanvas(true)
+      } else {
+        setDisabledCanvas(false)
+      }
+    }
+
+    onResize()
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      window.removeEventListener('resize', onResize)
+    }
+  }, [])
   
   useEffect(() => {
+    if (canvasDisabled) return
+
     const canvas = canvasRef.current!
     const gl = canvas.getContext('webgl')
     if (!gl) throw Error("Canvas context not found");
 
+    /**
+     * limit multiplayer to 2, because a larger value generates too much overhead
+     */
+    twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, Math.min(2, window.devicePixelRatio));
     let animationFrameId: number
 
     const programInfo = twgl.createProgramInfo(gl, [
@@ -59,32 +92,10 @@ export default function Canvas () {
       u_time: 0,
       u_timedelta: null,
       u_frame: -1,
-      u_resolution: null,
+      u_resolution: [gl.canvas.width, gl.canvas.height],
     };
 
-    let wasResized = true
-    let currentWindowWidth = window.innerWidth
-
-    function onResize() {
-      // workaround to prevent ios page resize events when scrolling the page
-      if (currentWindowWidth !== window.innerWidth) {
-        wasResized = true
-        currentWindowWidth = window.innerWidth
-      }
-    }
-
-    window.addEventListener('resize', onResize)
-    
-    const render = (time: number) => {
-      if (wasResized) {
-        twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, Math.min(2, window.devicePixelRatio)); // TODO ??
-        twgl.resizeFramebufferInfo(gl, fb, fbAttachments);
-        twgl.resizeFramebufferInfo(gl, fb2, fb2Attachments);
-        uniforms.u_resolution = [gl.canvas.width, gl.canvas.height]
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-        wasResized = false
-      }
-    
+    const render = (time: number) => {    
       uniforms.u_timedelta = uniforms.u_time ? time / 1000 - uniforms.u_time : 0
       uniforms.u_time = time / 1000
       uniforms.u_frame = (uniforms.u_frame + 1)
@@ -115,15 +126,24 @@ export default function Canvas () {
     
     return () => {
       window.cancelAnimationFrame(animationFrameId)
-      window.removeEventListener('resize', onResize)
     }
-  }, [])
+  }, [wasResized, canvasDisabled])
   
   return (
     <div className={st["art"]}>
-      <div className={st["art__wrapper"]}>
-        <canvas className={st["art__canvas"]} ref={canvasRef} />
-      </div>
+      {
+        canvasDisabled ?
+          (
+            <div className={st['art__fallback-wrapper']}>
+              <video loop muted autoPlay playsInline src={require('./fallback.mp4')} className={st['art__fallback']} fetchpriority="high" />
+            </div>
+          ) : 
+          (
+            <div className={st["art__wrapper"]}>
+              <canvas className={st["art__canvas"]} ref={canvasRef} />
+            </div>
+          )
+      }
     </div>
   )
 }

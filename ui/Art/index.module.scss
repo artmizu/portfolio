@@ -20,6 +20,19 @@
 		height: 100%;
 	}
 
+	&__fallback-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__fallback {
+		display: block;
+		height: 230px;
+		margin: 0 auto;
+		border-radius: 15px;
+	}
+
 	@media (max-width: 900px) {
 		border-radius: 15px;
 	}
