@@ -39,7 +39,7 @@
   },
   "opensource": {
     "analytics": {
-      "title": "Analytics module for Nuxt 2/3",
+      "title": "Prometheus integration for Nuxt 2/3",
       "description": "Allows you to see what's going on with the application. Supports NodeJS metrics and metrics specific to SSR applications"
     },
     "sitemap": {

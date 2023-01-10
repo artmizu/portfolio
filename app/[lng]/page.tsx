@@ -20,7 +20,7 @@ export default async function Home({ params: { lng } }: { params: { lng: Languag
       img: 'analytics' as const,
       title: t('about:opensource.analytics.title'),
       description: t('about:opensource.analytics.description'),
-      github: 'https://github.com/artmizu/analytics-nuxt'
+      github: 'https://github.com/artmizu/nuxt-prometheus'
     },
     {
       img: 'sitemap' as const,

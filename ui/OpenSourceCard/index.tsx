@@ -2,7 +2,7 @@ import st from './index.module.scss'
 import Image from 'next/image'
 import cls from 'classnames'
 import H3 from 'ui/h3'
-import AnalyticsImage from './asset/analytics.png'
+import AnalyticsImage from './asset/prometheus.svg'
 import MetrikaImage from './asset/metrika.png'
 import SitemapImage from './asset/sitemap.png'
 
