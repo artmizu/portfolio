@@ -27,7 +27,7 @@ export function ProjectCard({ data }: { data: Project }) {
       </div>
       {
         data.description && (
-          <p className={cls('ui-p', 'ui-grey-text', st['project-card__description'])} dangerouslySetInnerHTML={{ __html: data.description }}/>
+          <div className={cls('ui-p', 'ui-grey-text', st['project-card__description'])} dangerouslySetInnerHTML={{ __html: data.description }}/>
         )
       }
         
