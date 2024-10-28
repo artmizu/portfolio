@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   webpack(config, options) {
     const { isServer } = options;
     const prefix = nextConfig.assetPrefix || '';
@@ -33,6 +30,9 @@ const nextConfig = {
     
     return config;
   },
+  sassOptions: {
+    silenceDeprecations: ['legacy-js-api'],
+  }
 }
 
 module.exports = nextConfig

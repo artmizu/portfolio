@@ -10,15 +10,15 @@ export function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-  params: {
-    lng
-  }
+  params
 }: {
   children: React.ReactNode,
-  params: { lng: Language }
+  params: Promise<{ lng: Language }>
 }) {
+  const { lng } = await params
+
   return (
     <html lang={lng}>
       <head />

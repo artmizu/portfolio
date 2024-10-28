@@ -15,7 +15,7 @@
       "type": "store",
       "title": "Online store 05.ru",
       "date": {
-        "from": 2016,
+        "from": 2015,
         "to": 2023
       },
       "description": "<p class=\"ui-p ui-p_my\">Worked my way up from designer and developer to development team leader and interface art director, with up to 8 people in the team.</p><p class=\"ui-p ui-p_my\">  Together with the team took the front-end out of the monolith, worked on the architecture of the application, divided the application into layers, implemented metrics, tests, automation, and much more.</p>",
@@ -136,7 +136,7 @@
       "type": "samo",
       "title": "«SAMO.CRM» for travel business",
       "date": {
-        "from": 2017
+        "from": 2016
       },
       "description": "<p class=\"ui-p ui-p_my\">A tool that allows to work with customer applications, handle leads and move the client through the sales funnel in a convenient way for travel agencies.</p><p class=\"ui-p ui-p_my\">I made the UI of the CRM, then worked on the front-end: thought about the architecture and structure of the pages, figured out how to update the view regarding the internal state of the components, wrote the logic for the kanban boards and a lot of dynamic elements.</p>",
       "technology": "Custom development in JS, Sketch"

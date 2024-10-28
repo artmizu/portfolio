@@ -10,7 +10,8 @@ import LanguageSwitcher from 'ui/LanguageSwitcher'
 import { Project, ProjectType } from 'shared/type/Project'
 import Art from 'ui/Art'
 
-export default async function Home({ params: { lng } }: { params: { lng: Language }}) {
+export default async function Home({ params }: { params: Promise<{ lng: Language }>}) {
+  const { lng } = await params
   const { t } = await useTranslation(lng, ['about', 'project'])
   const list: { title: string, text: string }[] = t('about:tool.list', { returnObjects: true })
   const projectList: Array<Project & { type?: ProjectType }> = t('project:list', { returnObjects: true })
