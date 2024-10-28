@@ -16,7 +16,7 @@ jobs:
           username: ${{ secrets.DEPLOY_SERVER_USERNAME }}
           key: ${{ secrets.DEPLOY_SERVER_KEY }}
           script: |
-            cd /home/artmizu/ftp/www/artmizu.ru
+            cd /home/artmizu/www/portfolio
             git pull --rebase
             pnpm install
             pnpm build
