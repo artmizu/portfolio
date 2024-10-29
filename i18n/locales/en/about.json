@@ -1,12 +1,12 @@
 {
-  "title": "Aleksandr Saburov, Development & Design",
+  "title": "Aleksandr Kriuchkov, Development & Design",
   "meta": "10+ years in development and design, able to create projects from scratch, develop application architecture and design complex interfaces",
   "description": {
-    "first": "<b>10+ years in development and design</b>, able to create projects from scratch, develop application architecture and design complex interfaces. I am interested in the business aspects for better understanding the overall value that needs to be carried from the idea to the end customer through design and development.",
-    "second": "<b>I like not to tear down and build everything from scratch</b>, but to form an evolutionary approach to the development of projects, not stopping the delivery of new features at the time of this transition.",
-    "title": "Managing a development team for 3 years",
-    "third": "While working with a team I am engaged in its training and development, I form the knowledge base of the project and optimize processes. I build asynchronous interaction between team members, in which everyone understands what needs to be done and why. ",
-    "fourth": "At the same time I do not forget about the result and tracking the overall performance of the team and the mood of its members. I have led development teams of up to 8 people."
+    "first": "<b>10+ years in development and design</b>, able to create projects from scratch, develop application architecture and design complex interfaces. I am interested in the business aspects, for better understanding the overall value that needs to be carried from the idea to the end customer through design and development.",
+    "second": "<b>Rather than rebuilding from scratch, I favor an evolutionary approach</b> to development, advancing projects without halting feature delivery.",
+    "title": "Managing a development team for 4 years",
+    "third": "While working with a team, I focus on training and development to strengthen skills and build a solid knowledge base for the project. I also streamline processes to improve efficiency. To keep everyone aligned, I establish asynchronous communication, so each member understands both their tasks and the overall goals, ensuring clarity and direction across the team.",
+    "fourth": "At the same time, I do not forget about the result and tracking the overall performance of the team and the mood of its members. I have led development teams of up to 8 people."
   },
   "tool": {
     "title": "Things I use",
@@ -20,7 +20,7 @@
         "text": "For testing purposes"
       },
       { 
-        "title": "NodeJS, GraphQL, Apollo, MongoDB, PostgreSQL",
+        "title": "NodeJS, Temporal, GraphQL, MongoDB, PostgreSQL",
         "text": "For back-end development"
       },
       { 

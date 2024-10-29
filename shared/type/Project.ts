@@ -9,7 +9,8 @@ export type ProjectType =
   'samo' | 
   'kran' | 
   'behance' | 
-  'birden'
+  'birden' | 
+  'marketplace'
 
 export interface ProjectDate {
   from: number,

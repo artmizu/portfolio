@@ -72,7 +72,11 @@
 	}
 
 	&__left {
-		background-image: url(./asset/parser-recruiter/left.jpg);
+		background-image:
+			image-set(
+				url(./asset/parser-recruiter/left.webp) type("image/webp"),
+				url(./asset/parser-recruiter/left.jpg) type("image/jpeg")
+			);
 		filter: blur(1px);
 		transform: translate(-60px, 0) rotate(-17deg);
 		transform-origin: right;
@@ -80,12 +84,20 @@
 
 	&__center {
 		z-index: 1;
-		background-image: url(./asset/parser-recruiter/center.jpg);
+		background-image:
+			image-set(
+				url(./asset/parser-recruiter/center.webp) type("image/webp"),
+				url(./asset/parser-recruiter/center.jpg) type("image/jpeg")
+			);
 		box-shadow: 0 9px 26px 15px rgb(130 67 100 / 17%);
 	}
 
 	&__right {
-		background-image: url(./asset/parser-recruiter/right.jpg);
+		background-image:
+			image-set(
+				url(./asset/parser-recruiter/right.webp) type("image/webp"),
+				url(./asset/parser-recruiter/right.jpg) type("image/jpeg")
+			);
 		filter: blur(1px);
 		transform: translate(60px, 0) rotate(17deg);
 		transform-origin: left;
@@ -199,7 +211,11 @@
 	}
 
 	&__left {
-		background-image: url(./asset/verdi/aside.jpg);
+		background-image:
+			image-set(
+				url(./asset/verdi/aside.webp) type("image/webp"),
+				url(./asset/verdi/aside.jpg) type("image/jpeg")
+			);
 		filter: blur(1px);
 		transform: translate(-60px, 0) rotate(-17deg);
 		transform-origin: right;
@@ -207,12 +223,20 @@
 
 	&__center {
 		z-index: 1;
-		background-image: url(./asset/verdi/center.jpg);
+		background-image:
+			image-set(
+				url(./asset/verdi/center.webp) type("image/webp"),
+				url(./asset/verdi/center.jpg) type("image/jpeg")
+			);
 		box-shadow: 0 9px 26px 15px rgb(130 67 100 / 17%);
 	}
 
 	&__right {
-		background-image: url(./asset/verdi/aside.jpg);
+		background-image:
+			image-set(
+				url(./asset/verdi/aside.webp) type("image/webp"),
+				url(./asset/verdi/aside.jpg) type("image/jpeg")
+			);
 		filter: blur(1px);
 		transform: translate(60px, 0) rotate(17deg);
 		transform-origin: left;
@@ -253,7 +277,11 @@
 	}
 
 	&__left {
-		background-image: url(./asset/behance/left.jpg);
+		background-image:
+			image-set(
+				url(./asset/behance/left.webp) type("image/webp"),
+				url(./asset/behance/left.jpg) type("image/jpeg")
+			);
 		filter: blur(1px);
 		transform: translate(-120px, 30px) rotate(-17deg);
 		transform-origin: right;
@@ -265,7 +293,11 @@
 		z-index: 1;
 		width: 236px;
 		height: 241px;
-		background-image: url(./asset/behance/center.jpg);
+		background-image:
+			image-set(
+				url(./asset/behance/center.webp) type("image/webp"),
+				url(./asset/behance/center.jpg) type("image/jpeg")
+			);
 		background-repeat: no-repeat;
 		background-size: 236px 241px;
 		border-radius: 7px 7px 0 0;
@@ -275,7 +307,11 @@
 	}
 
 	&__right {
-		background-image: url(./asset/behance/right.jpg);
+		background-image:
+			image-set(
+				url(./asset/behance/right.webp) type("image/webp"),
+				url(./asset/behance/right.jpg) type("image/jpeg")
+			);
 		filter: blur(1px);
 		transform: translate(120px, 30px) rotate(17deg);
 		transform-origin: left;

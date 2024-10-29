@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "file-loader": "^4.2.0",
-    "sass": "^1.57.1",
+    "sass": "^1.80.4",
     "stylelint": "^14.16.0",
     "stylelint-config-recess-order": "^3.1.0",
     "stylelint-config-recommended": "^9.0.0",

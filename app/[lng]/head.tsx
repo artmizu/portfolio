@@ -1,7 +1,8 @@
 import { useTranslation } from "i18n/index";
 import { Language } from "shared/type/Language";
 
-export default async function Head({ params: { lng } }: { params: { lng: Language }}) {
+export default async function Head({ params }: { params: Promise<{ lng: Language }>}) {
+  const { lng } = await params
   const { t } = await useTranslation(lng, ['about'])
 
   return (

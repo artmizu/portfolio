@@ -7,7 +7,8 @@ import {
   ProjectCardLargeUae, 
   ProjectCardLargeSamo, 
   ProjectCardLargeKran,
-  ProjectCardLargeBirden 
+  ProjectCardLargeBirden, 
+  ProjectCardLargeMarketplace
 } from "ui/ProjectCard";
 import cls from 'classnames'
 import st from './index.module.scss'
@@ -23,7 +24,14 @@ export default function ProjectGrid({ list }: { list: Array<Project & { type?: P
     <div className={st['project-grid']}>
       { 
         list.map((el, index) => {
-          if (el.type === 'constructor') {
+
+          if (el.type === 'marketplace') {
+            return (
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+                <ProjectCardLargeMarketplace data={el} />
+              </article>
+            )
+          } else if (el.type === 'constructor') {
             return (
               <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeConstructor data={el} />

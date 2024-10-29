@@ -13,6 +13,9 @@ import UaeLeft from './asset/uae/left.jpg'
 import UaeRight from './asset/uae/right.jpg'
 import SamoImage from './asset/samo/image.jpg'
 
+import MarketplaceBottomImage from './asset/marketplace/bottom.jpg'
+import MarketplaceTopImage from './asset/marketplace/top.jpg'
+
 export function ProjectCard({ data }: { data: Project }) {
   return (
     <div className={st['project-card']}>
@@ -62,6 +65,24 @@ export function ProjectCardLargeBase({ data, children, onVisible }: { data: Proj
         { children }
       </div>
     </div>
+  )
+}
+
+export function ProjectCardLargeMarketplace({ data }: { data: Project }) {
+  const [isVisible, setIsVisible] = useState(false)
+  return (
+    <ProjectCardLargeBase data={data} onVisible={() => setIsVisible(true)}>
+      <div className={cls(st['marketplace'], {
+        [st['marketplace_visible']]: isVisible
+      })}>
+        <div className={st['marketplace__bottom']}>
+          <Image src={MarketplaceBottomImage} width="453" className={st['marketplace__preview']} alt={data.title} />
+        </div>
+        <div className={st['marketplace__top']}>
+          <Image src={MarketplaceTopImage} width="553" className={st['marketplace__preview-top']} alt={data.title} />
+        </div>
+      </div>
+    </ProjectCardLargeBase>
   )
 }
 

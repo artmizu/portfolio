@@ -2,6 +2,19 @@
   "title": "Projects",
   "list": [
     {
+      "type": "marketplace",
+      "title": "E-commerce marketplace",
+      "date": {
+        "from": 2023
+      },
+      "description": "<p class=\"ui-p ui-p_my\">Led the front-end architecture and implementation for a customer-facing project, steering the team from inception to successful launch. We utilized a mono-repository structure to consolidate different application modules, optimizing for scalability and minimizing interdependencies.</p><p class=\"ui-p ui-p_my\">The backend was composed of numerous microservices, interfaced with the front end via a facade layer. We employed Temporal as the communication protocol, ensuring reliable, efficient interactions across services and components.</p>",
+      "technology": "Temporal, Nuxt 3, Vue 3, NodeJS, Typescript",
+      "link": {
+        "text": "Go to the site",
+        "href": "https://market.05.ru/"
+      }
+    },
+    {
       "type": "constructor",
       "title": "Promo page builder for 05.ru",
       "date": {
