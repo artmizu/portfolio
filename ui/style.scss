@@ -36,7 +36,7 @@
 		max-width: 540px;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		font-size: 13px;
 		line-height: 24px;
 

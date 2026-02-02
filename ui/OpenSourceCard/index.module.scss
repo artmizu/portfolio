@@ -24,7 +24,7 @@
 		margin-top: auto;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		height: 330px;
 		padding: 20px 20px 25px;
 

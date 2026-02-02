@@ -18,7 +18,7 @@
 		line-height: 24px;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__link {
 			margin-top: 10px;
 			font-size: 15px;
@@ -47,7 +47,7 @@
 		flex-grow: 1;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		flex-direction: column;
 		border-radius: 10px;
 
@@ -71,8 +71,8 @@
 		right: 0;
 		bottom: 0;
 		z-index: 1;
-		width: 415px;
 		visibility: hidden;
+		width: 415px;
 		opacity: 0;
 
 		&::before {
@@ -117,7 +117,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__video-wrapper {
 			left: max(20px, calc(50% - 175px));
 			width: 350px;
@@ -204,7 +204,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			right: auto;
 			left: max(20px, calc(50% - 220px));
@@ -273,7 +273,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			right: auto;
 			bottom: -30px;
@@ -332,7 +332,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			position: absolute;
 			bottom: 0;
@@ -404,7 +404,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__video-wrapper {
 			bottom: -20px;
 			left: 20px;
@@ -459,7 +459,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__top {
 			right: 0;
 			bottom: -30px;
@@ -508,7 +508,7 @@
 		animation: slide-left 0.4s ease-out;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		background-position: center;
 		background-size: auto 250px;
 
@@ -597,7 +597,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			top: 0;
 			right: auto;
