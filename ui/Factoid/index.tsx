@@ -23,8 +23,8 @@ function FactoidBase({
     onVisible?: () => void,
     children: React.ReactNode 
   }) {
-  const intersectionRef = useRef(null);
-  const intersection = useIntersection(intersectionRef, {
+  const intersectionRef = useRef<HTMLElement>(null);
+  const intersection = useIntersection(intersectionRef as React.RefObject<HTMLElement>, {
     rootMargin: '0px',
     threshold: 0.8
   });
@@ -33,7 +33,7 @@ function FactoidBase({
     if (intersection && intersection.intersectionRatio > 0.8) {
       onVisible?.()
     }
-  }, [intersection])
+  }, [intersection, onVisible])
 
   return (
     <article className={st['factoid']} style={{ background: `linear-gradient(${background.from}, ${background.to})`}} ref={intersectionRef}>
@@ -81,7 +81,7 @@ export function FactoidParserExtension({ data }: { data: Project }) {
         [st['parser-extension_visible']]: isVisible
       })}>
         <div className={st['parser-extension__video-wrapper']}>
-          <video playsInline autoPlay muted loop src={require('./asset/parser-extension/preview.mp4')} className={st['parser-extension__video']}/>
+          <video playsInline autoPlay muted loop src="/videos/factoid/parser-extension-preview.mp4" className={st['parser-extension__video']}/>
         </div>
       </div>
     </FactoidBase>

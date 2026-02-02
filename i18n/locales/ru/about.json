@@ -16,7 +16,7 @@
         "text": "Для сборки проектов"
       },
       { 
-        "title": "Vitest, Jest, Cypress, Puppeteer",
+        "title": "Vitest, Jest, Cypress, Playwright",
         "text": "Для тестирования"
       },
       { 

@@ -10,11 +10,12 @@ import LanguageSwitcher from 'ui/LanguageSwitcher'
 import { Project, ProjectType } from 'shared/type/Project'
 import Art from 'ui/Art'
 
-export default async function Home({ params }: { params: Promise<{ lng: Language }>}) {
+export default async function Home({ params }: { params: Promise<{ lng: string }>}) {
   const { lng } = await params
-  const { t } = await useTranslation(lng, ['about', 'project'])
-  const list: { title: string, text: string }[] = t('about:tool.list', { returnObjects: true })
-  const projectList: Array<Project & { type?: ProjectType }> = t('project:list', { returnObjects: true })
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- This is a server-side function, not a React Hook
+  const { t } = await useTranslation(lng as Language, ['about', 'project'])
+  const list = t('about:tool.list', { returnObjects: true }) as { title: string, text: string }[]
+  const projectList = t('project:list', { returnObjects: true }) as Array<Project & { type?: ProjectType }>
 
   const openSource = [
     {

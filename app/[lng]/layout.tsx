@@ -16,10 +16,11 @@ export default async function RootLayout({
   params
 }: {
   children: React.ReactNode,
-  params: Promise<{ lng: Language }>
+  params: Promise<{ lng: string }>
 }) {
-  const { lng, } = await params
-  const { t } = await useTranslation(lng, ['about'])
+  const { lng } = await params
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- This is a server-side function, not a React Hook
+  const { t } = await useTranslation(lng as Language, ['about'])
 
   return (
     <html lang={lng}>
