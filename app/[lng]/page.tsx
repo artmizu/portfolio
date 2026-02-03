@@ -9,6 +9,11 @@ import { Language } from 'shared/type/Language'
 import LanguageSwitcher from 'ui/LanguageSwitcher'
 import { Project, ProjectType } from 'shared/type/Project'
 import Art from 'ui/Art'
+import { languages } from 'i18n/settings'
+
+export function generateStaticParams() {
+  return languages.map((lng) => ({ lng }))
+}
 
 export default async function Home({ params }: { params: Promise<{ lng: string }>}) {
   const { lng } = await params
