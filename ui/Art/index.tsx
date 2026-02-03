@@ -1,12 +1,20 @@
 'use client'
 
 import React, { useRef, useEffect, useState } from 'react'
-import * as twgl from "twgl.js/dist/5.x/twgl.js";
+import * as twgl from "twgl.js/dist/7.x/twgl.js";
 import vertexShaderSource from "./vertex.vert";
 import fragmentShaderSource from "./fragment.frag";
 import fragmentColorShaderSource from "./fragment-color.frag";
 import { plane, texture } from "./shape";
 import st from './index.module.scss'
+
+type Uniform = {
+  u_texture: WebGLTexture | null;
+  u_time: number;
+  u_timedelta: null | number;
+  u_frame: number;
+  u_resolution: [number, number];
+}
 
 export default function Canvas () {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -87,7 +95,7 @@ export default function Canvas () {
     }];
     const fb2 = twgl.createFramebufferInfo(gl, fb2Attachments);
 
-    const uniforms: { [key: string]: any } = {
+    const uniforms: Uniform = {
       u_texture: null,
       u_time: 0,
       u_timedelta: null,
@@ -135,7 +143,7 @@ export default function Canvas () {
         canvasDisabled ?
           (
             <div className={st['art__fallback-wrapper']}>
-              <video loop muted autoPlay playsInline src={require('./fallback.mp4')} className={st['art__fallback']} fetchpriority="high" />
+              <video loop muted autoPlay playsInline src="/videos/art/fallback.mp4" className={st['art__fallback']} fetchpriority="high" />
             </div>
           ) : 
           (

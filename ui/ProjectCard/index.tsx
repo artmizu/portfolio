@@ -44,8 +44,8 @@ export function ProjectCard({ data }: { data: Project }) {
 }
 
 export function ProjectCardLargeBase({ data, children, onVisible }: { data: Project, children: React.ReactNode, onVisible?: () => void }) {
-  const intersectionRef = useRef(null);
-  const intersection = useIntersection(intersectionRef, {
+  const intersectionRef = useRef<HTMLDivElement>(null);
+  const intersection = useIntersection(intersectionRef as React.RefObject<HTMLElement>, {
     rootMargin: '0px',
     threshold: 0.8
   });
@@ -54,6 +54,7 @@ export function ProjectCardLargeBase({ data, children, onVisible }: { data: Proj
     if (intersection && intersection.intersectionRatio > 0.8) {
       onVisible?.()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intersection])
 
   return (
@@ -95,7 +96,7 @@ export function ProjectCardLargeConstructor({ data }: { data: Project }) {
         [st['constructor_visible']]: isVisible
       })}>
         <div className={st['constructor__video-wrapper']}>
-          <video playsInline autoPlay muted loop src={require('./asset/constructor/preview.mp4')} className={st['constructor__video']}/>
+          <video playsInline autoPlay muted loop src="/videos/projects/constructor-preview.mp4" className={st['constructor__video']}/>
         </div>
         <div className={st['constructor__spot']}></div>
       </div>
@@ -168,7 +169,7 @@ export function ProjectCardLargeSamo({ data }: { data: Project }) {
           <Image src={SamoImage} width="450" className={st['samo__preview']} alt={data.title} />
         </div>
         <div className={st['samo__video-wrapper']}>
-          <video playsInline autoPlay muted loop src={require('./asset/samo/preview.mp4')} className={st['samo__video']}/>
+          <video playsInline autoPlay muted loop src="/videos/projects/samo-preview.mp4" className={st['samo__video']}/>
         </div>
       </div>
     </ProjectCardLargeBase>
@@ -183,7 +184,7 @@ export function ProjectCardLargeKran({ data }: { data: Project }) {
         [st['kran_visible']]: isVisible
       })}>
         <div className={st['kran__video-wrapper']}>
-          <video playsInline autoPlay muted src={require('./asset/kran/preview.mp4')} className={st['kran__video']}/>
+          <video playsInline autoPlay muted src="/videos/projects/kran-preview.mp4" className={st['kran__video']}/>
         </div>
       </div>
     </ProjectCardLargeBase>

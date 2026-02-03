@@ -18,7 +18,7 @@
 		line-height: 24px;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__link {
 			margin-top: 10px;
 			font-size: 15px;
@@ -47,7 +47,7 @@
 		flex-grow: 1;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		flex-direction: column;
 		border-radius: 10px;
 
@@ -71,8 +71,8 @@
 		right: 0;
 		bottom: 0;
 		z-index: 1;
-		width: 415px;
 		visibility: hidden;
+		width: 415px;
 		opacity: 0;
 
 		&::before {
@@ -99,7 +99,7 @@
 		left: calc(36% - 240px);
 		width: 750px;
 		height: 750px;
-		background: url(./asset/constructor/spot.svg) no-repeat;
+		background: url(/images/projects/constructor/spot.svg) no-repeat;
 		background-size: contain;
 		opacity: 0;
 	}
@@ -117,7 +117,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__video-wrapper {
 			left: max(20px, calc(50% - 175px));
 			width: 350px;
@@ -166,24 +166,24 @@
 	&__left {
 		background-image:
 			image-set(
-				url(./asset/store/left.webp) type("image/webp"),
-				url(./asset/store/left.jpg) type("image/jpeg")
+				url(/images/projects/store/left.webp) type("image/webp"),
+				url(/images/projects/store/left.jpg) type("image/jpeg")
 			);
 	}
 
 	&__center {
 		background-image:
 			image-set(
-				url(./asset/store/center.webp) type("image/webp"),
-				url(./asset/store/center.jpg) type("image/jpeg")
+				url(/images/projects/store/center.webp) type("image/webp"),
+				url(/images/projects/store/center.jpg) type("image/jpeg")
 			);
 	}
 
 	&__right {
 		background-image:
 			image-set(
-				url(./asset/store/right.webp) type("image/webp"),
-				url(./asset/store/right.jpg) type("image/jpeg")
+				url(/images/projects/store/right.webp) type("image/webp"),
+				url(/images/projects/store/right.jpg) type("image/jpeg")
 			);
 	}
 
@@ -204,7 +204,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			right: auto;
 			left: max(20px, calc(50% - 220px));
@@ -244,8 +244,8 @@
 		height: 300px;
 		background-image:
 			image-set(
-				url(./asset/darkstore/left.webp) type("image/webp"),
-				url(./asset/darkstore/left.jpg) type("image/jpeg")
+				url(/images/projects/darkstore/left.webp) type("image/webp"),
+				url(/images/projects/darkstore/left.jpg) type("image/jpeg")
 			);
 		border-radius: 7px;
 	}
@@ -255,8 +255,8 @@
 		height: 360px;
 		background-image:
 			image-set(
-				url(./asset/darkstore/right.webp) type("image/webp"),
-				url(./asset/darkstore/right.jpg) type("image/jpeg")
+				url(/images/projects/darkstore/right.webp) type("image/webp"),
+				url(/images/projects/darkstore/right.jpg) type("image/jpeg")
 			);
 		border-radius: 7px 0 0;
 	}
@@ -273,7 +273,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			right: auto;
 			bottom: -30px;
@@ -332,7 +332,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			position: absolute;
 			bottom: 0;
@@ -404,7 +404,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__video-wrapper {
 			bottom: -20px;
 			left: 20px;
@@ -459,7 +459,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__top {
 			right: 0;
 			bottom: -30px;
@@ -483,8 +483,8 @@
 	height: 100%;
 	background-image:
 		image-set(
-			url(./asset/kran/bg.webp) type("image/webp"),
-			url(./asset/kran/bg.jpg) type("image/jpeg")
+			url(/images/projects/kran/bg.webp) type("image/webp"),
+			url(/images/projects/kran/bg.jpg) type("image/jpeg")
 		);
 	background-repeat: no-repeat;
 	background-position: center right -92px;
@@ -508,7 +508,7 @@
 		animation: slide-left 0.4s ease-out;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		background-position: center;
 		background-size: auto 250px;
 
@@ -555,8 +555,8 @@
 		height: 395px;
 		background-image:
 			image-set(
-				url(./asset/birden/left.webp) type("image/webp"),
-				url(./asset/birden/left.png) type("image/png")
+				url(/images/projects/birden/left.webp) type("image/webp"),
+				url(/images/projects/birden/left.png) type("image/png")
 			);
 	}
 
@@ -565,8 +565,8 @@
 		height: 395px;
 		background-image:
 			image-set(
-				url(./asset/birden/center.webp) type("image/webp"),
-				url(./asset/birden/center.png) type("image/png")
+				url(/images/projects/birden/center.webp) type("image/webp"),
+				url(/images/projects/birden/center.png) type("image/png")
 			);
 	}
 
@@ -575,8 +575,8 @@
 		height: 395px;
 		background-image:
 			image-set(
-				url(./asset/birden/right.webp) type("image/webp"),
-				url(./asset/birden/right.png) type("image/png")
+				url(/images/projects/birden/right.webp) type("image/webp"),
+				url(/images/projects/birden/right.png) type("image/png")
 			);
 	}
 
@@ -597,7 +597,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		&__wrapper {
 			top: 0;
 			right: auto;

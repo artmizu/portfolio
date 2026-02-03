@@ -37,7 +37,7 @@
 		}
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		flex-direction: column;
 
 		&__about {
@@ -76,7 +76,7 @@
 		margin-bottom: 6px;
 	}
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		grid: auto-flow/repeat(2, 1fr);
 		gap: 23px 20px;
 
@@ -91,7 +91,7 @@
 	grid: auto-flow / repeat(3, 1fr);
 	gap: 20px;
 
-	@media (max-width: 900px) {
+	@media (width <= 900px) {
 		gap: 15px;
 		padding: 0 20px;
 		margin: 0 -20px;

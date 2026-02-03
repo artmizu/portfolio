@@ -5,12 +5,14 @@
     "stylelint-config-standard-scss"
   ],
   "plugins": [
-    "stylelint-scss"
+    "stylelint-scss",
+    "@stylistic/stylelint-plugin"
   ],
   "rules": {
-    "indentation": "tab",
     "selector-nested-pattern": "^(\\^{0,2}&|\\.|[a-z].|>)",
     "function-url-quotes": "never",
-    "selector-class-pattern": null
+    "selector-class-pattern": null,
+    "scss/operator-no-unspaced": null,
+    "@stylistic/indentation": "tab"
   }
 }
