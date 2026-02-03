@@ -6,6 +6,7 @@ import 'ui/style.scss'
 import { Language } from 'shared/type/Language'
 import { languages } from 'i18n/settings'
 import { useTranslation } from "i18n/index";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export function generateStaticParams() {
   return languages.map((lng) => ({ lng }))
@@ -42,6 +43,7 @@ export default async function RootLayout({
             {children}
           </div>
         </div>
+        <SpeedInsights />
       </body>
     </html>
   )
