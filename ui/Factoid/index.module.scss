@@ -365,6 +365,12 @@
 	}
 }
 
+.factoid-professional {
+	&__description {
+		margin-top: 10px;
+	}
+}
+
 @keyframes fade-in {
 	from {
 		opacity: 0;

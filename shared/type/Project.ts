@@ -1,16 +1,18 @@
-export type ProjectType = 
-  'constructor' | 
-  'store' | 
-  'darkstore' | 
-  'parser-extension' | 
-  'parser-recruiter' | 
-  'uae' | 
-  'verdi' | 
-  'samo' | 
-  'kran' | 
-  'behance' | 
-  'birden' | 
-  'marketplace'
+export type ProjectType =
+  'constructor' |
+  'store' |
+  'darkstore' |
+  'parser-extension' |
+  'parser-recruiter' |
+  'uae' |
+  'verdi' |
+  'samo' |
+  'kran' |
+  'behance' |
+  'birden' |
+  'marketplace' |
+  'professional-development' |
+  'rakuten'
 
 export interface ProjectDate {
   from: number,

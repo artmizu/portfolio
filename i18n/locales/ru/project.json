@@ -2,6 +2,29 @@
   "title": "Чем занимался",
   "list": [
     {
+      "type": "rakuten",
+      "title": "Rakuten",
+      "date": {
+        "from": 2025,
+        "to": 2026
+      },
+      "description": "<p class=\"ui-p ui-p_my\">Присоединился к команде на раннем этапе разработки нового проекта и участвовал в его успешном выпуске. Интегрировал Rakuten Recommendation Platform и Rakuten Unified Ads во фронт-энд.</p><p class=\"ui-p ui-p_my\">Участвовал в принятии ключевых архитектурных решений, которые определили направление развития проекта.</p>",
+      "technology": "React, Redux, NodeJS, TypeScript",
+      "link": {
+        "text": "Перейти на сайт",
+        "href": "https://fast-delivery-mart.rakuten.co.jp/"
+      }
+    },
+    {
+      "type": "professional-development",
+      "title": "Профессиональное развитие",
+      "date": {
+        "from": 2023,
+        "to": 2025
+      },
+      "description": "Переехал в Японию и провёл два насыщенных года: колесил на велосипеде по разным регионам, ночевал в горах, объезжал острова и побывал в 46 из 47 префектур. По пути сдал JLPT N2."
+    },
+    {
       "type": "marketplace",
       "title": "Маркетплейс для 05.ru",
       "date": {

@@ -1,22 +1,24 @@
 import { Project, ProjectType } from "shared/type/Project";
-import { 
-  ProjectCardLargeConstructor, 
-  ProjectCardLargeStore, 
-  ProjectCard, 
-  ProjectCardLargeDarkstore, 
-  ProjectCardLargeUae, 
-  ProjectCardLargeSamo, 
+import {
+  ProjectCardLargeConstructor,
+  ProjectCardLargeStore,
+  ProjectCard,
+  ProjectCardLargeDarkstore,
+  ProjectCardLargeUae,
+  ProjectCardLargeSamo,
   ProjectCardLargeKran,
-  ProjectCardLargeBirden, 
-  ProjectCardLargeMarketplace
+  ProjectCardLargeBirden,
+  ProjectCardLargeMarketplace,
+  ProjectCardLargeRakuten
 } from "ui/ProjectCard";
 import cls from 'classnames'
 import st from './index.module.scss'
-import { 
-  FactoidParserExtension, 
-  FactoidParserRecruiter, 
-  FactoidVerdi, 
-  FactoidBehance 
+import {
+  FactoidParserExtension,
+  FactoidParserRecruiter,
+  FactoidVerdi,
+  FactoidBehance,
+  FactoidProfessionalDevelopment
 } from "ui/Factoid";
 
 export default function ProjectGrid({ list }: { list: Array<Project & { type?: ProjectType }>}) {
@@ -25,7 +27,19 @@ export default function ProjectGrid({ list }: { list: Array<Project & { type?: P
       { 
         list.map((el, index) => {
 
-          if (el.type === 'marketplace') {
+          if (el.type === 'professional-development') {
+            return (
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+                <FactoidProfessionalDevelopment data={el} />
+              </article>
+            )
+          } else if (el.type === 'rakuten') {
+            return (
+              <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
+                <ProjectCardLargeRakuten data={el} />
+              </article>
+            )
+          } else if (el.type === 'marketplace') {
             return (
               <article key={index} className={cls(st['project-grid__el'], st['project-grid__el_large'])}>
                 <ProjectCardLargeMarketplace data={el} />

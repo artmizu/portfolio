@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useIntersection } from "react-use";
 import { Project } from "shared/type/Project";
+import DateMarker from "ui/DateMarker";
+import H2 from "ui/h2";
 import st from './index.module.scss'
 import cls from 'classnames'
 
@@ -115,5 +117,17 @@ export function FactoidBehance({ data }: { data: Project }) {
         <div className={st['behance__right']}></div>
       </div>
     </FactoidBase>
+  )
+}
+
+export function FactoidProfessionalDevelopment({ data }: { data: Project }) {
+  return (
+    <article className={st['factoid-professional']}>
+      <DateMarker data={data.date} />
+      <H2>{ data.title }</H2>
+      {data.description && (
+        <div className={cls('ui-p', 'ui-grey-text', st['factoid-professional__description'])}>{data.description}</div>
+      )}
+    </article>
   )
 }

@@ -208,3 +208,19 @@ export function ProjectCardLargeBirden({ data }: { data: Project }) {
   )
 }
 
+export function ProjectCardLargeRakuten({ data }: { data: Project }) {
+  const [isVisible, setIsVisible] = useState(false)
+  return (
+    <ProjectCardLargeBase data={data} onVisible={() => setIsVisible(true)}>
+      <div className={cls(st['rakuten'], {
+        [st['rakuten_visible']]: isVisible
+      })}>
+        <div className={st['rakuten__wrapper']}>
+          <div className={st['rakuten__left']}/>
+          <div className={st['rakuten__right']}/>
+        </div>
+      </div>
+    </ProjectCardLargeBase>
+  )
+}
+

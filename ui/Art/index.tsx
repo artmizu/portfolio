@@ -143,7 +143,7 @@ export default function Canvas () {
         canvasDisabled ?
           (
             <div className={st['art__fallback-wrapper']}>
-              <video loop muted autoPlay playsInline src="/videos/art/fallback.mp4" className={st['art__fallback']} fetchpriority="high" />
+              <video loop muted autoPlay playsInline src="/videos/art/fallback.mp4" className={st['art__fallback']} fetchPriority="high" />
             </div>
           ) : 
           (

@@ -2,6 +2,29 @@
   "title": "Projects",
   "list": [
     {
+      "type": "rakuten",
+      "title": "Rakuten",
+      "date": {
+        "from": 2025,
+        "to": 2026
+      },
+      "description": "<p class=\"ui-p ui-p_my\">Joined the team during the early-stage development of a new project and contributed to its successful delivery. Integrated Rakuten Recommendation Platform and Rakuten Unified Ads into the frontend.</p><p class=\"ui-p ui-p_my\">Provided technical guidance on critical architectural decisions that shaped the project's direction.</p>",
+      "technology": "React, Redux, NodeJS, TypeScript",
+      "link": {
+        "text": "Check the project",
+        "href": "https://fast-delivery-mart.rakuten.co.jp/"
+      }
+    },
+    {
+      "type": "professional-development",
+      "title": "Professional development",
+      "date": {
+        "from": 2023,
+        "to": 2025
+      },
+      "description": "Relocated to Japan and spent two years diving deep into the country - biked across regions, slept in mountain huts, island-hopped from north to south, and visited 46 of 47 prefectures. Somewhere along the way, also earned JLPT N2."
+    },
+    {
       "type": "marketplace",
       "title": "E-commerce marketplace",
       "date": {
@@ -10,7 +33,7 @@
       "description": "<p class=\"ui-p ui-p_my\">Led the front-end architecture and implementation for a customer-facing project, steering the team from inception to successful launch. We utilized a mono-repository structure to consolidate different application modules, optimizing for scalability and minimizing interdependencies.</p><p class=\"ui-p ui-p_my\">The backend was composed of numerous microservices, interfaced with the front end via a facade layer. We employed Temporal as the communication protocol, ensuring reliable, efficient interactions across services and components.</p>",
       "technology": "Temporal, Nuxt 3, Vue 3, NodeJS, Typescript",
       "link": {
-        "text": "Go to the site",
+        "text": "Check the project",
         "href": "https://market.05.ru/"
       }
     },
@@ -34,7 +57,7 @@
       "description": "<p class=\"ui-p ui-p_my\">Worked my way up from designer and developer to development team leader and interface art director, with up to 8 people in the team.</p><p class=\"ui-p ui-p_my\">  Together with the team took the front-end out of the monolith, worked on the architecture of the application, divided the application into layers, implemented metrics, tests, automation, and much more.</p>",
       "technology": "Nuxt 2, Vue 2, Typescript",
       "link": {
-        "text": "Go to the site",
+        "text": "Check the project",
         "href": "https://05.ru/"
       }
     },
@@ -74,7 +97,7 @@
       "description": "Led the front-end development team and the interface design team. Developed the initial look of the product MVP and iteratively improved its design and codebase, later moving the project to Nuxt 3.",
       "technology": "Nuxt 2/3, Vue 2/3, Typescript",
       "link": {
-        "text": "Go to the site",
+        "text": "Check the project",
         "href": "https://darkstore.05.ru/"
       }
     },
@@ -121,7 +144,7 @@
       "description": "Wrote an API to filter and update agency projects. Configured feedback collection and email notifications, set up backups and documentation generation via Swagger.",
       "technology": "Express, PostgreSQL, NodeJS",
       "link": {
-        "text": "Go to the site",
+        "text": "Check the project",
         "href": "https://urbanpg.ru"
       }
     },
@@ -133,7 +156,7 @@
       "description": "There was a need to implement a new tool in the monolith, so without using frameworks I invented all the functionality to update the view and synchronize the states between all the entities of the page.",
       "technology": "Custom development in JS",
       "link": {
-        "text": "Go to the site",
+        "text": "Check the project",
         "href": "https://collaborator.pro/tools/checklist-for-seo"
       }
     },
@@ -163,7 +186,7 @@
       "description": "<p class=\"ui-p ui-p_my\">Made a website for a company producing heavy lifting equipment, thought through the structure of the project, created a design taking into account the existing corporate identity of the company.</p>\n<p class=\"ui-p ui-p_my\">After that I wrote all the back-end and front-end parts, also made an admin panel for editing the main entities.</p>",
       "technology": "Ruby on Rails, SQLite",
       "link": {
-        "text": "Go to the site",
+        "text": "Check the project",
         "href": "https://www.kran18.ru"
       }
     },
