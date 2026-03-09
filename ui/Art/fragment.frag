@@ -27,7 +27,7 @@ float fbm(vec3 seed)
 {
   float result=0.;
   float a=.5;
-  for(int i=0;i<3;++i){
+  for(int i=0;i<2;++i){
     seed+=result/2.;
     result+=gyroid(seed/a)*a;
     a/=2.;
@@ -51,7 +51,7 @@ void main(){
   
   // turbulences
   float noise=fbm(vec3(p*3.,dist-u_time*.1*speed));
-  noise=pow(abs(noise),.5);
+  noise=sqrt(abs(noise));
   float angle=noise*6.28;
   offset+=turbulences*vec2(cos(angle),sin(angle));
   
@@ -70,20 +70,17 @@ void main(){
   vec2 rng=hash23(vec3(cords,u_frame));
   if(spawn)frame=vec4(step(.5,rng.x),step(.5,rng.y),0,0);
   
-  // neighbor values
+  // neighbor values (4 cardinal directions)
+  vec2 invRes=1./u_resolution;
   vec2 neighbors=vec2(0);
-  for(float x=-1.;x<=1.;++x)
-  {
-    for(float y=-1.;y<=1.;++y)
-    {
-      if(x==0.&&y==0.)continue;
-      neighbors+=texture2D(u_texture,v_texture+vec2(x,y)/u_resolution).rg;
-    }
-  }
-  
+  neighbors+=texture2D(u_texture,v_texture+vec2( 1., 0.)*invRes).rg;
+  neighbors+=texture2D(u_texture,v_texture+vec2(-1., 0.)*invRes).rg;
+  neighbors+=texture2D(u_texture,v_texture+vec2( 0., 1.)*invRes).rg;
+  neighbors+=texture2D(u_texture,v_texture+vec2( 0.,-1.)*invRes).rg;
+
   // animation fade
-  frame.r+=4.*(neighbors.r>4.?1.:-1.)*u_timedelta;
-  frame.g+=4.*(neighbors.g>4.?1.:-1.)*u_timedelta;
+  frame.r+=4.*(neighbors.r>2.?1.:-1.)*u_timedelta;
+  frame.g+=4.*(neighbors.g>2.?1.:-1.)*u_timedelta;
   
   gl_FragColor=vec4(clamp(frame.rg,0.,1.),1.,1.);
 }

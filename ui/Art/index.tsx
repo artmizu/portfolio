@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useEffect, useState } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import * as twgl from "twgl.js/dist/7.x/twgl.js";
 import vertexShaderSource from "./vertex.vert";
 import fragmentShaderSource from "./fragment.frag";
@@ -18,7 +18,6 @@ type Uniform = {
 
 export default function Canvas () {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [canvasDisabled, setDisabledCanvas] = useState(false)
   const [wasResized, setWasResized] = useState(false)
 
   useEffect(() => {
@@ -30,24 +29,16 @@ export default function Canvas () {
         setWasResized(true)
         previousWindowWidth = window.innerWidth
       }
-
-      if (window.innerWidth <= 900) {
-        setDisabledCanvas(true)
-      } else {
-        setDisabledCanvas(false)
-      }
     }
 
-    onResize()
     window.addEventListener('resize', onResize)
 
     return () => {
       window.removeEventListener('resize', onResize)
     }
   }, [])
-  
+
   useEffect(() => {
-    if (canvasDisabled) return
 
     const canvas = canvasRef.current!
     const gl = canvas.getContext('webgl')
@@ -56,7 +47,7 @@ export default function Canvas () {
     /**
      * limit multiplayer to 2, because a larger value generates too much overhead
      */
-    twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, Math.min(2, window.devicePixelRatio));
+    twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, Math.min(1, window.devicePixelRatio));
     let animationFrameId: number
 
     const programInfo = twgl.createProgramInfo(gl, [
@@ -135,23 +126,13 @@ export default function Canvas () {
     return () => {
       window.cancelAnimationFrame(animationFrameId)
     }
-  }, [wasResized, canvasDisabled])
-  
+  }, [wasResized])
+
   return (
     <div className={st["art"]}>
-      {
-        canvasDisabled ?
-          (
-            <div className={st['art__fallback-wrapper']}>
-              <video loop muted autoPlay playsInline src="/videos/art/fallback.mp4" className={st['art__fallback']} fetchPriority="high" />
-            </div>
-          ) : 
-          (
-            <div className={st["art__wrapper"]}>
-              <canvas className={st["art__canvas"]} ref={canvasRef} />
-            </div>
-          )
-      }
+      <div className={st["art__wrapper"]}>
+        <canvas className={st["art__canvas"]} ref={canvasRef} />
+      </div>
     </div>
   )
 }

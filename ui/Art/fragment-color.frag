@@ -12,8 +12,9 @@ void main()
   vec4 frame=texture2D(u_texture,v_texture);
   
   // tints
-  vec3 tint=.5+.5*cos(vec3(9,3,5)*9.+length(v_texture-.5)*5.);
+  float dist=length(v_texture-.5);
+  vec3 tint=.5+.5*cos(vec3(9,3,5)*9.+dist*5.);
   gl_FragColor=vec4(frame.r*tint,1);
-  tint=.5+.5*cos(vec3(1,2,3)*5.+length(v_texture-.5)*2.+3.);
+  tint=.5+.5*cos(vec3(1,2,3)*5.+dist*2.+3.);
   gl_FragColor.rgb+=frame.g*tint;
 }
