@@ -37,7 +37,7 @@ export default async function RootLayout({
     <html lang={lng}>
       <body>
         <div className={`${styles.layout} ${inter.className}`}>
-          <div className={styles.wrapper}>{children}</div>
+          <main className={styles.wrapper}>{children}</main>
         </div>
         <SpeedInsights />
       </body>
