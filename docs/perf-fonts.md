@@ -224,15 +224,17 @@ were removed from `ui/Art/index.module.scss`.
 3596 KiB removed, matching the file size. No code, style or config file references the deleted name:
 `rg -n "fallback\.mp4"` reports no hits outside this document, which names the file by definition.
 
-Two related findings, both outside the allowlist and left in place:
+Two related findings, both outside the allowlist:
 
 1. `ui/Art/fallback.{mp4}` is a byte identical copy (md5 `6ea9e15becf2677572015729072418fa`, same
-   3682207 B) that is tracked in the source tree and referenced by nothing. It does not ship, but it
-   is 3.5 MiB of repository.
+   3682207 B) that was tracked in the source tree and referenced by nothing. It did not ship, but it
+   was 3.5 MiB of repository. It has since been removed in `perf/cleanup`, commit `d2f370d`, together
+   with the 23 other dead media files listed in `docs/perf-cleanup.md`. The bytes stay retrievable
+   from `d2f370d^`.
 2. `ui/Art/index.tsx` throws `Error('Canvas context not found')` when `canvas.getContext('webgl')`
    returns null. There is no error boundary around it, so a client without WebGL gets Next's global
-   "This page couldn't load" screen for the whole page. Pre-existing on the base commit, worth a
-   follow up.
+   "This page couldn't load" screen for the whole page. Pre-existing on the base commit, still in
+   place, worth a follow up.
 
 ## 6. Screenshots and what they show
 
