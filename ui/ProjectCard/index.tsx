@@ -3,8 +3,8 @@
 import cls from 'classnames';
 import Image from 'next/image';
 import { useEffect, useEffectEvent, useRef, useState } from 'react';
-import { useIntersection } from 'react-use';
 import type { Project } from 'shared/type/Project';
+import { useIntersection } from 'shared/useIntersection';
 import DateMarker from 'ui/DateMarker';
 import H2 from 'ui/h2';
 import LazyVideo from 'ui/LazyVideo';
@@ -57,7 +57,7 @@ export function ProjectCardLargeBase({
   onVisible?: () => void;
 }) {
   const intersectionRef = useRef<HTMLDivElement>(null);
-  const intersection = useIntersection(intersectionRef as React.RefObject<HTMLElement>, {
+  const intersection = useIntersection(intersectionRef, {
     rootMargin: '0px',
     threshold: 0.8,
   });
