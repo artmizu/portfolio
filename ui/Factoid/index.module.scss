@@ -161,6 +161,8 @@
 		position: absolute;
 		bottom: -20px;
 		left: 20px;
+		width: 347px;
+		aspect-ratio: 694 / 390;
 		overflow: hidden;
 		border-radius: 5px 0 0;
 		box-shadow: 0 0 19px 1px rgb(193 208 223 / 63%);
@@ -184,6 +186,7 @@
 
 		&__video-wrapper {
 			left: max(20px, calc(50% - 215px));
+			width: 430px;
 		}
 
 		&__video {

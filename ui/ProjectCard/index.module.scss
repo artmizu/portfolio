@@ -73,6 +73,7 @@
 		z-index: 1;
 		visibility: hidden;
 		width: 415px;
+		height: 400px;
 		opacity: 0;
 
 		&::before {
@@ -386,6 +387,7 @@
 		right: -10px;
 		bottom: 120px;
 		width: 430px;
+		aspect-ratio: 860 / 612;
 	}
 
 	&__video {
