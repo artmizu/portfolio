@@ -633,11 +633,6 @@
 	&__left {
 		width: 150px;
 		height: 320px;
-		background-image:
-			image-set(
-				url(/images/projects/rakuten/sp.avif) type("image/avif"),
-				url(/images/projects/rakuten/sp.webp) type("image/webp")
-			);
 		border-radius: 7px;
 	}
 
@@ -674,12 +669,18 @@
 
 		&__left {
 			height: 270px;
+			background-image:
+				image-set(
+					url(/images/projects/rakuten/sp.avif) type("image/avif"),
+					url(/images/projects/rakuten/sp.webp) type("image/webp")
+				);
 			border-radius: 7px 7px 0 0;
 		}
 
 		&__right {
 			width: 390px;
 			height: 270px;
+			background-image: none;
 			border-radius: 7px 7px 0 0;
 		}
 	}
