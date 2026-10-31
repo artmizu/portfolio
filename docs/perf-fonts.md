@@ -13,7 +13,11 @@ milliseconds.
 
 ## 1. Fonts
 
-### Shipped change
+### Shipped change in `perf/fonts`, reverted in `perf/fonts2`
+
+This subsection describes the latin-only configuration that shipped on `perf/fonts`. It is no longer
+the shipped configuration: `perf/fonts2` restores the cyrillic subsets. The history is kept as
+written, and the current state with its numbers is in the last subsection of this section.
 
 `shared/font.ts` asks for the latin subset only:
 
@@ -97,6 +101,135 @@ locales and it is outside this task's allowlist.
 
 The shipped single instance reaches every acceptance criterion: `/en` 62 KB (budget 65), no cyrillic
 request on `/en`, `/ru` unchanged at 88 KB.
+
+That last sentence is where the reversal starts: "`/ru` unchanged at 88 KB" counted bytes but not
+preloads. `/ru` still fetched the same 88 KB, just later, and the trade-off subsection above already
+said which locale that hit.
+
+### The cyrillic preloads were restored in `perf/fonts2`
+
+Branch `perf/fonts2`, base `7f7fecd` (the merge of `perf/js`), built with `next build` and served with
+`next start --port 3492`. Same tools as the rest of this document.
+
+The owner reversed the decision: `/ru` is the default locale (`fallbackLng` in `i18n/settings.ts` and
+the `x-default` alternate), so the locale that lost its preloads is the one most first-time visitors
+get, and the Cyrillic faces should be back on the initial load. `shared/font.ts` now reads:
+
+```ts
+const inter = Inter({ subsets: ['latin', 'cyrillic'] });
+const philosopher = Philosopher({ subsets: ['latin', 'cyrillic'], weight: '400' });
+```
+
+Nothing else changed. Because `subsets` controls preloading, not which faces are self hosted, the 12
+`.next/static/media/*.woff2` files and their `@font-face` rules are identical in both builds; the
+number of files marked with `-s.p.` (preloaded) goes from 2 to 4.
+
+#### Preload links in the served HTML
+
+| build                  | `/en` | `/ru` | faces preloaded                                                                                      |
+| ---------------------- | ----- | ----- | ---------------------------------------------------------------------------------------------------- |
+| latin only (`7f7fecd`) | 2     | 2     | Inter latin `07c7676b89ed2778-s.p`, Philosopher latin `51038ad943701fbc-s.p`                         |
+| latin and cyrillic     | 4     | 4     | the same two plus Philosopher cyrillic `6271d0eae1748bf2-s.p`, Inter cyrillic `76b70a1dbe058eb5-s.p` |
+
+#### woff2 requests per locale, fresh profile
+
+`/tmp/perf/eval.sh`, `performance.getEntriesByType('resource')`, one page load each:
+
+| locale | latin only                                                                                                                                   | latin and cyrillic                                                                                                               |
+| ------ | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `/en`  | 2 files, 63032 B: latin 48732 + 14300, `fontKB` 62                                                                                           | 4 files, 90212 B: adds Philosopher cyrillic 8136 and Inter cyrillic 19044, `fontKB` 88, cyrillic requests start 11 ms, end 47 ms |
+| `/ru`  | 4 files, 90212 B, `fontKB` 88, cyrillic fetched on demand: Philosopher 8136 B starts 24 ms ends 38 ms, Inter 19044 B starts 33 ms ends 60 ms | 4 files, 90212 B, `fontKB` 88, all four start at 13 ms and end between 20 and 26 ms                                              |
+
+That is the point of the revert: on `/ru` the two Cyrillic faces now arrive with the first paint
+instead of 24 and 33 ms after the document started loading. On `/en` they are fetched even though the
+page contains no Cyrillic code point (`document.documentElement.textContent` match count 0).
+
+`document.fonts` after load confirms which faces exist and which are in use: the `@font-face` with
+`unicode-range: U+301, U+400-45F, ...` for Inter and for Philosopher is `loaded` on both locales, the
+cyrillic-ext face (`U+460-52F, ...`) stays `unloaded`, and `document.fonts.check('16px Philosopher',
+'Александр')` and `document.fonts.check('16px Inter', 'разработка')` both return true.
+
+#### Harness numbers
+
+`/tmp/perf/measure.sh`, `noscroll`, port 3492, both sides built and measured in this session. Mobile
+is 390x844 dpr 3 with 4x CPU throttling and slow 4G, desktop 1440x900 dpr 2 unthrottled.
+
+| locale | device  | side           | runs | lcp samples                                                | lcp median | cls | fontKB | transferKB | requests |
+| ------ | ------- | -------------- | ---- | ---------------------------------------------------------- | ---------- | --- | ------ | ---------- | -------- |
+| `/en`  | desktop | latin only     | 4    | 76, 96, 96, 100                                            | 96         | 0   | 62     | 564        | 45       |
+| `/en`  | desktop | latin+cyrillic | 5    | 60, 68, 76, 84, 84                                         | 76         | 0   | 88     | 591        | 47       |
+| `/en`  | mobile  | latin only     | 8    | 572, 588, 588, 588, 592, 604, 620, 624                     | 590        | 0   | 62     | 566        | 45       |
+| `/en`  | mobile  | latin+cyrillic | 8    | 596, 604, 608, 612, 616, 716, 724, 732                     | 614        | 0   | 88     | 592        | 47       |
+| `/ru`  | desktop | latin only     | 4    | 80, 84, 92, 96                                             | 88         | 0   | 88     | 590        | 47       |
+| `/ru`  | desktop | latin+cyrillic | 4    | 64, 68, 76, 116                                            | 72         | 0   | 88     | 590        | 47       |
+| `/ru`  | mobile  | latin only     | 12   | 576, 588, 592, 592, 600, 600, 604, 604, 604, 608, 612, 724 | 602        | 0   | 88     | 591        | 47       |
+| `/ru`  | mobile  | latin+cyrillic | 12   | 612, 612, 616, 624, 628, 632, 636, 720, 724, 728, 752, 772 | 634        | 0   | 88     | 591        | 47       |
+
+`cls` is 0 in every run of both sides, both locales and both devices. `lcp` equals `fcp` in every run
+(the LCP element is the lead paragraph on desktop and on `/ru` mobile, the `h1` on `/en` mobile).
+
+Desktop: no regression. The `/en` median falls from 96 to 76 ms and the `/ru` median from 88 to 72 ms,
+which is the same direction the earlier latin-only change could not demonstrate, and the samples
+overlap in both directions, so neither direction is a reliable signal on this machine.
+
+Mobile: worse, and the samples do not overlap much. `/en` 590 to 614 ms at the median, `/ru` 602 to 634
+ms at the median, with a longer high tail on the cyrillic side (732 and 772 ms). `/en` also shows the
+byte cost directly: the `load` event moves from 3307 to 3407 ms up to 3436 to 3468 ms, about the 27 KB
+extra at the emulated 1.6 Mbit/s. `/ru` fetches the same bytes in both builds, so its shift cannot be a
+byte count effect; the only difference there is that four faces are preloaded at high priority instead
+of two preloaded and two requested after the document parse. The `tbt` of the cyrillic side (33 to 84
+ms) is not higher than the latin-only side (36 to 89 ms), so CPU contention does not explain the shift
+either. Honest summary: on the mobile emulation the revert costs about 25 to 35 ms of LCP at the
+median, and the earlier latin-only change saved the mirror image of that. The acceptance criterion
+"lcp not worse" is met on desktop and not met on the mobile emulation.
+
+#### The cost of the revert on `/en`, stated explicitly
+
+The two Cyrillic faces are 8136 + 19044 = 27180 B of woff2. `/en` fetches both because they are
+preloaded, even though the page has no Cyrillic code point, so:
+
+| metric        | `/en` latin only | `/en` latin+cyrillic | delta  |
+| ------------- | ---------------- | -------------------- | ------ |
+| font bytes    | 63032            | 90212                | +27180 |
+| `fontKB`      | 62               | 88                   | +26    |
+| `transferKB`  | 564 desktop      | 591 desktop          | +27    |
+| `transferKB`  | 566 mobile       | 592 mobile           | +26    |
+| requests      | 45               | 47                   | +2     |
+| mobile `load` | 3307 to 3407 ms  | 3436 to 3468 ms      | +130   |
+
+`/ru` pays nothing in bytes: same 90212 B, same `transferKB` 590 desktop and 591 mobile, same 47
+requests. It buys the earlier font arrival described above.
+
+#### Screenshots of `/ru` after the revert
+
+`/tmp/perf/shot.sh http://127.0.0.1:3492/ru <out.png> <desktop|mobile>`, 5 s in, WebGL canvas
+included:
+
+| file                              | what it shows                                                                                                                                                                                                                                                                                                                  |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/tmp/perf/fonts2-ru-desktop.png` | 1440x900, black background, two columns. Left: `RU` active and `EN` inactive in the switch, `Александр Крючков, разработка и дизайн` in Philosopher over two lines, the Telegram/GitHub/hello links, then the Cyrillic lead paragraphs and `3 года руководил командой разработки` in Inter Cyrillic. Right: the shader canvas. |
+| `/tmp/perf/fonts2-ru-mobile.png`  | 390x844. The canvas card full width at the top, then the switch, the `h1` over four lines, the links and the Cyrillic body copy.                                                                                                                                                                                               |
+
+Both show Cyrillic text in the self-hosted faces: the serif Cyrillic forms of Philosopher in the `h1`
+and Inter's Cyrillic in the body, with no fallback shapes, no missing glyphs and no invisible text.
+
+#### Check after a `next` upgrade
+
+next/font self hosts every face in the Google CSS2 response and emits `@font-face` rules per subset,
+so the cyrillic faces existing in the build is implementation behaviour, not a documented contract.
+After every `next` upgrade, run these four checks against a fresh `pnpm build`:
+
+```
+ls .next/static/media/*-s.p.*.woff2 | wc -l                                              # 4
+curl -s http://127.0.0.1:3492/ru | grep -o 'rel="preload" href="/_next/static/media/[^"]*"' | wc -l   # 4
+rg -c 'unicode-range:U\+301,U\+400-45F' .next/static/chunks/*.css                        # 2, Inter and Philosopher
+```
+
+and in the browser on `/ru`: `document.fonts.check('16px Philosopher', 'Александр')` and
+`document.fonts.check('16px Inter', 'разработка')` must both return true while exactly four `.woff2`
+requests are in the resource list. If the cyrillic rules are no longer emitted, `/ru` silently falls
+back to the system font: no error, no failed request, just the wrong typeface, which is the failure
+mode the trade-off subsection above describes for the opposite direction.
 
 ## 2. Harness numbers
 
