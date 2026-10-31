@@ -7,9 +7,11 @@ Base commit: `b0f9500`.
 
 1. `ui/LazyVideo/index.tsx` (new client component). Renders the existing wrapper element with a poster `<img>` that carries the same CSS class the `<video>` used, and mounts the real
    `<video preload="none" playsInline muted autoPlay loop src poster>` only when the wrapper comes within 300 px of the viewport. Once mounted it stays mounted. Playback pauses when the wrapper
-   leaves the viewport and resumes when it returns. The IntersectionObserver disconnects on unmount.
+   leaves the viewport and resumes when it returns. The IntersectionObserver disconnects on unmount. The poster `<img>` is eager (it is the placeholder the user sees before playback) but carries
+   `fetchPriority="low"` so the 83 KB of posters does not compete with the hero text that owns LCP.
 2. The four `<video>` call sites now use `LazyVideo`: `ui/ProjectCard/index.tsx` (`ProjectCardLargeConstructor`, `ProjectCardLargeSamo`, `ProjectCardLargeKran`) and `ui/Factoid/index.tsx`
-   (`FactoidParserExtension`). CSS classes, wrapper classes and markup nesting are unchanged.
+   (`FactoidParserExtension`). CSS classes, wrapper classes and markup nesting are unchanged. `kran` keeps the behaviour of the original markup and passes `loop={false}`: the base commit renders
+   that clip without `loop`, so it plays once and holds the last frame. The other three keep `loop`.
 3. The four MP4 files were re-encoded in place and four WebP posters were added under `public/videos/posters/`.
 
 ## Videos
@@ -54,33 +56,48 @@ No `width`/`height` attributes are set on the `<img>` or the `<video>`: on `vide
 
 ## Measurements
 
-Cache disabled, production build, `HEAD` of this branch, harness `/tmp/perf/measure.sh` (headless Chrome, `--disable-gpu`), 1440x900 desktop and 390x844 emulated mobile.
+Cache disabled, production build, 1440x900 desktop and 390x844 emulated mobile (4x CPU, 1.6 Mbps / 150 ms).
 
-| metric                       | baseline | after   |
-| ---------------------------- | -------- | ------- |
-| desktop initial `transferKB` | 3032     | 1294    |
-| desktop initial `videoKB`    | 1810     | 0       |
-| desktop initial `imgKB`      | 934      | 1017    |
-| desktop initial `lcp`        | 184 ms   | 100 ms  |
-| desktop `cls`                | 0        | 0       |
-| desktop `load`               | 970 ms   | 253 ms  |
-| desktop `requests`           | 48       | 46      |
-| mobile `load`                | 13488 ms | 6898 ms |
-| mobile initial `videoKB`     | 562      | 0       |
-| mobile `lcp`                 | 916 ms   | 868 ms  |
-| mobile `cls`                 | 0        | 0       |
+`/tmp/perf/measure.sh` as shipped passes `--disable-gpu`. The Chrome on this machine (156.0.8078.74) has no WebGL in that mode, `ui/Art/index.tsx` throws `Canvas context not found` from its
+effect during hydration and React unmounts the page, so that harness reports `imgCount 0` and an error page for both the base commit and this branch. To get comparable numbers, baseline and
+after were both measured with `/tmp/perf/measure-ng.sh`: byte for byte the same harness and probe, only without `--disable-gpu`, so WebGL works and the page renders.
 
-`videoKB` after a full scroll: 471 KB (constructor 269, parser-extension 72, samo 94, kran 37), measured with the same resource-timing formula on a cache-disabled headless run. The
-`--disable-gpu` headless Chrome used by `measure.sh` cannot report this row: the site's WebGL hero throws `Canvas context not found` during hydration there (also on the base commit), so React
-never mounts the cards and nothing is observed while scrolling. The initial-load rows are unaffected because the removed videos are absent from the server HTML and the posters are part of it.
+| metric                                 | baseline (b0f9500)      | after                        |
+| -------------------------------------- | ----------------------- | ---------------------------- |
+| desktop initial `transferKB`           | 3032                    | 1304                         |
+| desktop initial `videoKB`              | 1810                    | 0                            |
+| desktop initial `imgKB`                | 934                     | 1017                         |
+| desktop initial `requests`             | 48                      | 49                           |
+| desktop initial `lcp`                  | 560 ms                  | 108 - 132 ms                 |
+| desktop `cls`                          | 0                       | 0                            |
+| desktop `load`                         | 689 ms                  | 126 - 152 ms                 |
+| desktop after full scroll `videoKB`    | 1810                    | 471                          |
+| desktop after full scroll `transferKB` | 3203                    | 1946                         |
+| desktop after full scroll `lcp`        | 12584 ms (IMG)          | 12620 ms (IMG)               |
+| desktop after full scroll `cls`        | 0                       | 0                            |
+| mobile initial `transferKB`            | 1693 - 1783             | 1304                         |
+| mobile initial `videoKB`               | 471 - 562               | 0                            |
+| mobile `load` (4 runs)                 | 13401 / 13449 / 8886 ms | 6983 / 7005 / 7007 / 7131 ms |
+| mobile `lcp` (4 runs)                  | 784 / 872 / 772 ms      | 776 / 776 / 780 / 960 ms     |
+| mobile `cls`                           | 0                       | 0                            |
+
+The after-full-scroll `lcp` is an `IMG` in both columns: the largest paint on the page is a project screenshot that only arrives when it scrolls into view, so that row moves with the scroll
+speed of the probe, not with this change.
+
+Videos fetched after a full scroll, from resource timing: 471 KB total (constructor 269, samo 94, parser-extension 72, kran 37). None of them is requested before the section approaches the
+viewport.
 
 ## Functional verification
 
-Headless Chrome with SwiftShader (WebGL available), cache disabled:
+Headless Chrome with GPU and WebGL, 1440x900, cache disabled, poster state read before any scroll and video state read after scrolling each card to the centre of the viewport:
 
-- before any scroll: 0 `<video>` elements, 4 poster images loaded and laid out at 477x400, 347x195, 430x306, 335x215.
-- after scrolling each card into view: all four videos exist with `preload="none"`, `poster` set, `paused=false`, `loop=true`
-  (constructor 644x540 at 8.002 s, parser-extension 854x480 at 8.008 s, samo 674x480 at 8.400 s, kran 748x480 at 2.035 s).
-- after scrolling back to the top: all four report `paused=true`, so the pause/resume path works.
-- no JavaScript exceptions. The only console entry is a pre-existing 404 for `/<lang>/_vercel/speed-insights/script.js`, which `app/[lng]/layout.tsx` requests outside Vercel on the base commit
-  as well.
+- before any scroll: 0 `<video>` elements, 4 poster images, all `complete`, laid out at 477x400, 347x195, 430x306 and 335x215, which is byte for byte the box the `<video>` occupied before.
+  The constructor poster reports `visibility: hidden` because its own card keeps `visibility: hidden` until the reveal animation starts, exactly as on the base commit.
+- after scrolling each card into view: the video for that card exists with `preload="none"`, `poster` set and `paused=false`. Constructor 644x540 / 8.002 s, parser-extension 854x480 / 8.008 s,
+  samo 674x480 / 8.400 s, kran 748x480 / 2.035 s, all `readyState 4`.
+- leaving a card pauses its video (`paused=true`), returning to it resumes it.
+- kran reports `loop=false` and stops after its 2.035 s, matching the base markup which has no `loop` on that clip.
+- no JavaScript exception and no `console.error` during load and during the scroll pass. The only console entry in the network log is the pre-existing 404 for
+  `/<lang>/_vercel/speed-insights/script.js`, which the layout requests outside Vercel on the base commit too.
+- screenshots of the card band at `/tmp/perf/videos5-cards.png` (scrollY 5900, samo and kran) and `/tmp/perf/videos5-card-constructor.png` (scrollY 2900): the video and poster boxes sit in
+  their original position with the original border radius, no empty box, no letterboxing and no change in the surrounding text layout.

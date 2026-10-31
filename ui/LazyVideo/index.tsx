@@ -70,7 +70,7 @@ export default function LazyVideo({
           className={className}
         />
       ) : (
-        <img src={poster} alt={ariaLabel ?? ''} decoding="async" className={className} />
+        <img src={poster} alt={ariaLabel ?? ''} fetchPriority="low" decoding="async" className={className} />
       )}
     </div>
   );
