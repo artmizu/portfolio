@@ -6,6 +6,7 @@ import { useIntersection } from 'react-use';
 import type { Project } from 'shared/type/Project';
 import DateMarker from 'ui/DateMarker';
 import H2 from 'ui/h2';
+import LazyVideo from 'ui/LazyVideo';
 import st from './index.module.scss';
 
 function FactoidBase({
@@ -106,16 +107,13 @@ export function FactoidParserExtension({ data }: { data: Project }) {
           [st['parser-extension_visible']]: isVisible,
         })}
       >
-        <div className={st['parser-extension__video-wrapper']}>
-          <video
-            playsInline
-            autoPlay
-            muted
-            loop
-            src="/videos/factoid/parser-extension-preview.mp4"
-            className={st['parser-extension__video']}
-          />
-        </div>
+        <LazyVideo
+          src="/videos/factoid/parser-extension-preview.mp4"
+          poster="/videos/posters/parser-extension-preview.webp"
+          wrapperClassName={st['parser-extension__video-wrapper']}
+          className={st['parser-extension__video']}
+          ariaLabel={data.title}
+        />
       </div>
     </FactoidBase>
   );

@@ -7,6 +7,7 @@ import { useIntersection } from 'react-use';
 import type { Project } from 'shared/type/Project';
 import DateMarker from 'ui/DateMarker';
 import H2 from 'ui/h2';
+import LazyVideo from 'ui/LazyVideo';
 import RichText from 'ui/RichText';
 import MarketplaceBottomImage from './asset/marketplace/bottom.jpg';
 import MarketplaceTopImage from './asset/marketplace/top.jpg';
@@ -110,16 +111,13 @@ export function ProjectCardLargeConstructor({ data }: { data: Project }) {
           [st.constructor_visible]: isVisible,
         })}
       >
-        <div className={st['constructor__video-wrapper']}>
-          <video
-            playsInline
-            autoPlay
-            muted
-            loop
-            src="/videos/projects/constructor-preview.mp4"
-            className={st.constructor__video}
-          />
-        </div>
+        <LazyVideo
+          src="/videos/projects/constructor-preview.mp4"
+          poster="/videos/posters/constructor-preview.webp"
+          wrapperClassName={st['constructor__video-wrapper']}
+          className={st.constructor__video}
+          ariaLabel={data.title}
+        />
         <div className={st.constructor__spot} />
       </div>
     </ProjectCardLargeBase>
@@ -198,9 +196,13 @@ export function ProjectCardLargeSamo({ data }: { data: Project }) {
         <div className={st.samo__bottom}>
           <Image src={SamoImage} width="450" className={st.samo__preview} alt={data.title} />
         </div>
-        <div className={st['samo__video-wrapper']}>
-          <video playsInline autoPlay muted loop src="/videos/projects/samo-preview.mp4" className={st.samo__video} />
-        </div>
+        <LazyVideo
+          src="/videos/projects/samo-preview.mp4"
+          poster="/videos/posters/samo-preview.webp"
+          wrapperClassName={st['samo__video-wrapper']}
+          className={st.samo__video}
+          ariaLabel={data.title}
+        />
       </div>
     </ProjectCardLargeBase>
   );
@@ -215,9 +217,14 @@ export function ProjectCardLargeKran({ data }: { data: Project }) {
           [st.kran_visible]: isVisible,
         })}
       >
-        <div className={st['kran__video-wrapper']}>
-          <video playsInline autoPlay muted src="/videos/projects/kran-preview.mp4" className={st.kran__video} />
-        </div>
+        <LazyVideo
+          src="/videos/projects/kran-preview.mp4"
+          poster="/videos/posters/kran-preview.webp"
+          wrapperClassName={st['kran__video-wrapper']}
+          className={st.kran__video}
+          loop={false}
+          ariaLabel={data.title}
+        />
       </div>
     </ProjectCardLargeBase>
   );
