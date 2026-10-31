@@ -36,7 +36,7 @@ rewrite this file.
 
 ```
 app/[lng]/            layout (metadata, fonts, SpeedInsights), page (landing), globals.css
-proxy.ts              locale middleware: cookie `i18next`, Accept-Language, redirect to /<lng>
+proxy.ts              locale proxy: cookie `i18next`, then Accept-Language, then ru; `/` is rewritten to the resolved locale (no redirect, no shared caching), every other path redirects to `/<lng>...`, prefix checks match whole path segments
 i18n/                 settings, server helper getTranslation, client hook useTranslation, locales/*.json
 shared/               font.ts (next/font), useIntersection.ts, type/
 ui/                   one folder per component with a .module.scss next to it

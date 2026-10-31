@@ -10,11 +10,26 @@ export const config = {
 };
 
 const cookieName = 'i18next';
-const rootRewriteHeader = 'x-proxy-root-rewrite';
+const rootRewriteMarker = 'x-proxy-root-rewrite';
+const rootRewriteToken = crypto.randomUUID();
+const excludedPaths = ['/_next', '/favicon.ico', '/favicon.png', '/og.jpg', '/videos', '/images'];
 
-function rootRewriteRequestHeaders(req: NextRequest) {
+function matchesPath(pathname: string, target: string) {
+  return pathname === target || pathname.startsWith(`${target}/`);
+}
+
+function isLocalePath(pathname: string) {
+  return languages.some((lng) => matchesPath(pathname, `/${lng}`));
+}
+
+function isExcludedPath(pathname: string) {
+  return excludedPaths.some((target) => matchesPath(pathname, target));
+}
+
+function requestHeadersWithoutMarker(req: NextRequest, marker?: string) {
   const headers = new Headers(req.headers);
-  headers.set(rootRewriteHeader, '1');
+  headers.delete(rootRewriteMarker);
+  if (marker) headers.set(rootRewriteMarker, marker);
   return headers;
 }
 
@@ -26,25 +41,25 @@ export function proxy(req: NextRequest) {
     (headerLng ? acceptLanguage.get(headerLng) : undefined) ??
     fallbackLng;
 
-  if (
-    !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
-    !req.nextUrl.pathname.startsWith('/_next') &&
-    !req.nextUrl.pathname.startsWith('/favicon') &&
-    !req.nextUrl.pathname.startsWith('/og') &&
-    !req.nextUrl.pathname.startsWith('/videos') &&
-    !req.nextUrl.pathname.startsWith('/images') &&
-    req.nextUrl.pathname !== '/'
-  ) {
-    return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
+  const { pathname, search } = req.nextUrl;
+  const isRoot = pathname === '/';
+
+  if (!isLocalePath(pathname) && !isExcludedPath(pathname) && !isRoot) {
+    return NextResponse.redirect(new URL(`/${lng}${pathname}${search}`, req.url));
   }
 
-  const isRoot = req.nextUrl.pathname === '/';
-  const isRootRewrite = req.headers.get(rootRewriteHeader) === '1';
-  const response = isRoot
-    ? NextResponse.rewrite(new URL(`/${lng}`, req.url), { request: { headers: rootRewriteRequestHeaders(req) } })
-    : NextResponse.next();
+  const marker = req.headers.get(rootRewriteMarker);
+  const nextHeaders = marker ? requestHeadersWithoutMarker(req) : null;
 
-  if (isRoot || (isRootRewrite && req.nextUrl.pathname === `/${lng}`)) {
+  const response = isRoot
+    ? NextResponse.rewrite(new URL(`/${lng}${search}`, req.url), {
+        request: { headers: requestHeadersWithoutMarker(req, rootRewriteToken) },
+      })
+    : nextHeaders
+      ? NextResponse.next({ request: { headers: nextHeaders } })
+      : NextResponse.next();
+
+  if (isRoot || marker === rootRewriteToken) {
     response.headers.set('Cache-Control', 'private, no-store');
   }
 
@@ -52,7 +67,9 @@ export function proxy(req: NextRequest) {
     let lngInReferer: Language | undefined;
     try {
       const refererUrl = new URL(req.headers.get('referer') ?? req.url);
-      lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`));
+      if (refererUrl.host === (req.headers.get('host') ?? req.nextUrl.host)) {
+        lngInReferer = languages.find((l) => matchesPath(refererUrl.pathname, `/${l}`));
+      }
     } catch {
       // malformed Referer header: leave the cookie untouched
     }
