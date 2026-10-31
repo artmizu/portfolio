@@ -1,9 +1,22 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import * as twgl from 'twgl.js/dist/7.x/twgl.js';
 import fragmentShaderSource from './fragment.frag';
 import fragmentColorShaderSource from './fragment-color.frag';
+import {
+  type BufferInfo,
+  bindFramebufferInfo,
+  createBufferInfoFromArrays,
+  createFramebufferInfo,
+  createProgramInfo,
+  createTextures,
+  drawBufferInfo,
+  type FramebufferInfo,
+  type ProgramInfo,
+  resizeCanvasToDisplaySize,
+  setBuffersAndAttributes,
+  setUniforms,
+} from './gl';
 import st from './index.module.scss';
 import { plane, texture } from './shape';
 import vertexShaderSource from './vertex.vert';
@@ -17,15 +30,15 @@ type Uniform = {
 };
 
 type Programs = {
-  programInfo: twgl.ProgramInfo;
-  programInfoSecond: twgl.ProgramInfo;
-  bufferInfo: twgl.BufferInfo;
+  programInfo: ProgramInfo;
+  programInfoSecond: ProgramInfo;
+  bufferInfo: BufferInfo;
 };
 
 type Targets = {
   textures: Record<string, WebGLTexture>;
-  fb: twgl.FramebufferInfo;
-  fb2: twgl.FramebufferInfo;
+  fb: FramebufferInfo;
+  fb2: FramebufferInfo;
 };
 
 const NARROW_VIEWPORT_MAX_WIDTH = 900;
@@ -73,9 +86,9 @@ export default function Canvas() {
     let elapsedTime = 0;
 
     function createTargets(): Targets {
-      twgl.resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, Math.min(1, window.devicePixelRatio));
+      resizeCanvasToDisplaySize(gl.canvas as HTMLCanvasElement, Math.min(1, window.devicePixelRatio));
 
-      const textures = twgl.createTextures(gl, {
+      const textures = createTextures(gl, {
         u_framebuffer: {
           width: gl.canvas.width,
           height: gl.canvas.height,
@@ -91,8 +104,8 @@ export default function Canvas() {
 
       return {
         textures,
-        fb: twgl.createFramebufferInfo(gl, [{ attachment: textures.u_framebuffer }]),
-        fb2: twgl.createFramebufferInfo(gl, [{ attachment: textures.u_framebuffersecond }]),
+        fb: createFramebufferInfo(gl, [textures.u_framebuffer]),
+        fb2: createFramebufferInfo(gl, [textures.u_framebuffersecond]),
       };
     }
 
@@ -106,11 +119,11 @@ export default function Canvas() {
 
     function createPrograms(): Programs {
       return {
-        programInfo: twgl.createProgramInfo(gl, [vertexShaderSource, fragmentShaderSource]),
-        programInfoSecond: twgl.createProgramInfo(gl, [vertexShaderSource, fragmentColorShaderSource]),
-        bufferInfo: twgl.createBufferInfoFromArrays(gl, {
-          a_position: plane,
-          a_texture: texture,
+        programInfo: createProgramInfo(gl, [vertexShaderSource, fragmentShaderSource]),
+        programInfoSecond: createProgramInfo(gl, [vertexShaderSource, fragmentColorShaderSource]),
+        bufferInfo: createBufferInfoFromArrays(gl, {
+          a_position: { data: plane, numComponents: 3 },
+          a_texture: { data: texture, numComponents: 2 },
         }),
       };
     }
@@ -160,25 +173,25 @@ export default function Canvas() {
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
       if (uniforms.u_frame % 2 === 0) {
-        twgl.bindFramebufferInfo(gl, targets.fb);
+        bindFramebufferInfo(gl, targets.fb);
         uniforms.u_texture = targets.textures.u_framebuffersecond;
       } else {
-        twgl.bindFramebufferInfo(gl, targets.fb2);
+        bindFramebufferInfo(gl, targets.fb2);
         uniforms.u_texture = targets.textures.u_framebuffer;
       }
 
       // biome-ignore lint/correctness/useHookAtTopLevel: gl.useProgram is the WebGL API, not a React hook
       gl.useProgram(programs.programInfo.program);
-      twgl.setBuffersAndAttributes(gl, programs.programInfo, programs.bufferInfo);
-      twgl.setUniforms(programs.programInfo, uniforms);
-      twgl.drawBufferInfo(gl, programs.bufferInfo);
+      setBuffersAndAttributes(gl, programs.programInfo, programs.bufferInfo);
+      setUniforms(gl, programs.programInfo, uniforms);
+      drawBufferInfo(gl, programs.bufferInfo);
 
-      twgl.bindFramebufferInfo(gl, null);
+      bindFramebufferInfo(gl, null);
       // biome-ignore lint/correctness/useHookAtTopLevel: gl.useProgram is the WebGL API, not a React hook
       gl.useProgram(programs.programInfoSecond.program);
-      twgl.setBuffersAndAttributes(gl, programs.programInfoSecond, programs.bufferInfo);
-      twgl.setUniforms(programs.programInfoSecond, uniforms);
-      twgl.drawBufferInfo(gl, programs.bufferInfo);
+      setBuffersAndAttributes(gl, programs.programInfoSecond, programs.bufferInfo);
+      setUniforms(gl, programs.programInfoSecond, uniforms);
+      drawBufferInfo(gl, programs.bufferInfo);
     }
 
     function render(time: number) {

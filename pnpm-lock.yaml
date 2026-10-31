@@ -50,9 +50,6 @@ importers:
       sharp:
         specifier: ^0.35.5
         version: 0.35.5(@types/node@26.6.6)
-      twgl.js:
-        specifier: ^7.0.0
-        version: 7.0.0
     devDependencies:
       '@biomejs/biome':
         specifier: 2.6.4
@@ -2504,9 +2501,6 @@ packages:
   tslib@2.9.1:
     resolution: {integrity: sha512-a4Ux9VKuIMHsOS7ENbEq6hK2ZGYIT27Rtl0E4eD9KqwxhKiQeMZE/9xb3IdYwWaSOyIBQLExhQgXDTYoiCxnWA==}
 
-  twgl.js@7.0.0:
-    resolution: {integrity: sha512-9HHZ8emdZb2nKPU0FDIGDlkp6AD9rWFv7ThqdbmUqyBhD3WTQpLN+89w4B+YshGwD1fL6PMVpVKZqC0pikgmcA==}
-
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -4730,8 +4724,6 @@ snapshots:
       loader-utils: 3.3.1
 
   tslib@2.9.1: {}
-
-  twgl.js@7.0.0: {}
 
   type-check@0.4.0:
     dependencies:
