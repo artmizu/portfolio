@@ -35,13 +35,6 @@ const RESIZE_DEBOUNCE_MS = 250;
 const MAX_FRAME_DELTA_S = 0.1;
 const IDLE_SETUP_TIMEOUT_MS = 200;
 
-function createWebGLContext(canvas: HTMLCanvasElement) {
-  const context = canvas.getContext('webgl');
-  if (!context) throw Error('Canvas context not found');
-
-  return context;
-}
-
 type IdleWindow = Window & {
   requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
   cancelIdleCallback?: (handle: number) => void;
@@ -56,7 +49,9 @@ export default function Canvas() {
     const wrapper = wrapperRef.current;
     if (!(canvas && wrapper)) return;
 
-    const gl = createWebGLContext(canvas);
+    const context = canvas.getContext('webgl');
+    if (!context) return;
+    const gl: WebGLRenderingContext = context;
 
     const uniforms: Uniform = {
       u_texture: null,
