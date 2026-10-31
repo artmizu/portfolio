@@ -17,7 +17,8 @@ milliseconds.
 
 This subsection describes the latin-only configuration that shipped on `perf/fonts`. It is no longer
 the shipped configuration: `perf/fonts2` restores the cyrillic subsets. The history is kept as
-written, and the current state with its numbers is in the last subsection of this section.
+written, and the current state with its numbers is in "The cyrillic preloads were restored in
+`perf/fonts2`" below.
 
 `shared/font.ts` asks for the latin subset only:
 
@@ -32,15 +33,20 @@ files (both families, latin, latin-ext, cyrillic, cyrillic-ext, greek, vietnames
 `.next/static/media/` and in the CSS with their own `unicode-range`. What changes is the `<link
 rel="preload">` set in the document:
 
-| locale          | preloaded woff2                                                | bytes |
-| --------------- | -------------------------------------------------------------- | ----- |
-| `/en` and `/ru` | `07c7676b89ed2778-s.p.2bn3s6zvc0dyp.woff2` (Inter latin)       | 48432 |
-| `/en` and `/ru` | `51038ad943701fbc-s.p.0g1n-t9ppwqrh.woff2` (Philosopher latin) | 14000 |
+| locale          | preloaded woff2                                                | bytes on disk |
+| --------------- | -------------------------------------------------------------- | ------------- |
+| `/en` and `/ru` | `07c7676b89ed2778-s.p.2bn3s6zvc0dyp.woff2` (Inter latin)       | 48432         |
+| `/en` and `/ru` | `51038ad943701fbc-s.p.0g1n-t9ppwqrh.woff2` (Philosopher latin) | 14000         |
+
+Sizes in this table are `ls -l .next/static/media/*.woff2`. A request for the same file reports 300 B
+more in `transferSize`, which is the response headers, so the preload table and the resource timing
+lists below differ by that constant.
 
 ### Requests per locale
 
 Full list from the page itself (`performance.getEntriesByType('resource')`, headless, cache
-disabled), base build versus this branch:
+disabled), base build versus this branch. Byte counts here and in the rest of this document are
+`transferSize`, that is the file size on disk plus 300 B of response headers per request:
 
 | locale | base                                                                                                          | this branch                                                  |
 | ------ | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
@@ -57,10 +63,10 @@ exactly the same two files, in the same encoding, as the base build.
 
 `/ru` is the default locale (`fallbackLng` in `i18n/settings.ts`, and `x-default` points at `/ru`), so
 the locale that loses its four preloads is the one most first-time visitors get. The two cyrillic
-faces, 19044 + 8136 = 27180 B, are now requested only after the browser has parsed the document and
-found Cyrillic text to paint. Measured on `/ru` with `/tmp/perf/eval.sh`: the latin faces finish at
-29 and 31 ms, the cyrillic faces start at 53 and 66 ms and finish at 87 and 88 ms, FCP is 92 ms,
-CLS is 0 in all four harness runs and LCP stays inside the noise band (see section 2). Because
+faces, 18744 + 7836 = 26580 B on disk, are now requested only after the browser has parsed the
+document and found Cyrillic text to paint. Measured on `/ru` with `/tmp/perf/eval.sh`: the latin faces
+finish at 29 and 31 ms, the cyrillic faces start at 53 and 66 ms and finish at 87 and 88 ms, FCP is
+92 ms, CLS is 0 in all four harness runs and LCP stays inside the noise band (see section 2). Because
 next/font emits `font-display: swap`, Cyrillic text paints in the fallback face first and swaps when
 the real face lands, so there is no invisible text, only a possible short swap.
 
@@ -133,7 +139,9 @@ number of files marked with `-s.p.` (preloaded) goes from 2 to 4.
 
 #### woff2 requests per locale, fresh profile
 
-`/tmp/perf/eval.sh`, `performance.getEntriesByType('resource')`, one page load each:
+`/tmp/perf/eval.sh`, `performance.getEntriesByType('resource')`, one page load each. The byte counts
+are `transferSize`, so they are 300 B above the file size per request (see the note under the preload
+table above):
 
 | locale | latin only                                                                                                                                   | latin and cyrillic                                                                                                               |
 | ------ | -------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
@@ -172,38 +180,60 @@ Desktop: no regression. The `/en` median falls from 96 to 76 ms and the `/ru` me
 which is the same direction the earlier latin-only change could not demonstrate, and the samples
 overlap in both directions, so neither direction is a reliable signal on this machine.
 
-Mobile: worse, and the samples do not overlap much. `/en` 590 to 614 ms at the median, `/ru` 602 to 634
-ms at the median, with a longer high tail on the cyrillic side (732 and 772 ms). `/en` also shows the
-byte cost directly: the `load` event moves from 3307 to 3407 ms up to 3436 to 3468 ms, about the 27 KB
-extra at the emulated 1.6 Mbit/s. `/ru` fetches the same bytes in both builds, so its shift cannot be a
-byte count effect; the only difference there is that four faces are preloaded at high priority instead
-of two preloaded and two requested after the document parse. The `tbt` of the cyrillic side (33 to 84
-ms) is not higher than the latin-only side (36 to 89 ms), so CPU contention does not explain the shift
-either. Honest summary: on the mobile emulation the revert costs about 25 to 35 ms of LCP at the
-median, and the earlier latin-only change saved the mirror image of that. The acceptance criterion
-"lcp not worse" is met on desktop and not met on the mobile emulation.
+Mobile: worse, and the samples are bimodal, which is why this document no longer quotes a single
+figure. The runs of the cyrillic side fall into two modes, 596 to 636 ms and 716 to 772 ms, while the
+latin-only side stays in one mode, 572 to 624 ms, with a single 724 ms run in the `/ru` set:
+
+| locale | side           | n   | low mode   | high mode  | median | mean |
+| ------ | -------------- | --- | ---------- | ---------- | ------ | ---- |
+| `/en`  | latin only     | 8   | 572 to 624 | none       | 590    | 597  |
+| `/en`  | latin+cyrillic | 8   | 596 to 616 | 716 to 732 | 614    | 651  |
+| `/ru`  | latin only     | 12  | 576 to 612 | 724, 1 run | 602    | 609  |
+| `/ru`  | latin+cyrillic | 12  | 612 to 636 | 720 to 772 | 634    | 671  |
+
+An independent review of the same build, with nine mobile runs per cell, landed on the same
+bimodality from a different session and reported +104 ms on `/en` and +28 ms on `/ru` at the median,
+and +69 ms and +62 ms at the mean. The means agree across both measurement sets (54 to 69 ms on
+`/en`, 62 ms on `/ru`); the medians do not, because which mode the middle sample falls in depends on
+how many runs of the session hit the high mode. The penalty is therefore real but not tightly
+quantified: expect tens of milliseconds on average and a step of about 100 ms for a visitor whose
+load lands in the high mode. The earlier latin-only change saved the mirror image of that.
+
+The acceptance ledger for this document is now one met and one breached criterion. "lcp not worse" is
+met on desktop and not met on the mobile emulation, as above. The byte budget this document set for
+`/en` in "Locale aware instances were implemented, measured and rejected" (62 KB against a 65 KB
+budget) is breached: `/en` is 88 KB now, and the next subsection states the cost.
 
 #### The cost of the revert on `/en`, stated explicitly
 
-The two Cyrillic faces are 8136 + 19044 = 27180 B of woff2. `/en` fetches both because they are
-preloaded, even though the page has no Cyrillic code point, so:
+The two Cyrillic faces are 18744 + 7836 = 26580 B on disk, and 19044 + 8136 = 27180 B as
+`transferSize` on the wire. `/en` fetches both because they are preloaded, even though the page has no
+Cyrillic code point, so:
 
-| metric        | `/en` latin only | `/en` latin+cyrillic | delta  |
-| ------------- | ---------------- | -------------------- | ------ |
-| font bytes    | 63032            | 90212                | +27180 |
-| `fontKB`      | 62               | 88                   | +26    |
-| `transferKB`  | 564 desktop      | 591 desktop          | +27    |
-| `transferKB`  | 566 mobile       | 592 mobile           | +26    |
-| requests      | 45               | 47                   | +2     |
-| mobile `load` | 3307 to 3407 ms  | 3436 to 3468 ms      | +130   |
+| metric                                | `/en` latin only | `/en` latin+cyrillic | delta  |
+| ------------------------------------- | ---------------- | -------------------- | ------ |
+| font bytes on disk                    | 62432            | 89012                | +26580 |
+| font bytes on the wire (transferSize) | 63032            | 90212                | +27180 |
+| `fontKB`                              | 62               | 88                   | +26    |
+| `transferKB`                          | 564 desktop      | 591 desktop          | +27    |
+| `transferKB`                          | 566 mobile       | 592 mobile           | +26    |
+| requests                              | 45               | 47                   | +2     |
+| mobile `load`                         | 3307 to 3407 ms  | 3436 to 3468 ms      | +130   |
 
-`/ru` pays nothing in bytes: same 90212 B, same `transferKB` 590 desktop and 591 mobile, same 47
-requests. It buys the earlier font arrival described above.
+`/ru` pays nothing in bytes: same 90212 B on the wire, same `transferKB` 590 desktop and 591 mobile,
+same 47 requests. It buys the earlier font arrival described above.
+
+The `/en` mobile `load` event in the last row is the byte cost seen directly: about 27 KB extra at the
+emulated 1.6 Mbit/s. `/ru` fetches the same bytes in both builds, so its LCP shift above cannot be a
+byte count effect; the only difference there is that four faces are preloaded at high priority instead
+of two preloaded and two requested after the document parse. The `tbt` of the cyrillic side (33 to 84
+ms) is not higher than the latin-only side (36 to 89 ms), so CPU contention does not explain the shift
+either.
 
 #### Screenshots of `/ru` after the revert
 
-`/tmp/perf/shot.sh http://127.0.0.1:3492/ru <out.png> <desktop|mobile>`, 5 s in, WebGL canvas
-included:
+`/tmp/perf/shot.sh http://127.0.0.1:<port>/ru <out.png> <desktop|mobile>`, 5 s in, WebGL canvas
+included, where `<port>` is the port `next start` was started on (`3492` in the runs above):
 
 | file                              | what it shows                                                                                                                                                                                                                                                                                                                  |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -215,21 +245,26 @@ and Inter's Cyrillic in the body, with no fallback shapes, no missing glyphs and
 
 #### Check after a `next` upgrade
 
-next/font self hosts every face in the Google CSS2 response and emits `@font-face` rules per subset,
-so the cyrillic faces existing in the build is implementation behaviour, not a documented contract.
-After every `next` upgrade, run these four checks against a fresh `pnpm build`:
+next/font self hosts every face in the Google CSS2 response and emits `@font-face` rules per subset.
+With cyrillic in `subsets` this is no longer only an unrequested subset surviving as a side effect:
+the cyrillic files are asked for and preloaded, so it would take a regression on a requested subset,
+named and preloaded by the config, to lose them. The risk is therefore smaller than the trade-off
+subsection above describes for the latin-only configuration, but it is not zero: the rule is still
+emitted by next/font rather than by this repository, and a broken subset would show up as the wrong
+typeface rather than as an error. After every `next` upgrade, run three commands against a fresh
+`pnpm build`:
 
 ```
-ls .next/static/media/*-s.p.*.woff2 | wc -l                                              # 4
-curl -s http://127.0.0.1:3492/ru | grep -o 'rel="preload" href="/_next/static/media/[^"]*"' | wc -l   # 4
-rg -c 'unicode-range:U\+301,U\+400-45F' .next/static/chunks/*.css                        # 2, Inter and Philosopher
+ls .next/static/media/*-s.p.*.woff2 | wc -l                                                             # 4
+curl -s http://127.0.0.1:<port>/ru | grep -o 'rel="preload" href="/_next/static/media/[^"]*"' | wc -l   # 4
+rg -c 'unicode-range:U\+301,U\+400-45F' .next/static/chunks/*.css                                       # 2, Inter and Philosopher
 ```
 
-and in the browser on `/ru`: `document.fonts.check('16px Philosopher', 'Александр')` and
-`document.fonts.check('16px Inter', 'разработка')` must both return true while exactly four `.woff2`
-requests are in the resource list. If the cyrillic rules are no longer emitted, `/ru` silently falls
-back to the system font: no error, no failed request, just the wrong typeface, which is the failure
-mode the trade-off subsection above describes for the opposite direction.
+where `<port>` is the port `next start` is running on, and then one check in the browser on `/ru`:
+`document.fonts.check('16px Philosopher', 'Александр')` and `document.fonts.check('16px Inter',
+'разработка')` must both return true while exactly four `.woff2` requests are in the resource list. If
+the cyrillic rules are gone, `/ru` falls back to the system font: no error, no failed request, just the
+wrong typeface.
 
 ## 2. Harness numbers
 
