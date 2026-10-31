@@ -29,7 +29,7 @@ background-image:
     );
 ```
 
-Browsers negotiate from `type()` and fetch exactly one file per element. Verified with a CDP network log: all 19 backgrounds issue one request each, all of them `.avif`, and no `.webp`, `.jpg` or `.png` file is requested.
+Browsers negotiate from `type()` and fetch exactly one file per element. Verified against the production server: 19 backgrounds per viewport, one request each, all of them `.avif`, and no `.webp`, `.jpg` or `.png` file is requested.
 
 350 KB of initial image payload is not reachable with WebP alone, because these are dense screenshots. Measured totals after resizing to 2x: WebP 517 KB, AVIF 329 KB. AVIF is therefore the served format. The WebP files remain as the fallback candidate at the same paths and the same dimensions.
 
@@ -68,18 +68,39 @@ Files whose source already matched 2x the box keep their dimensions. Their bytes
 - `kran/bg` is painted at `auto 477px`, so the source is exactly 2x on desktop.
 - factoid card stacks are painted at `background-size: 220px 226px`, so the source is exactly 2x.
 
-## Rakuten is not a variant selection bug
+## Rakuten: two distinct artworks, both required
 
-`rakuten__left` paints `sp.webp` and `rakuten__right` paints `pc.webp`. They are two different artworks rendered side by side: a phone mockup and a desktop screenshot. Both elements occupy layout space at every width (`left: 150x320` and `right: 330x380` on desktop, `150x270` and `390x270` below 900 px), and both are visible at 1440 px and at 390 px.
+`rakuten__left` paints `sp` and `rakuten__right` paints `pc`. These are not two sizes of one image: `sp` is the phone layout of the Rakuten site and `pc` is the desktop layout, and the card shows them as a pair, a phone mockup next to a desktop screenshot. Both boxes occupy layout space at every width and both are painted at 1440 px and at 390 px.
 
-Reported DOM boxes on the base build:
+DOM boxes, base build:
 
 ```
 desktop 1440: rakuten__left  x=720 y=2010 150x320   rakuten__right x=887 y=2010 330x380
 mobile   390: rakuten__left  x= 40 y=2544 150x270   rakuten__right x=190 y=2544 390x270
 ```
 
-Hiding one of them per breakpoint would leave a 150 px hole in the card, so both stay. What changed is the payload per element: one 2x asset instead of a 5.7x and a 6.8x asset plus two raster fallbacks. Both `sp` and `pc` are requested at both viewports, by design.
+I did try the other reading first, gating the pair on the existing 900 px media query so that only one artwork loaded per viewport. It empties half the card at every width: the phone mockup disappears on desktop and the desktop screenshot disappears on mobile. That change was reverted. Per-viewport variant selection is the wrong model here, and the payload win does not depend on it: the win comes from sizing each file to its own painted box and from switching the served format to AVIF.
+
+Each file is sized from the box it paints, independently:
+
+| file       | painted box at 1440             | painted box at 390              | source              | new              | new AVIF |
+| ---------- | ------------------------------- | ------------------------------- | ------------------- | ---------------- | -------- |
+| rakuten/sp | cover 150x320, 2x needs 300x640 | cover 150x270, 2x needs 300x540 | 860x1864, 108.9 KB  | 300x650, 31.0 KB | 19.2 KB  |
+| rakuten/pc | cover 330x380, 2x needs 907x760 | cover 390x270, 2x needs 780x540 | 2242x1878, 183.5 KB | 907x760, 69.4 KB | 44.4 KB  |
+
+Both variants are therefore requested at both viewports, one request each, and the pair costs 63.6 KB instead of 292.4 KB. Evidence from the full request list, captured with a logging HTTP proxy in front of `next start` (no browser instrumentation), production build, cache disabled:
+
+```
+desktop 1440x900 DPR2, one document load, 19 image requests, 336845 B of image bytes
+  /images/projects/rakuten/sp.avif  19712 B  19.2 KB
+  /images/projects/rakuten/pc.avif  45439 B  44.4 KB
+
+mobile 390x844 DPR3, one document load, 19 image requests, 336845 B of image bytes
+  /images/projects/rakuten/sp.avif  19712 B  19.2 KB
+  /images/projects/rakuten/pc.avif  45439 B  44.4 KB
+```
+
+Both files appear in both lists because both boxes are painted at both widths: 19 images per viewport, one request each, no `.webp`, `.jpg` or `.png` requested, and no additional image request after scrolling. One earlier mobile capture recorded the document twice, because the harness overrides device metrics and user agent before navigating and the page occasionally reloads once; that run also showed both rakuten files, twice.
 
 ## Deleted files
 
@@ -125,19 +146,24 @@ Differences are re-encode noise on screenshot content, with no shift in framing,
 
 ## Result
 
-Measured with `/tmp/perf/measure.sh`, production build, cache disabled.
+Measured with `/tmp/perf/measure.sh`, production build, cache disabled, five runs per cell, medians shown. Baseline is `b0f9500` built from the same clone and measured on the same machine.
 
-| metric     | baseline desktop | new desktop | baseline mobile | new mobile |
-| ---------- | ---------------- | ----------- | --------------- | ---------- |
-| imgKB      | 934              | 344         | 934             | 344        |
-| transferKB | 3033             | 2431        | 3033            | 2431       |
-| videoKB    | 1810             | 1810        | 1810            | 1810       |
-| jsKB       | 170              | 170         | 170             | 170        |
-| fontKB     | 88               | 88          | 88              | 88         |
-| requests   | 48               | 45          | 48              | 45         |
-| cls        | 0                | 0           | 0               | 0          |
-| lcp        | 144              | 92          | n/a             | 588        |
+| metric     | baseline desktop    | new desktop          | baseline mobile         | new mobile              |
+| ---------- | ------------------- | -------------------- | ----------------------- | ----------------------- |
+| imgKB      | 934                 | 344                  | 934                     | 344                     |
+| transferKB | 3022                | 2442                 | 1774                    | 2442                    |
+| videoKB    | 1810                | 1810                 | 562                     | 1810                    |
+| jsKB       | 170                 | 170                  | 170                     | 170                     |
+| fontKB     | 88                  | 88                   | 88                      | 88                      |
+| requests   | 45                  | 48                   | 44                      | 48                      |
+| cls        | 0                   | 0                    | 0                       | 0                       |
+| lcp median | 72                  | 80                   | 636                     | 612                     |
+| lcp runs   | 68, 72, 84, 68, 124 | 104, 72, 80, 100, 60 | 712, 636, 596, 592, 712 | 608, 608, 620, 612, 776 |
 
-Images account for 589 KB less. `transferKB` stays at 2431 because video transfer is unchanged at 1810 KB; excluding video the initial payload drops from 1223 KB to 621 KB.
+The mobile `transferKB` and `videoKB` cells are not comparable across builds: under the throttled profile the run does not always finish pulling the four MP4 previews, so the baseline run that completed fewer video requests reports a lower total. The desktop comparison is clean, both builds move the same 1810 KB of video.
+
+Images carry 590 KB less on desktop and on mobile. `transferKB` cannot reach 1700 KB from this group: 1810 KB of the initial desktop payload is the four MP4 previews, which are outside this allowlist. Excluding video, the initial desktop payload drops from 1212 KB to 632 KB.
+
+`lcp` medians differ by 8 ms on desktop and 24 ms on mobile with fully overlapping ranges (desktop 60 to 104 new against 68 to 124 base, mobile 608 to 776 new against 592 to 712 base). The mobile LCP element is the `<h1>` text node, not an image, and four other agents were building on this machine during the runs, so the spread is noise rather than a regression. `cls` is 0 in every run on both builds.
 
 Reproduce the asset work with the numbers in this file: the box is read from the stylesheet, the target is `2x` of the painted size, the WebP is `cwebp -q 80 -m 6 -sharp_yuv`, the AVIF is quality 57 with 4:2:0, and ICC profiles of the source files are carried over.
