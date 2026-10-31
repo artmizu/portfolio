@@ -18,6 +18,8 @@ Base commit: `b9f7fa4`.
 | CLS, desktop, no scroll | 0      | 0          |
 | CLS, mobile, no scroll  | 0      | 0          |
 
+Both columns of every row are produced by the same instrument, so each row is a like-for-like pair. The request counts and `transferKB` figures in this table come from `/tmp/perf/measure.sh`, production build, cache disabled, device scale factor 2 on desktop and 3 on mobile, taken from its `initial` block before any scrolling. The runtime table further down reports sums of per-request `transferSize` collected with `/tmp/perf/eval.sh` in a separate session, and that harness leaves the cache enabled and uses device scale factor 1 on desktop, so it reads 667 KB desktop and 672 KB mobile for the same two builds. The 4 KB desktop and 1 KB mobile gaps between the two tables follow from those settings, not from a change: no figure here is compared against a figure from the other table.
+
 Nothing under `public/` was removed. `du -sh public` is unchanged because every deleted file lived under `ui/`.
 
 ## How the reference list was built
@@ -68,6 +70,8 @@ The reverse check was done too: for every file that imports or points at somethi
 
 Total: 11 789 855 B. `ui/` drops from 13M to 1.5M.
 
+The four preview MP4s among these deletions are exactly the re-encode sources tabulated as the "before" column of `docs/perf-videos.md`: 4 720 929, 1 278 246, 77 308 and 497 476 B. Deleting them from the working tree does not delete them from the repository history: `git show b9f7fa4:ui/ProjectCard/asset/samo/preview.mp4 | wc -c` still returns 1278246, and every deleted path is retrievable from `d2f370d^` or any earlier commit.
+
 The directories that became empty were removed from disk, which git does not track: `ui/Factoid/asset/behance`, `ui/Factoid/asset/parser-recruiter`, `ui/Factoid/asset/verdi`, `ui/Factoid/asset/parser-extension`, `ui/Factoid/asset`, `ui/ProjectCard/asset/constructor` and `ui/ProjectCard/asset/kran`.
 
 ## Kept on purpose
@@ -102,11 +106,15 @@ Effect on the emitted CSS is exactly that rule, verified by concatenating the th
 
 32646 B of CSS to 32591 B, the 55 B of the removed rule.
 
+The same comparison was run in the other direction, JSX to stylesheet, because a name that JSX applies and the module never declares is the mirror image of a dead rule. Four such keys exist in `app/[lng]/page.tsx`: `st['main-page']` at line 70, `st['main-intro__description']` at line 91, `st['main-used-grid__el']` at line 109 and `st['main-used-grid__el-text']` at line 113. None of the four is declared in `app/[lng]/page.module.scss` or in any other stylesheet, so each resolves to `undefined`, contributes no class to its element and styles nothing. `rg -F` for each of the four names returns only the `page.tsx` line that uses it. All four are pre-existing on the base commit and are left in place: a dangling JSX key is not a dead CSS rule, and removing it is a code change outside the scope of this branch.
+
 ## Runtime verification
 
 Prod server: `npx next start --hostname 127.0.0.1 --port 3483`. The baseline came from a second worktree checked out at `b9f7fa4` with its own `pnpm install --frozen-lockfile`, built and served on port 3487, so before and after were measured on the same machine, same Chrome, same harness, in one session.
 
 Request lists were captured with `/tmp/perf/eval.sh` reading `performance.getEntriesByType('resource')` together with `responseStatus` and `transferSize`, in four configurations: desktop and mobile, without scrolling and after scrolling the whole page. Metrics and CLS came from `/tmp/perf/measure.sh <url> <desktop|mobile> scroll`.
+
+Every absolute in the table below is specific to this machine, this Chrome build and this measurement window. An independent run of the same two builds elsewhere reports 45/58/45/56 requests and 694/1607/699/1665 KB, because its window catches two extra `/ru?_rsc=` route prefetches, and it catches them on both sides. The portable claim is the equality itself, not the absolutes: base and branch agree name for name, status for status and byte for byte, which holds regardless of how many prefetches a given machine happens to finish inside the window.
 
 ```
                        requests        transferKB          CLS
@@ -116,6 +124,8 @@ desktop scroll         56     56      1579   1579         0        0
 mobile  noscroll       43     43       672    672         0        0
 mobile  scroll         54     54      1640   1640    0.0302   0.0302
 ```
+
+This table is the `/tmp/perf/eval.sh` scale, the same 667 and 672 KB that the `/tmp/perf/measure.sh` figures in the result table read as 671 and 673 for the reason given there.
 
 The media commit alone leaves the request list byte-identical in all four configurations: no name added, no name removed, same per-request status, same per-request bytes. The CSS commit changes exactly one file name, the content hash of the chunk that lost the rule:
 
@@ -145,4 +155,6 @@ The two offsets that show content are identical. Offset 0 carries the WebGL canv
 
 ## Note for a reviewer
 
-`docs/perf-videos.md` quotes the 4 720 929, 1 278 246, 77 308 and 497 476 B rows as the "before" sizes of the four clips. Those were the files deleted here; the served copies under `public/videos/` are the re-encoded ones and are untouched. The numbers in that document stay accurate as a record of that earlier change.
+`docs/perf-videos.md` quotes the 4 720 929, 1 278 246, 77 308 and 497 476 B rows as the "before" sizes of the four clips. Those were the files deleted here; the served copies under `public/videos/` are the re-encoded ones and are untouched. The numbers in that document stay accurate as a record of that earlier change, and the deleted sources remain readable from git history rather than from the worktree.
+
+`docs/perf-fonts.md` listed `ui/Art/fallback.mp4` as a tracked, unreferenced copy left in place. That document now records the removal in `d2f370d`. No other document carried the same stale statement: `docs/perf-images.md` and `docs/perf-videos.md` do describe the `ui/` asset trees, but nothing they claim about which files remain is contradicted by this branch.
