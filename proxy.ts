@@ -21,13 +21,16 @@ export function proxy(req: NextRequest) {
     !req.nextUrl.pathname.startsWith('/favicon') &&
     !req.nextUrl.pathname.startsWith('/og') &&
     !req.nextUrl.pathname.startsWith('/videos') &&
-    !req.nextUrl.pathname.startsWith('/images')
+    !req.nextUrl.pathname.startsWith('/images') &&
+    req.nextUrl.pathname !== '/'
   ) {
     return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
   }
 
+  const response =
+    req.nextUrl.pathname === '/' ? NextResponse.rewrite(new URL(`/${lng}`, req.url)) : NextResponse.next();
+
   if (req.headers.has('referer')) {
-    const response = NextResponse.next();
     let lngInReferer: Language | undefined;
     try {
       const refererUrl = new URL(req.headers.get('referer') ?? req.url);
@@ -36,8 +39,7 @@ export function proxy(req: NextRequest) {
       // malformed Referer header: leave the cookie untouched
     }
     if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
-    return response;
   }
 
-  return NextResponse.next();
+  return response;
 }
