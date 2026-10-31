@@ -2,7 +2,7 @@
 
 import cls from 'classnames';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useEffectEvent, useRef, useState } from 'react';
 import { useIntersection } from 'react-use';
 import type { Project } from 'shared/type/Project';
 import DateMarker from 'ui/DateMarker';
@@ -61,10 +61,12 @@ export function ProjectCardLargeBase({
     threshold: 0.8,
   });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: onVisible must not re-trigger the observer callback
+  // call the latest callback without re-subscribing the effect on every parent render
+  const onVisibleEvent = useEffectEvent(() => onVisible?.());
+
   useEffect(() => {
     if (intersection && intersection.intersectionRatio > 0.8) {
-      onVisible?.();
+      onVisibleEvent();
     }
   }, [intersection]);
 

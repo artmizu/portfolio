@@ -13,7 +13,11 @@ const initI18next = async (lng: Language, ns?: Namespace<LanguageNS>) => {
   return i18nInstance;
 };
 
-export async function useTranslation(
+/**
+ * Server-side translation helper. Not a React hook: it is async and is called
+ * from Server Components / async functions, so it must not be named `use*`.
+ */
+export async function getTranslation(
   lng: Language,
   ns?: Namespace<LanguageNS>,
   options: { keyPrefix?: KeyPrefix<LanguageNS> } = {},

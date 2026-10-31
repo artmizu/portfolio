@@ -1,6 +1,7 @@
 import cls from 'classnames';
-import { useTranslation } from 'i18n';
+import { getTranslation } from 'i18n';
 import { languages } from 'i18n/settings';
+import type { Metadata } from 'next';
 import type { Language } from 'shared/type/Language';
 import type { Project, ProjectType } from 'shared/type/Project';
 import Art from 'ui/Art';
@@ -16,9 +17,31 @@ export function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ lng: string }> }): Promise<Metadata> {
+  const { lng } = await params;
+  const { t } = await getTranslation(lng as Language, ['about']);
+
+  return {
+    title: t('about:title') as string,
+    description: t('about:meta') as string,
+    alternates: {
+      canonical: `/${lng}`,
+      languages: { en: '/en', ru: '/ru', 'x-default': '/ru' },
+    },
+    openGraph: {
+      type: 'website',
+      siteName: t('about:title') as string,
+      title: t('about:title') as string,
+      description: t('about:meta') as string,
+      locale: lng,
+      images: [{ url: '/og.jpg', width: 1200, height: 600, alt: t('about:title') as string }],
+    },
+  };
+}
+
 export default async function Home({ params }: { params: Promise<{ lng: string }> }) {
   const { lng } = await params;
-  const { t } = await useTranslation(lng as Language, ['about', 'project']);
+  const { t } = await getTranslation(lng as Language, ['about', 'project']);
   const list = t('about:tool.list', { returnObjects: true }) as { title: string; text: string }[];
   const projectList = t('project:list', { returnObjects: true }) as Array<Project & { type?: ProjectType }>;
 
@@ -96,8 +119,8 @@ export default async function Home({ params }: { params: Promise<{ lng: string }
         Open Source
       </H1>
       <section className={st['main-open-source-grid']}>
-        {openSource.map((el, index) => (
-          <div key={index} className={st['main-open-source-grid__el']}>
+        {openSource.map((el) => (
+          <div key={el.github} className={st['main-open-source-grid__el']}>
             <OpenSourceCard {...el} />
           </div>
         ))}

@@ -1,5 +1,6 @@
 import acceptLanguage from 'accept-language';
 import { type NextRequest, NextResponse } from 'next/server';
+import type { Language } from 'shared/type/Language';
 import { fallbackLng, languages } from './i18n/settings';
 
 acceptLanguage.languages(languages);
@@ -26,10 +27,14 @@ export function proxy(req: NextRequest) {
   }
 
   if (req.headers.has('referer')) {
-    const referer = req.headers.get('referer');
-    const refererUrl = new URL(referer ?? req.url);
-    const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`));
     const response = NextResponse.next();
+    let lngInReferer: Language | undefined;
+    try {
+      const refererUrl = new URL(req.headers.get('referer') ?? req.url);
+      lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`));
+    } catch {
+      // malformed Referer header: leave the cookie untouched
+    }
     if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
     return response;
   }
