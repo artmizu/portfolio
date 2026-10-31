@@ -67,31 +67,32 @@ The poster reaches the browser through the Next image optimizer: at DPR 1 it ask
 `/tmp/perf/measure.sh`, headless Chrome, cache disabled, production build, desktop 1440x900 and emulated mobile 390x844 with 4x CPU throttling and 1.6 Mbps / 150 ms. Baseline is the base commit
 `b0f9500` served from a separate copy on port 3399, branch is port 3301, both measured in the same session.
 
-| metric                                 | baseline `b0f9500`        | branch                         |
-| -------------------------------------- | ------------------------- | ------------------------------ |
-| desktop initial `transferKB`           | 3032                      | 1222                           |
-| desktop initial `videoKB`              | 1810                      | 0                              |
-| desktop initial `imgKB`                | 934                       | 934                            |
-| desktop initial `requests`             | 48                        | 45                             |
-| desktop initial `lcp`                  | 100 / 116 ms              | 80 to 108 ms (4 runs)          |
-| desktop initial `load`                 | 226 / 257 ms              | 99 to 139 ms (4 runs)          |
-| desktop `cls`                          | 0                         | 0                              |
-| desktop after full scroll `videoKB`    | 1810                      | 809                            |
-| desktop after full scroll `transferKB` | 3203                      | 2389                           |
-| desktop after full scroll `lcp`        | 12636 ms (`IMG`)          | 12604 ms (`IMG`)               |
-| desktop after full scroll `cls`        | 0                         | 0                              |
-| mobile initial `transferKB`            | 1783                      | 1222                           |
-| mobile initial `videoKB`               | 562                       | 0                              |
-| mobile initial `imgKB`                 | 934                       | 934                            |
-| mobile `load`                          | 13456 / 13426 ms (2 runs) | 6592 / 6618 / 6632 ms (3 runs) |
-| mobile `lcp`                           | 776 / 888 ms (2 runs)     | 776 / 872 / 876 ms (3 runs)    |
-| mobile `cls`                           | 0                         | 0                              |
+| metric                                 | baseline `b0f9500`                   | branch                   |
+| -------------------------------------- | ------------------------------------ | ------------------------ |
+| desktop initial `transferKB`           | 3032                                 | 1222                     |
+| desktop initial `videoKB`              | 1810                                 | 0                        |
+| desktop initial `imgKB`                | 934                                  | 934                      |
+| desktop initial `requests`             | 48                                   | 45                       |
+| desktop initial `lcp`                  | 100 / 116 ms                         | 64 to 108 ms (5 runs)    |
+| desktop initial `load`                 | 226 / 257 ms                         | 82 to 139 ms (5 runs)    |
+| desktop `cls`                          | 0                                    | 0                        |
+| desktop after full scroll `videoKB`    | 1810                                 | 809                      |
+| desktop after full scroll `transferKB` | 3203                                 | 2389                     |
+| desktop after full scroll `lcp`        | 12636 ms (`IMG`)                     | 12604 ms (`IMG`)         |
+| desktop after full scroll `cls`        | 0                                    | 0                        |
+| mobile initial `transferKB`            | 1783                                 | 1222                     |
+| mobile initial `videoKB`               | 562                                  | 0                        |
+| mobile initial `imgKB`                 | 934                                  | 934                      |
+| mobile `load`                          | 13426 to 13467 ms (4 runs)           | 6592 to 6632 ms (4 runs) |
+| mobile `lcp`                           | 776 to 924 ms (4 runs)               | 772 to 888 ms (4 runs)   |
+| mobile `cls`                           | 0                                    | 0                        |
+| mobile after full scroll `videoKB`     | 1810                                 | 809                      |
+| mobile after full scroll `lcp`         | 776 ms (hero text, no new candidate) | 25492 ms (`IMG`)         |
 
 Each timing row lists separate runs of the same measurement. `imgKB` is unchanged between the columns: no poster is requested during initial load, the four poster files only arrive when their card
 approaches the viewport. Videos fetched after a full scroll, from resource timing: 809 KB (constructor 582, samo 119, parser-extension 72, kran 37).
 
-The after-full-scroll `lcp` is an `IMG` in both columns: the largest paint on the page is a project screenshot that only arrives when it scrolls into view, so that row moves with the probe's scroll
-speed, not with this change.
+The mobile after-full-scroll `lcp` needs a caveat: on the base commit all page images are fetched during initial load and painted off screen, so no new largest-paint candidate appears while scrolling and the metric stays on the hero text at 776 ms. On this branch the four posters are lazy, so a poster paints while the probe scrolls and becomes the candidate, at 25.5 s under the throttled profile. Desktop shows the same `IMG` case in both columns (12636 ms base, 12604 and 12620 ms branch), so the two viewports disagree only because of when the image paints. Initial `lcp` is unchanged on both viewports.
 
 ## Functional verification
 
