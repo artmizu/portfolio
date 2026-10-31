@@ -74,8 +74,8 @@
 	&__left {
 		background-image:
 			image-set(
-				url(/images/factoid/parser-recruiter/left.webp) type("image/webp"),
-				url(/images/factoid/parser-recruiter/left.jpg) type("image/jpeg")
+				url(/images/factoid/parser-recruiter/left.avif) type("image/avif"),
+				url(/images/factoid/parser-recruiter/left.webp) type("image/webp")
 			);
 		filter: blur(1px);
 		transform: translate(-60px, 0) rotate(-17deg);
@@ -86,8 +86,8 @@
 		z-index: 1;
 		background-image:
 			image-set(
-				url(/images/factoid/parser-recruiter/center.webp) type("image/webp"),
-				url(/images/factoid/parser-recruiter/center.jpg) type("image/jpeg")
+				url(/images/factoid/parser-recruiter/center.avif) type("image/avif"),
+				url(/images/factoid/parser-recruiter/center.webp) type("image/webp")
 			);
 		box-shadow: 0 9px 26px 15px rgb(130 67 100 / 17%);
 	}
@@ -95,8 +95,8 @@
 	&__right {
 		background-image:
 			image-set(
-				url(/images/factoid/parser-recruiter/right.webp) type("image/webp"),
-				url(/images/factoid/parser-recruiter/right.jpg) type("image/jpeg")
+				url(/images/factoid/parser-recruiter/right.avif) type("image/avif"),
+				url(/images/factoid/parser-recruiter/right.webp) type("image/webp")
 			);
 		filter: blur(1px);
 		transform: translate(60px, 0) rotate(17deg);
@@ -213,8 +213,8 @@
 	&__left {
 		background-image:
 			image-set(
-				url(/images/factoid/verdi/aside.webp) type("image/webp"),
-				url(/images/factoid/verdi/aside.jpg) type("image/jpeg")
+				url(/images/factoid/verdi/aside.avif) type("image/avif"),
+				url(/images/factoid/verdi/aside.webp) type("image/webp")
 			);
 		filter: blur(1px);
 		transform: translate(-60px, 0) rotate(-17deg);
@@ -225,8 +225,8 @@
 		z-index: 1;
 		background-image:
 			image-set(
-				url(/images/factoid/verdi/center.webp) type("image/webp"),
-				url(/images/factoid/verdi/center.jpg) type("image/jpeg")
+				url(/images/factoid/verdi/center.avif) type("image/avif"),
+				url(/images/factoid/verdi/center.webp) type("image/webp")
 			);
 		box-shadow: 0 9px 26px 15px rgb(130 67 100 / 17%);
 	}
@@ -234,8 +234,8 @@
 	&__right {
 		background-image:
 			image-set(
-				url(/images/factoid/verdi/aside.webp) type("image/webp"),
-				url(/images/factoid/verdi/aside.jpg) type("image/jpeg")
+				url(/images/factoid/verdi/aside.avif) type("image/avif"),
+				url(/images/factoid/verdi/aside.webp) type("image/webp")
 			);
 		filter: blur(1px);
 		transform: translate(60px, 0) rotate(17deg);
@@ -279,8 +279,8 @@
 	&__left {
 		background-image:
 			image-set(
-				url(/images/factoid/behance/left.webp) type("image/webp"),
-				url(/images/factoid/behance/left.jpg) type("image/jpeg")
+				url(/images/factoid/behance/left.avif) type("image/avif"),
+				url(/images/factoid/behance/left.webp) type("image/webp")
 			);
 		filter: blur(1px);
 		transform: translate(-120px, 30px) rotate(-17deg);
@@ -295,8 +295,8 @@
 		height: 241px;
 		background-image:
 			image-set(
-				url(/images/factoid/behance/center.webp) type("image/webp"),
-				url(/images/factoid/behance/center.jpg) type("image/jpeg")
+				url(/images/factoid/behance/center.avif) type("image/avif"),
+				url(/images/factoid/behance/center.webp) type("image/webp")
 			);
 		background-repeat: no-repeat;
 		background-size: 236px 241px;
@@ -309,8 +309,8 @@
 	&__right {
 		background-image:
 			image-set(
-				url(/images/factoid/behance/right.webp) type("image/webp"),
-				url(/images/factoid/behance/right.jpg) type("image/jpeg")
+				url(/images/factoid/behance/right.avif) type("image/avif"),
+				url(/images/factoid/behance/right.webp) type("image/webp")
 			);
 		filter: blur(1px);
 		transform: translate(120px, 30px) rotate(17deg);

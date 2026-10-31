@@ -166,24 +166,24 @@
 	&__left {
 		background-image:
 			image-set(
-				url(/images/projects/store/left.webp) type("image/webp"),
-				url(/images/projects/store/left.jpg) type("image/jpeg")
+				url(/images/projects/store/left.avif) type("image/avif"),
+				url(/images/projects/store/left.webp) type("image/webp")
 			);
 	}
 
 	&__center {
 		background-image:
 			image-set(
-				url(/images/projects/store/center.webp) type("image/webp"),
-				url(/images/projects/store/center.jpg) type("image/jpeg")
+				url(/images/projects/store/center.avif) type("image/avif"),
+				url(/images/projects/store/center.webp) type("image/webp")
 			);
 	}
 
 	&__right {
 		background-image:
 			image-set(
-				url(/images/projects/store/right.webp) type("image/webp"),
-				url(/images/projects/store/right.jpg) type("image/jpeg")
+				url(/images/projects/store/right.avif) type("image/avif"),
+				url(/images/projects/store/right.webp) type("image/webp")
 			);
 	}
 
@@ -244,8 +244,8 @@
 		height: 300px;
 		background-image:
 			image-set(
-				url(/images/projects/darkstore/left.webp) type("image/webp"),
-				url(/images/projects/darkstore/left.jpg) type("image/jpeg")
+				url(/images/projects/darkstore/left.avif) type("image/avif"),
+				url(/images/projects/darkstore/left.webp) type("image/webp")
 			);
 		border-radius: 7px;
 	}
@@ -255,8 +255,8 @@
 		height: 360px;
 		background-image:
 			image-set(
-				url(/images/projects/darkstore/right.webp) type("image/webp"),
-				url(/images/projects/darkstore/right.jpg) type("image/jpeg")
+				url(/images/projects/darkstore/right.avif) type("image/avif"),
+				url(/images/projects/darkstore/right.webp) type("image/webp")
 			);
 		border-radius: 7px 0 0;
 	}
@@ -483,8 +483,8 @@
 	height: 100%;
 	background-image:
 		image-set(
-			url(/images/projects/kran/bg.webp) type("image/webp"),
-			url(/images/projects/kran/bg.jpg) type("image/jpeg")
+			url(/images/projects/kran/bg.avif) type("image/avif"),
+			url(/images/projects/kran/bg.webp) type("image/webp")
 		);
 	background-repeat: no-repeat;
 	background-position: center right -92px;
@@ -555,8 +555,8 @@
 		height: 395px;
 		background-image:
 			image-set(
-				url(/images/projects/birden/left.webp) type("image/webp"),
-				url(/images/projects/birden/left.png) type("image/png")
+				url(/images/projects/birden/left.avif) type("image/avif"),
+				url(/images/projects/birden/left.webp) type("image/webp")
 			);
 	}
 
@@ -565,8 +565,8 @@
 		height: 395px;
 		background-image:
 			image-set(
-				url(/images/projects/birden/center.webp) type("image/webp"),
-				url(/images/projects/birden/center.png) type("image/png")
+				url(/images/projects/birden/center.avif) type("image/avif"),
+				url(/images/projects/birden/center.webp) type("image/webp")
 			);
 	}
 
@@ -575,8 +575,8 @@
 		height: 395px;
 		background-image:
 			image-set(
-				url(/images/projects/birden/right.webp) type("image/webp"),
-				url(/images/projects/birden/right.png) type("image/png")
+				url(/images/projects/birden/right.avif) type("image/avif"),
+				url(/images/projects/birden/right.webp) type("image/webp")
 			);
 	}
 
@@ -635,8 +635,8 @@
 		height: 320px;
 		background-image:
 			image-set(
-				url(/images/projects/rakuten/sp.webp) type("image/webp"),
-				url(/images/projects/rakuten/sp.jpg) type("image/jpeg")
+				url(/images/projects/rakuten/sp.avif) type("image/avif"),
+				url(/images/projects/rakuten/sp.webp) type("image/webp")
 			);
 		border-radius: 7px;
 	}
@@ -646,8 +646,8 @@
 		height: 380px;
 		background-image:
 			image-set(
-				url(/images/projects/rakuten/pc.webp) type("image/webp"),
-				url(/images/projects/rakuten/pc.jpg) type("image/jpeg")
+				url(/images/projects/rakuten/pc.avif) type("image/avif"),
+				url(/images/projects/rakuten/pc.webp) type("image/webp")
 			);
 		border-radius: 7px 0 0;
 	}
