@@ -32,7 +32,7 @@ export default function OpenSourceCard({
   return (
     <article className={st.card}>
       <div className={st.card__img}>
-        <Image src={getImage(img)} height="60" alt={title} />
+        <Image src={getImage(img)} height="60" sizes="60px" alt={title} />
       </div>
       <div className={st.card__title}>
         <H3>{title}</H3>
