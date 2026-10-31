@@ -38,7 +38,7 @@ export function ProjectCard({ data }: { data: Project }) {
 
       {data.link && (
         <div className={st['project-card__link']}>
-          <a href={data.link.href} className="ui-link">
+          <a href={data.link.href} className="ui-link" aria-label={`${data.link.text}: ${data.title}`}>
             {data.link.text}
           </a>
         </div>

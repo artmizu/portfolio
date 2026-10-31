@@ -39,7 +39,7 @@ export default function OpenSourceCard({
       </div>
       <div className={cls('ui-p', 'ui-grey-text', st.card__description)}>{description}</div>
       <div className={st.card__github}>
-        <a href={github} className={st['github-link']}>
+        <a href={github} className={st['github-link']} aria-label={`GitHub: ${title}`}>
           GitHub
         </a>
       </div>
