@@ -25,6 +25,7 @@ export default function LazyVideo({
   const endedRef = useRef(false);
   const [mounted, setMounted] = useState(false);
   const [inView, setInView] = useState(false);
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const element = wrapperRef.current;
@@ -63,18 +64,19 @@ export default function LazyVideo({
         <video
           ref={videoRef}
           src={src}
-          poster={poster}
           preload="none"
           playsInline
           muted
           autoPlay
           loop={loop}
           className={className}
+          onPlaying={() => setPlaying(true)}
           onEnded={() => {
             endedRef.current = true;
           }}
         />
-      ) : (
+      ) : null}
+      {!playing ? (
         <Image
           src={poster}
           alt=""
@@ -84,7 +86,7 @@ export default function LazyVideo({
           className={className}
           style={{ objectFit: 'cover', objectPosition: 'left top' }}
         />
-      )}
+      ) : null}
     </div>
   );
 }

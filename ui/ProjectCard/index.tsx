@@ -114,7 +114,7 @@ export function ProjectCardLargeConstructor({ data }: { data: Project }) {
         <LazyVideo
           src="/videos/projects/constructor-preview.mp4"
           poster="/videos/posters/constructor-preview.webp"
-          sizes="(max-width: 900px) 350px, 477px"
+          sizes="(max-width: 900px) 350px, 415px"
           wrapperClassName={st['constructor__video-wrapper']}
           className={st.constructor__video}
         />
