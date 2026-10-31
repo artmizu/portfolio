@@ -4,7 +4,7 @@ Every image on the site is a CSS background declared in `ui/**/*.module.scss`. N
 
 ## Browser floor
 
-The repository declares no `browserslist`, so the Next.js default applies. Next 16.4.3 targets Chrome 111, Edge 111, Firefox 111 and Safari 16.4 (`node_modules/next/dist/docs/03-architecture/supported-browsers.md`). AVIF is supported by all four of those floors (Chrome 85, Edge 85, Firefox 93, Safari 16.4), so `AVIF` as the first `image-set()` candidate with WebP as the second covers the declared target set exactly. Only an engine older than that floor, for example Safari 16.3 or earlier, would lose the image; such an engine is outside the declared target.
+The repository declares no `browserslist`, so the Next.js default applies. Next 16.4.3 targets Chrome 111, Edge 111, Firefox 111 and Safari 16.4 (`node_modules/next/dist/docs/03-architecture/supported-browsers.md`). Per caniuse-lite metadata the AVIF floor is Chrome 85, Edge 85, Firefox 93 and Safari 16.4, so `image-set()` with an AVIF first candidate and a WebP second candidate is expected to resolve to one file on every engine in that set. That expectation is not measured here: the harness is headless Chrome only, so the network evidence below covers Chrome 156. The Safari 16.4 and Chrome 111 to 112 behaviour rests on that metadata, not on a run. An engine older than the declared floor, for example Safari 16.3, would lose the image.
 
 ## What was wrong
 
@@ -20,22 +20,29 @@ The CSS display box is read from the stylesheet, not from the source file. For `
 
 Two groups need more than 2x:
 
-- `rakuten/sp` and `rakuten/pc` are the only two assets a 3x phone renders large: 150x270 and 390x270 CSS pixels, which is 450x810 and 1170x810 device pixels. Sized at 2x they were undersampled on those screens, with visible softening on the search bar and small text. Both are now sized for 3x of the mobile painted box, which also keeps them above 2x of the desktop painted box: `sp` 450x975 against 300x650 desktop need, `pc` 1170x980 against 907x760 desktop need.
+- `rakuten/sp` and `rakuten/pc` are the only two assets a 3x phone renders large: 150x270 and 390x270 CSS pixels, which is 450x810 and 1170x810 device pixels. Sized at 2x they were undersampled on those screens, with visible softening on the search bar and small text. Both are now sized for 3x of the mobile painted box, which also keeps them above 2x of the desktop painted box: `sp` 450x975 against 300x650 desktop need, `pc` 1170x980 against 907x760 desktop need. `pc` is still short of 3x on a 3x desktop display: its 330x380 box is 990x1140 device pixels there and a 980 px tall file is upscaled 1.163x. That case sits outside the stated 2x desktop target; this commit only fixed the 3x phone case.
 - `factoid/behance/left` and `right` are pinned by `background-size: 123px 230px`, so 2x is 246x460. Their sources are 258x460, so they now stay at native size instead of being downscaled to 246x439, which was 1.91x on the vertical axis.
 
-Fidelity of the re-encoded pair, measured as a DPR3 render of the mobile box compared with a LANCZOS render of the original JPEG at the same device resolution:
+Fidelity of the re-encoded pair, with the method stated so it can be repeated. Reference: the original JPEG at `b0f9500`, resampled once with LANCZOS3 to the painted size in device pixels (450x975 and 1170x980), then cropped to the DPR3 mobile box from the top left. Shipped: the AVIF decoded and cropped at the same rectangle. PSNR, MAE and the mean per channel offset are computed over RGB.
 
-| file       | DPR3 device box | AVIF         | PSNR     | MAE      |
-| ---------- | --------------- | ------------ | -------- | -------- |
-| rakuten/sp | 450x810         | q65, 42.8 KB | 37.00 dB | 1.58/255 |
-| rakuten/pc | 1170x810        | q65, 78.1 KB | 39.55 dB | 1.13/255 |
+| file       | device box | AVIF         | PSNR     | MAE      | mean offset R / G / B |
+| ---------- | ---------- | ------------ | -------- | -------- | --------------------- |
+| rakuten/sp | 450x810    | q65, 42.8 KB | 37.29 dB | 1.49/255 | -0.04 / 0.04 / 0.18   |
+| rakuten/pc | 1170x810   | q65, 78.1 KB | 40.84 dB | 0.98/255 | -0.05 / 0.02 / -0.02  |
 
-Both were checked at 1:1 device pixels against the original render: the search bar, the logo and the small product text are indistinguishable at 300 percent zoom.
+A reference that crops the source to the visible region first and then resamples gives 32.92 dB / MAE 2.17 for `sp` and 39.32 dB / MAE 1.12 for `pc`, so 32.9 to 40.8 dB is the range across reasonable reference variants. Earlier revisions of this document carried 37.00 and 39.55 dB, measured over the whole file rather than the visible box, and those numbers are replaced by the table above.
+
+I also compared 1:1 device pixel crops of the search bar, the Rakuten 24 logo and the small product text against the reference render and saw no difference.
 
 Each file is re-encoded twice:
 
 - `.webp` at quality 90 for the four files above and 80 for the rest, written back to the existing path, so every stylesheet path stays valid.
 - a sibling `.avif` at quality 65 for the four files above and 57 for the rest.
+
+Chroma and colour profile, as read back with `avifdec --info` and sharp metadata:
+
+- All 19 AVIFs are 8 bit without alpha. Fifteen are YUV420 and four are YUV444, because sharp encodes 4:4:4 by default: `rakuten/sp`, `rakuten/pc`, `factoid/behance/left` and `factoid/behance/right`. An earlier revision of this document said everything was 4:2:0, which was wrong.
+- No shipped AVIF carries an ICC profile, and neither do the shipped WebPs. The two rakuten JPEG masters carried a 524 byte sRGB IEC61966-2.1 profile and both the resized WebP and the AVIF dropped it, which was not intended. The rendered delta is negligible: the mean per channel offset against the tagged reference render is at most 0.18 of 255, and the tag describes sRGB, which is the space the decoders assume for an untagged file.
 
 The stylesheets select the format with `image-set()` and a single `type()` descriptor per candidate:
 
@@ -47,7 +54,7 @@ background-image:
     );
 ```
 
-Browsers negotiate from `type()` and fetch exactly one file per element. Verified against the production server: 19 backgrounds per viewport, one request each, all of them `.avif`, and no `.webp`, `.jpg` or `.png` requested.
+Browsers negotiate from `type()` and fetch exactly one file per element. The page paints 20 raster background elements but there are 19 distinct files, because `verdi__right` reuses `verdi/aside`. Verified against the production server: 19 image requests per viewport, one per file, all of them `.avif`, and no `.webp`, `.jpg` or `.png` requested.
 
 ## Sizes
 
@@ -135,9 +142,9 @@ public/images/projects/rakuten/{pc,sp}.jpg
 public/images/projects/store/{center,left,right}.jpg
 ```
 
-Unreferenced files in `public/images` (7 files): `kran/bg-2.{jpg,webp}` is a second kran background, 932x954 against 1120x954 for `kran/bg`, added during the Next 16 upgrade and referenced by no stylesheet, component or asset import at any point in the history (`git log -S bg-2 -- ui/` is empty); the card paints `kran/bg.webp` only. `marketplace/{bottom,top}.{jpg,webp}`, `samo/image.{jpg,webp}` and `uae/{left,right}.{jpg,webp}` are copies whose live previews are imported from `ui/ProjectCard/asset/` as JPEG and served through `next/image`, so the copies in `public/images` were never reachable.
+Unreferenced files in `public/images` (12 files): `kran/bg-2.{jpg,webp}` is a second kran background, 932x954 against 1120x954 for `kran/bg`, added during the Next 16 upgrade and referenced by no stylesheet, component or asset import at any point in the history (`git log -S bg-2 -- ui/` is empty); the card paints `kran/bg.webp` only. `marketplace/{bottom,top}.{jpg,webp}`, `samo/image.{jpg,webp}` and `uae/{left,right}.{jpg,webp}` are copies whose live previews are imported from `ui/ProjectCard/asset/` as JPEG and served through `next/image`, so the copies in `public/images` were never reachable.
 
-Dead sources in `ui/ProjectCard/asset` (26 files, 2.60 MB): that directory is reached only through static imports, and `index.tsx` imports exactly `marketplace/bottom.jpg`, `marketplace/top.jpg`, `samo/image.jpg`, `uae/left.jpg` and `uae/right.jpg`. Everything else there was unreachable: `birden/{left,center,right}.{png,webp}`, `darkstore/{left,right}.{jpg,webp}`, `kran/bg.{jpg,webp}`, `kran/bg-2.{jpg,webp}`, `store/{left,center,right}.{jpg,webp}`, `marketplace/{top,bottom}.webp`, `samo/image.webp`, `uae/{left,right}.webp`.
+Dead sources in `ui/ProjectCard/asset` (25 files, 2,668,188 B, 2.55 MiB): that directory is reached only through static imports, and `index.tsx` imports exactly `marketplace/bottom.jpg`, `marketplace/top.jpg`, `samo/image.jpg`, `uae/left.jpg` and `uae/right.jpg`. Everything else there was unreachable: `birden/{left,center,right}.{png,webp}`, `darkstore/{left,right}.{jpg,webp}`, `kran/bg.{jpg,webp}`, `kran/bg-2.{jpg,webp}`, `store/{left,center,right}.{jpg,webp}`, `marketplace/{top,bottom}.webp`, `samo/image.webp`, `uae/{left,right}.webp`.
 
 Directory sizes after the change, from `du -sk`:
 
@@ -162,7 +169,9 @@ Measured with `/tmp/perf/measure.sh`, production build, cache disabled, five run
 
 `imgKB`, `transferKB` and `requests` are identical in all five runs per cell; only the timing columns vary.
 
-Images carry 522 KB less on desktop and on mobile. `transferKB` cannot reach 1700 KB from this group: 1810 KB of the initial desktop payload is the four MP4 previews, which are outside this allowlist. Excluding video, the initial desktop payload drops from 1223 KB to 701 KB.
+Images carry 522 KB less on desktop and on mobile. `transferKB` cannot reach 1700 KB from this group: 1810 KB of the initial desktop payload is three MP4 previews, which are outside this allowlist. Excluding video, the initial desktop payload drops from 1223 KB to 701 KB.
+
+On mobile `transferKB` moves the other way, 1784 to 2511, while `imgKB` drops 934 to 412. The measurement window is fixed at 20 s on the throttled profile, so freeing 522 KB of image bytes lets one more MP4 preview finish inside it: `videoKB` is 562 on the baseline and 1810 here. The baseline set is `parser-extension-preview.mp4` 486 KB plus `kran-preview.mp4` 76 KB; this build adds `samo-preview.mp4` 1249 KB. `constructor-preview.mp4` 269 KB does not load in either build before the window closes, and the desktop run reaches the same 1810 KB in both builds, which is why that column is directly comparable and this one is not.
 
 The 350 KB figure in the original brief is not met by this commit: it is 412 KB. That brief assumed 2x assets throughout. Sizing the rakuten pair for 3x phones adds 57.3 KB and restoring the behance pair to native size adds 11.1 KB, so 344 KB became 412 KB. The two changes are the difference between passing a screenshot comparison at DPR3 and failing it.
 
@@ -170,4 +179,4 @@ The 350 KB figure in the original brief is not met by this commit: it is 412 KB.
 
 ## Reproduce
 
-The box is read from the stylesheet. The target is 2x the painted size, or 3x for the two rakuten files. WebP is `cwebp -q 80` (`-q 90` for the four re-encoded files), AVIF is sharp at quality 57 (`65` for the four), 4:2:0, and ICC profiles of the source JPEGs are carried over.
+The box is read from the stylesheet. The target is 2x the painted size, or 3x for the two rakuten files. WebP is `cwebp -q 80` (`-q 90` for the four re-encoded files), AVIF is sharp at quality 57 (`65` for the four) at sharp's default chroma subsampling, which is 4:4:4, so the four sharp-encoded files came out YUV444 and the fifteen earlier ones are YUV420. No ICC profile survives into the shipped files.
