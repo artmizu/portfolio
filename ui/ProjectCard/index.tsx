@@ -90,10 +90,22 @@ export function ProjectCardLargeMarketplace({ data }: { data: Project }) {
         })}
       >
         <div className={st.marketplace__bottom}>
-          <Image src={MarketplaceBottomImage} width="453" className={st.marketplace__preview} alt={data.title} />
+          <Image
+            src={MarketplaceBottomImage}
+            width="453"
+            sizes="453px"
+            className={st.marketplace__preview}
+            alt={data.title}
+          />
         </div>
         <div className={st.marketplace__top}>
-          <Image src={MarketplaceTopImage} width="553" className={st['marketplace__preview-top']} alt={data.title} />
+          <Image
+            src={MarketplaceTopImage}
+            width="553"
+            sizes="(max-width: 900px) 520px, 556px"
+            className={st['marketplace__preview-top']}
+            alt={data.title}
+          />
         </div>
       </div>
     </ProjectCardLargeBase>
@@ -175,10 +187,10 @@ export function ProjectCardLargeUae({ data }: { data: Project }) {
       >
         <div className={st.uae__wrapper}>
           <div className={st.uae__left}>
-            <Image src={UaeLeft} width="300" className={st.uae__preview} alt={data.title} />
+            <Image src={UaeLeft} width="300" sizes="300px" className={st.uae__preview} alt={data.title} />
           </div>
           <div className={st.uae__right}>
-            <Image src={UaeRight} width="400" className={st.uae__preview} alt={data.title} />
+            <Image src={UaeRight} width="400" sizes="400px" className={st.uae__preview} alt={data.title} />
           </div>
         </div>
       </div>
@@ -196,7 +208,7 @@ export function ProjectCardLargeSamo({ data }: { data: Project }) {
         })}
       >
         <div className={st.samo__bottom}>
-          <Image src={SamoImage} width="450" className={st.samo__preview} alt={data.title} />
+          <Image src={SamoImage} width="450" sizes="450px" className={st.samo__preview} alt={data.title} />
         </div>
         <div className={st['samo__video-wrapper']}>
           <video playsInline autoPlay muted loop src="/videos/projects/samo-preview.mp4" className={st.samo__video} />
