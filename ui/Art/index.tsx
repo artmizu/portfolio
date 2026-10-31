@@ -38,9 +38,11 @@ export default function Canvas () {
     }
   }, [])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: wasResized is a re-render trigger to re-init the WebGL context on resize
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    const canvas = canvasRef.current!
     const gl = canvas.getContext('webgl')
     if (!gl) throw Error("Canvas context not found");
 
@@ -108,12 +110,14 @@ export default function Canvas () {
         uniforms.u_texture = textures.u_framebuffer
       }
     
+      // biome-ignore lint/correctness/useHookAtTopLevel: gl.useProgram is the WebGL API, not a React hook
       gl.useProgram(programInfo.program);
       twgl.setBuffersAndAttributes(gl, programInfo, bufferInfo);
       twgl.setUniforms(programInfo, uniforms);
       twgl.drawBufferInfo(gl, bufferInfo);
     
       twgl.bindFramebufferInfo(gl, null)
+      // biome-ignore lint/correctness/useHookAtTopLevel: gl.useProgram is the WebGL API, not a React hook
       gl.useProgram(programInfoSecond.program);
       twgl.setBuffersAndAttributes(gl, programInfoSecond, bufferInfo);
       twgl.setUniforms(programInfoSecond, uniforms);

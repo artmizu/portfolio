@@ -11,7 +11,9 @@
     "dev": "next dev --hostname 0.0.0.0 --port 3201",
     "build": "next build",
     "start": "next start  --hostname 0.0.0.0 --port 3200",
-    "lint": "eslint .",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
+    "format": "biome format --write",
     "lint:css": "stylelint './**/*.{scss,css}'",
     "typecheck": "tsc --noEmit"
   },
@@ -22,7 +24,6 @@
     "@vercel/speed-insights": "^2.0.0",
     "accept-language": "^3.0.20",
     "classnames": "^2.5.1",
-    "eslint-config-next": "16.4.3",
     "i18next": "^26.5.12",
     "i18next-resources-to-backend": "^1.2.3",
     "next": "16.4.3",
@@ -35,8 +36,8 @@
     "twgl.js": "^7.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.6.4",
     "@stylistic/stylelint-plugin": "^5.3.1",
-    "eslint": "10.14.0",
     "file-loader": "^6.2.0",
     "sass": "^1.107.1",
     "stylelint": "^17.16.0",
@@ -47,6 +48,6 @@
     "stylelint-order": "^8.1.2",
     "stylelint-scss": "^7.4.0",
     "ts-shader-loader": "^2.1.0",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   }
 }

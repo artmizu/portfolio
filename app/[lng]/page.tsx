@@ -17,7 +17,6 @@ export function generateStaticParams() {
 
 export default async function Home({ params }: { params: Promise<{ lng: string }>}) {
   const { lng } = await params
-  // eslint-disable-next-line react-hooks/rules-of-hooks -- This is a server-side function, not a React Hook
   const { t } = await useTranslation(lng as Language, ['about', 'project'])
   const list = t('about:tool.list', { returnObjects: true }) as { title: string, text: string }[]
   const projectList = t('project:list', { returnObjects: true }) as Array<Project & { type?: ProjectType }>
@@ -60,7 +59,9 @@ export default async function Home({ params }: { params: Promise<{ lng: string }
             </nav>
           </div>
           <section className={st['main-intro__description']}>
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static copy from our own i18n JSON, not user input */}
             <p className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.first') }} />
+            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static copy from our own i18n JSON, not user input */}
             <p className="ui-p ui-p_mxw-540 ui-p_large ui-p_my" dangerouslySetInnerHTML={{ __html: t('about:description.second') }} />
             <H3 mt>{ t('about:description.title') }</H3>
             <p className="ui-p ui-p_mxw-540 ui-p_large ui-p_my">

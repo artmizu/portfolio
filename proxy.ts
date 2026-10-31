@@ -11,10 +11,11 @@ export const config = {
 const cookieName = 'i18next'
 
 export function proxy(req: NextRequest) {
-  let lng
-  if (req.cookies.has(cookieName)) lng = acceptLanguage.get(req.cookies.get(cookieName)!.value)
-  if (!lng) lng = acceptLanguage.get(req.headers.get('Accept-Language'))
-  if (!lng) lng = fallbackLng
+  const cookieLng = req.cookies.get(cookieName)?.value;
+  const lng =
+    acceptLanguage.get(cookieLng) ??
+    acceptLanguage.get(req.headers.get('Accept-Language')) ??
+    fallbackLng;
 
   if (
     !languages.some(loc => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
@@ -28,7 +29,8 @@ export function proxy(req: NextRequest) {
   }
 
   if (req.headers.has('referer')) {
-    const refererUrl = new URL(req.headers.get('referer')!)
+    const referer = req.headers.get('referer');
+    const refererUrl = new URL(referer ?? req.url);
     const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`))
     const response = NextResponse.next()
     if (lngInReferer) response.cookies.set(cookieName, lngInReferer)

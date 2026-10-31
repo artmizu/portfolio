@@ -30,6 +30,7 @@ export function ProjectCard({ data }: { data: Project }) {
       </div>
       {
         data.description && (
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: static copy from our own project data, not user input
           <div className={cls('ui-p', 'ui-grey-text', st['project-card__description'])} dangerouslySetInnerHTML={{ __html: data.description }}/>
         )
       }
@@ -50,11 +51,11 @@ export function ProjectCardLargeBase({ data, children, onVisible }: { data: Proj
     threshold: 0.8
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: onVisible must not re-trigger the observer callback
   useEffect(() => {
     if (intersection && intersection.intersectionRatio > 0.8) {
       onVisible?.()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [intersection])
 
   return (
