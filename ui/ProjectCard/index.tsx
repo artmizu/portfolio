@@ -114,9 +114,9 @@ export function ProjectCardLargeConstructor({ data }: { data: Project }) {
         <LazyVideo
           src="/videos/projects/constructor-preview.mp4"
           poster="/videos/posters/constructor-preview.webp"
+          sizes="(max-width: 900px) 350px, 477px"
           wrapperClassName={st['constructor__video-wrapper']}
           className={st.constructor__video}
-          ariaLabel={data.title}
         />
         <div className={st.constructor__spot} />
       </div>
@@ -199,9 +199,9 @@ export function ProjectCardLargeSamo({ data }: { data: Project }) {
         <LazyVideo
           src="/videos/projects/samo-preview.mp4"
           poster="/videos/posters/samo-preview.webp"
+          sizes="(max-width: 900px) 366px, 430px"
           wrapperClassName={st['samo__video-wrapper']}
           className={st.samo__video}
-          ariaLabel={data.title}
         />
       </div>
     </ProjectCardLargeBase>
@@ -220,10 +220,10 @@ export function ProjectCardLargeKran({ data }: { data: Project }) {
         <LazyVideo
           src="/videos/projects/kran-preview.mp4"
           poster="/videos/posters/kran-preview.webp"
+          sizes="(max-width: 900px) 160px, 313px"
           wrapperClassName={st['kran__video-wrapper']}
           className={st.kran__video}
           loop={false}
-          ariaLabel={data.title}
         />
       </div>
     </ProjectCardLargeBase>

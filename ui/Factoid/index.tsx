@@ -110,9 +110,9 @@ export function FactoidParserExtension({ data }: { data: Project }) {
         <LazyVideo
           src="/videos/factoid/parser-extension-preview.mp4"
           poster="/videos/posters/parser-extension-preview.webp"
+          sizes="(max-width: 900px) 430px, 347px"
           wrapperClassName={st['parser-extension__video-wrapper']}
           className={st['parser-extension__video']}
-          ariaLabel={data.title}
         />
       </div>
     </FactoidBase>

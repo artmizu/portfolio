@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 
 const PRELOAD_MARGIN = '300px';
@@ -7,26 +8,27 @@ const PRELOAD_MARGIN = '300px';
 export default function LazyVideo({
   src,
   poster,
+  sizes,
   className,
   wrapperClassName,
   loop = true,
-  ariaLabel,
 }: {
   src: string;
   poster: string;
+  sizes: string;
   className?: string;
   wrapperClassName?: string;
   loop?: boolean;
-  ariaLabel?: string;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const endedRef = useRef(false);
   const [mounted, setMounted] = useState(false);
   const [inView, setInView] = useState(false);
 
   useEffect(() => {
     const element = wrapperRef.current;
-    if (!element) return;
+    if (!element || typeof IntersectionObserver !== 'function') return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -47,11 +49,12 @@ export default function LazyVideo({
     const video = videoRef.current;
     if (!video) return;
 
-    if (inView) {
-      void video.play().catch(() => undefined);
-    } else {
+    if (!inView) {
       video.pause();
+      return;
     }
+
+    if (!endedRef.current) void video.play().catch(() => undefined);
   }, [inView]);
 
   return (
@@ -66,11 +69,21 @@ export default function LazyVideo({
           muted
           autoPlay
           loop={loop}
-          aria-label={ariaLabel}
           className={className}
+          onEnded={() => {
+            endedRef.current = true;
+          }}
         />
       ) : (
-        <img src={poster} alt={ariaLabel ?? ''} fetchPriority="low" decoding="async" className={className} />
+        <Image
+          src={poster}
+          alt=""
+          fill
+          sizes={sizes}
+          loading="lazy"
+          className={className}
+          style={{ objectFit: 'cover', objectPosition: 'left top' }}
+        />
       )}
     </div>
   );
