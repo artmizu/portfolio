@@ -79,33 +79,33 @@ source. Every poster is fetched once per page view.
 ## Measurements
 
 `/tmp/perf/measure.sh`, headless Chrome, cache disabled, production build, desktop 1440x900 and emulated mobile 390x844 with 4x CPU throttling and 1.6 Mbps / 150 ms. Baseline is the base commit
-`b0f9500` served from a separate copy on port 3399, branch is port 3301, both measured in the same session. Timing rows list the runs and their median.
+`b0f9500` served from a separate copy on port 3399, branch is port 3301, both measured in the same session. Timing rows list the runs and their median; the branch LCP and load rows also include the final pass on the committed tree.
 
-| metric                                 | baseline `b0f9500`                     | branch                             |
-| -------------------------------------- | -------------------------------------- | ---------------------------------- |
-| desktop initial `transferKB`           | 3032                                   | 1222                               |
-| desktop initial `videoKB`              | 1810                                   | 0                                  |
-| desktop initial `imgKB`                | 934                                    | 934                                |
-| desktop initial `requests`             | 48                                     | 45                                 |
-| desktop initial `lcp`                  | 84 / 100 / 152, median 100 ms          | 72 / 72 / 192, median 72 ms        |
-| desktop initial `load`                 | 219 / 238 / 466, median 238 ms         | 89 / 137 / 206, median 137 ms      |
-| desktop `cls`                          | 0                                      | 0                                  |
-| desktop after full scroll `imgKB`      | 1105                                   | 1199                               |
-| desktop after full scroll `videoKB`    | 1810                                   | 809                                |
-| desktop after full scroll `transferKB` | 3203                                   | 2296                               |
-| desktop after full scroll `lcp`        | 12628 ms (`IMG`)                       | 12608 ms (`IMG`)                   |
-| desktop after full scroll `cls`        | 0                                      | 0                                  |
-| mobile initial `transferKB`            | 1783                                   | 1222                               |
-| mobile initial `videoKB`               | 562                                    | 0                                  |
-| mobile initial `imgKB`                 | 934                                    | 934                                |
-| mobile initial `lcp`                   | 780 / 868 / 892, median 868 ms         | 768 / 772 / 904, median 772 ms     |
-| mobile `load`                          | 13429 / 13450 / 13457, median 13450 ms | 6613 / 6619 / 6621, median 6619 ms |
-| mobile `cls`                           | 0                                      | 0                                  |
-| mobile after full scroll `imgKB`       | 1064                                   | 1158                               |
-| mobile after full scroll `videoKB`     | 1810                                   | 809                                |
-| mobile after full scroll `transferKB`  | 3162                                   | 2255                               |
-| mobile after full scroll `lcp`         | 780 ms, `P` (hero text)                | 27032 ms, `IMG` (samo placeholder) |
-| mobile after full scroll `cls`         | 0                                      | 0                                  |
+| metric                                 | baseline `b0f9500`                              | branch                                   |
+| -------------------------------------- | ----------------------------------------------- | ---------------------------------------- |
+| desktop initial `transferKB`           | 3032                                            | 1222                                     |
+| desktop initial `videoKB`              | 1810                                            | 0                                        |
+| desktop initial `imgKB`                | 934                                             | 934                                      |
+| desktop initial `requests`             | 48                                              | 45                                       |
+| desktop initial `lcp`                  | 84 / 100 / 152, median 100 ms (3 runs)          | 72 to 192 ms, median 80 ms (5 runs)      |
+| desktop initial `load`                 | 219 / 238 / 466, median 238 ms (3 runs)         | 89 to 251 ms, median 145 ms (5 runs)     |
+| desktop `cls`                          | 0                                               | 0                                        |
+| desktop after full scroll `imgKB`      | 1105                                            | 1199                                     |
+| desktop after full scroll `videoKB`    | 1810                                            | 809                                      |
+| desktop after full scroll `transferKB` | 3203                                            | 2296                                     |
+| desktop after full scroll `lcp`        | 12628 ms (`IMG`)                                | 12608 ms (`IMG`)                         |
+| desktop after full scroll `cls`        | 0                                               | 0                                        |
+| mobile initial `transferKB`            | 1783                                            | 1222                                     |
+| mobile initial `videoKB`               | 562                                             | 0                                        |
+| mobile initial `imgKB`                 | 934                                             | 934                                      |
+| mobile initial `lcp`                   | 780 / 868 / 892, median 868 ms (3 runs)         | 768 to 904 ms, median 844 ms (5 runs)    |
+| mobile `load`                          | 13429 / 13450 / 13457, median 13450 ms (3 runs) | 6597 to 6621 ms, median 6613 ms (5 runs) |
+| mobile `cls`                           | 0                                               | 0                                        |
+| mobile after full scroll `imgKB`       | 1064                                            | 1158                                     |
+| mobile after full scroll `videoKB`     | 1810                                            | 809                                      |
+| mobile after full scroll `transferKB`  | 3162                                            | 2255                                     |
+| mobile after full scroll `lcp`         | 780 ms, `P` (hero text)                         | 27032 ms, `IMG` (samo placeholder)       |
+| mobile after full scroll `cls`         | 0                                               | 0                                        |
 
 `imgKB` after a full scroll is the one row that grew: +94 KB on both viewports, which is exactly the four optimized posters fetched once (52 KB at DPR 1 for the same four files, 94 KB at DPR 2
 and DPR 3). Before the poster attribute was removed the same row was +187 KB, because every poster was fetched twice, once raw by the video element and once through the optimizer.
