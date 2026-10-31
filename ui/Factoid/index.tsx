@@ -2,8 +2,8 @@
 
 import cls from 'classnames';
 import { useEffect, useRef, useState } from 'react';
-import { useIntersection } from 'react-use';
 import type { Project } from 'shared/type/Project';
+import { useIntersection } from 'shared/useIntersection';
 import DateMarker from 'ui/DateMarker';
 import H2 from 'ui/h2';
 import LazyVideo from 'ui/LazyVideo';
@@ -27,7 +27,7 @@ function FactoidBase({
   children: React.ReactNode;
 }) {
   const intersectionRef = useRef<HTMLElement>(null);
-  const intersection = useIntersection(intersectionRef as React.RefObject<HTMLElement>, {
+  const intersection = useIntersection(intersectionRef, {
     rootMargin: '0px',
     threshold: 0.8,
   });
