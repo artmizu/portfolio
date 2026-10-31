@@ -10,10 +10,21 @@ export const config = {
 };
 
 const cookieName = 'i18next';
+const rootRewriteHeader = 'x-proxy-root-rewrite';
+
+function rootRewriteRequestHeaders(req: NextRequest) {
+  const headers = new Headers(req.headers);
+  headers.set(rootRewriteHeader, '1');
+  return headers;
+}
 
 export function proxy(req: NextRequest) {
   const cookieLng = req.cookies.get(cookieName)?.value;
-  const lng = acceptLanguage.get(cookieLng) ?? acceptLanguage.get(req.headers.get('Accept-Language')) ?? fallbackLng;
+  const headerLng = req.headers.get('Accept-Language');
+  const lng =
+    (cookieLng ? acceptLanguage.get(cookieLng) : undefined) ??
+    (headerLng ? acceptLanguage.get(headerLng) : undefined) ??
+    fallbackLng;
 
   if (
     !languages.some((loc) => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
@@ -27,8 +38,15 @@ export function proxy(req: NextRequest) {
     return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
   }
 
-  const response =
-    req.nextUrl.pathname === '/' ? NextResponse.rewrite(new URL(`/${lng}`, req.url)) : NextResponse.next();
+  const isRoot = req.nextUrl.pathname === '/';
+  const isRootRewrite = req.headers.get(rootRewriteHeader) === '1';
+  const response = isRoot
+    ? NextResponse.rewrite(new URL(`/${lng}`, req.url), { request: { headers: rootRewriteRequestHeaders(req) } })
+    : NextResponse.next();
+
+  if (isRoot || (isRootRewrite && req.nextUrl.pathname === `/${lng}`)) {
+    response.headers.set('Cache-Control', 'private, no-store');
+  }
 
   if (req.headers.has('referer')) {
     let lngInReferer: Language | undefined;
