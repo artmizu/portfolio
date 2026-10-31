@@ -11,27 +11,27 @@
   "tool": {
     "title": "Things I use",
     "list": [
-      { 
+      {
         "title": "Vite, ESBuild, Rollup, Webpack",
         "text": "For building projects"
       },
-      { 
+      {
         "title": "Vitest, Jest, Cypress, Playwright",
         "text": "For testing purposes"
       },
-      { 
+      {
         "title": "NodeJS, Temporal, GraphQL, MongoDB, PostgreSQL",
         "text": "For back-end development"
       },
-      { 
+      {
         "title": "Vue 2/3, React, Solid, SvelteJS",
         "text": "Also the ecosystems around them"
       },
-      { 
+      {
         "title": "Gitlab CI, Docker, Github Actions",
         "text": "For CI/CD"
       },
-      { 
+      {
         "title": "Typescript",
         "text": "Love and use it"
       }

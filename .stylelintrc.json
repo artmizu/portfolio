@@ -1,13 +1,6 @@
 {
-  "extends": [
-    "stylelint-config-recess-order",
-    "stylelint-config-recommended",
-    "stylelint-config-standard-scss"
-  ],
-  "plugins": [
-    "stylelint-scss",
-    "@stylistic/stylelint-plugin"
-  ],
+  "extends": ["stylelint-config-recess-order", "stylelint-config-recommended", "stylelint-config-standard-scss"],
+  "plugins": ["stylelint-scss", "@stylistic/stylelint-plugin"],
   "rules": {
     "selector-nested-pattern": "^(\\^{0,2}&|\\.|[a-z].|>)",
     "function-url-quotes": "never",

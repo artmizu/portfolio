@@ -1,34 +1,34 @@
-declare module "*.frag" {
+declare module '*.frag' {
   const value: string;
   export default value;
 }
 
-declare module "*.vert" {
+declare module '*.vert' {
   const value: string;
   export default value;
 }
 
-declare module "*.jpg" {
-  const value: import("next/image").StaticImageData;
+declare module '*.jpg' {
+  const value: import('next/image').StaticImageData;
   export default value;
 }
 
-declare module "*.jpeg" {
-  const value: import("next/image").StaticImageData;
+declare module '*.jpeg' {
+  const value: import('next/image').StaticImageData;
   export default value;
 }
 
-declare module "*.png" {
-  const value: import("next/image").StaticImageData;
+declare module '*.png' {
+  const value: import('next/image').StaticImageData;
   export default value;
 }
 
-declare module "*.webp" {
-  const value: import("next/image").StaticImageData;
+declare module '*.webp' {
+  const value: import('next/image').StaticImageData;
   export default value;
 }
 
-declare module "*.svg" {
-  const value: import("next/image").StaticImageData;
+declare module '*.svg' {
+  const value: import('next/image').StaticImageData;
   export default value;
 }

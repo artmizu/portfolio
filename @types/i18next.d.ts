@@ -10,7 +10,7 @@
 
 // declare module "i18next" {
 //   // Extend CustomTypeOptions
-//   interface CustomTypeOptions { 
+//   interface CustomTypeOptions {
 //     // custom namespace type, if you changed it
 //     defaultNS: "common";
 //     // custom resources type
@@ -21,5 +21,5 @@
 //       opensource: typeof opensource;
 //     };
 //     // other
-//   } 
+//   }
 // }

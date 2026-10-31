@@ -1,30 +1,28 @@
-import Link from 'next/link'
-import { languages } from 'i18n/settings'
-import { Language } from 'shared/type/Language'
-import st from './index.module.scss'
+import { languages } from 'i18n/settings';
+import Link from 'next/link';
+import type { Language } from 'shared/type/Language';
+import st from './index.module.scss';
 
 export default async function LanguageSwitcher({ current }: { current: Language }) {
   return (
-    <nav className={st['switcher']}>
-      {
-        languages.map((el) => {
-          if (el === current) {
-            return (
-              <div key={el} className={st['switcher__el']}>
-                { el }
-              </div>
-            )
-          } else {
-            return (
-              <div key={el} className={st['switcher__el']}>
-                <Link className='ui-link' href={`/${el}`}>
-                  { el }
-                </Link>
-              </div>
-            )
-          }
-        })
-      }
+    <nav className={st.switcher}>
+      {languages.map((el) => {
+        if (el === current) {
+          return (
+            <div key={el} className={st.switcher__el}>
+              {el}
+            </div>
+          );
+        } else {
+          return (
+            <div key={el} className={st.switcher__el}>
+              <Link className="ui-link" href={`/${el}`}>
+                {el}
+              </Link>
+            </div>
+          );
+        }
+      })}
     </nav>
-  )
+  );
 }

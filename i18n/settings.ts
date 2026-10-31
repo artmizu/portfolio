@@ -1,11 +1,11 @@
-import { Namespace } from "i18next"
-import { Language, LanguageNS } from "shared/type/Language"
+import type { Namespace } from 'i18next';
+import type { Language, LanguageNS } from 'shared/type/Language';
 
-export const fallbackLng: Language = 'ru'
-export const languages: Language[] = [fallbackLng, 'en']
-export const defaultNS: LanguageNS = 'about'
+export const fallbackLng: Language = 'ru';
+export const languages: Language[] = [fallbackLng, 'en'];
+export const defaultNS: LanguageNS = 'about';
 
-export function getOptions (lng:string = fallbackLng, ns:Namespace<LanguageNS> = defaultNS) {
+export function getOptions(lng: string = fallbackLng, ns: Namespace<LanguageNS> = defaultNS) {
   return {
     // debug: true,
     supportedLngs: languages,
@@ -13,6 +13,6 @@ export function getOptions (lng:string = fallbackLng, ns:Namespace<LanguageNS> =
     lng,
     fallbackNS: defaultNS,
     defaultNS,
-    ns
-  }
+    ns,
+  };
 }

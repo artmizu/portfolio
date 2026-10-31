@@ -11,27 +11,27 @@
   "tool": {
     "title": "С чем работал",
     "list": [
-      { 
+      {
         "title": "Vite, ESBuild, Rollup, Webpack",
         "text": "Для сборки проектов"
       },
-      { 
+      {
         "title": "Vitest, Jest, Cypress, Playwright",
         "text": "Для тестирования"
       },
-      { 
+      {
         "title": "NodeJS, Temporal, GraphQL, MongoDB, PostgreSQL",
         "text": "Для разработки на бэке"
       },
-      { 
+      {
         "title": "Vue 2/3, React, Solid, SvelteJS",
         "text": "И экосистемы вокруг них"
       },
-      { 
+      {
         "title": "Gitlab CI, Docker, Github Actions",
         "text": "Для автоматизации"
       },
-      { 
+      {
         "title": "Typescript",
         "text": "Люблю и использую"
       }
